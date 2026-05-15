@@ -1,0 +1,112 @@
+<!-- beli.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beli Produk - Warung Teh Tia</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#f5f5f5;
+    }
+
+    header{
+      background:#ff9800;
+      color:white;
+      text-align:center;
+      padding:25px;
+      font-size:32px;
+      font-weight:bold;
+    }
+
+    .produk-container{
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .produk{
+      background:white;
+      padding:20px;
+      border-radius:15px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      transition:0.3s;
+    }
+
+    .produk:hover{
+      transform:scale(1.02);
+    }
+
+    .nama{
+      font-size:25px;
+      font-weight:bold;
+      color:#333;
+    }
+
+    .harga{
+      font-size:20px;
+      color:#4caf50;
+      margin-top:10px;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:15px;
+      padding:10px 25px;
+      background:#ff9800;
+      color:white;
+      text-decoration:none;
+      border-radius:10px;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      background:#e68900;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    🛍️ Daftar Produk
+  </header>
+
+  <div class="produk-container">
+
+    <div class="produk">
+      <div class="nama">🍜 Mie Goreng</div>
+      <div class="harga">3.500</div>
+      <a href="#" class="btn">Beli</a>
+    </div>
+
+    <div class="produk">
+      <div class="nama">🍲 Mie Soto</div>
+      <div class="harga">3.000</div>
+      <a href="#" class="btn">Beli</a>
+    </div>
+
+    <div class="produk">
+      <div class="nama">🥚 Telur</div>
+      <div class="harga">28.000</div>
+      <a href="#" class="btn">Beli</a>
+      
+    </div>
+      <div class="produk">
+      <div class="nama">🧼 Sabun</div>
+      <div class="harga">18.000</div>
+      <a href="#" class="btn">Beli</a>
+    </div>
+    
+    <p>Sisa nya beli di warung Teh Tia.</p>
+    <a href="index.html" class="btn">
+       ⬅ Kembali
+    </a>
+
+  </div>
+
+</body>
+</html>
