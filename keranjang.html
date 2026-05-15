@@ -1,0 +1,202 @@
+<!-- keranjang.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang - Warung Teh Tia</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#f5f5f5;
+    }
+
+    header{
+      background:#ff9800;
+      color:white;
+      text-align:center;
+      padding:25px;
+      font-size:32px;
+      font-weight:bold;
+    }
+
+    .container{
+      padding:30px;
+    }
+
+    .card{
+      background:white;
+      padding:20px;
+      border-radius:15px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    ul{
+      padding-left:20px;
+    }
+
+    li{
+      margin-bottom:10px;
+      font-size:18px;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:15px;
+      padding:12px 25px;
+      background:#ff9800;
+      color:white;
+      text-decoration:none;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:16px;
+    }
+
+    .btn:hover{
+      background:#e68900;
+    }
+
+    .kosong{
+      color:gray;
+    }
+
+    #totalHarga{
+      margin-top:20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  🛒 Keranjang Warung Teh Tia
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>Isi Keranjang 🔥</h2>
+
+    <ul id="listKeranjang"></ul>
+
+    <h3 id="totalHarga">
+      Total Harga: Rp 0
+    </h3>
+
+    <button class="btn" onclick="checkoutWhatsApp()">
+      Checkout WhatsApp 📱
+    </button>
+
+    <button class="btn" onclick="hapusKeranjang()">
+      Hapus Keranjang 🗑️
+    </button>
+
+    <br><br>
+
+    <a href="beli.html" class="btn">
+      ⬅ Kembali
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+  let keranjang =
+  JSON.parse(localStorage.getItem("keranjang")) || [];
+
+  function tampilkanKeranjang(){
+
+    let list =
+    document.getElementById("listKeranjang");
+
+    let totalHarga =
+    document.getElementById("totalHarga");
+
+    list.innerHTML = "";
+
+    let totalSemua = 0;
+
+    if(keranjang.length === 0){
+
+      list.innerHTML =
+      "<p class='kosong'>Keranjang kosong 😭</p>";
+
+      totalHarga.innerHTML =
+      "Total Harga: Rp 0";
+
+      return;
+    }
+
+    keranjang.forEach(item => {
+
+      let subtotal =
+      item.harga * item.jumlah;
+
+      totalSemua += subtotal;
+
+      list.innerHTML += `
+        <li>
+          ${item.nama}
+          x${item.jumlah}
+          = Rp ${subtotal.toLocaleString("id-ID")}
+        </li>
+      `;
+    });
+
+    totalHarga.innerHTML =
+    "Total Harga: Rp " +
+    totalSemua.toLocaleString("id-ID");
+  }
+
+  function checkoutWhatsApp(){
+
+    if(keranjang.length === 0){
+      alert("Keranjang kosong 😭");
+      return;
+    }
+
+    let pesan =
+    "Halo Warung Teh Tia,%0ASaya mau beli:%0A";
+
+    let totalSemua = 0;
+
+    keranjang.forEach(item => {
+
+      let subtotal =
+      item.harga * item.jumlah;
+
+      totalSemua += subtotal;
+
+      pesan +=
+      `- ${item.nama} x${item.jumlah} = Rp ${subtotal.toLocaleString("id-ID")}%0A`;
+    });
+
+    pesan +=
+    `%0ATotal Harga: Rp ${totalSemua.toLocaleString("id-ID")}`;
+
+    location.href =
+    `https://wa.me/6285820028734?text=${pesan}`;
+  }
+
+  function hapusKeranjang(){
+
+    localStorage.removeItem("keranjang");
+
+    keranjang = [];
+
+    tampilkanKeranjang();
+
+    alert("Keranjang dihapus 🔥");
+  }
+
+  tampilkanKeranjang();
+
+</script>
+
+</body>
+</html>
