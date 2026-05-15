@@ -7,6 +7,7 @@
   <title>Beli Produk - Warung Teh Tia</title>
 
   <style>
+
     body{
       margin:0;
       font-family:Arial, sans-serif;
@@ -74,18 +75,27 @@
       text-decoration:none;
       border:none;
       border-radius:10px;
-      transition:0.3s;
       cursor:pointer;
       font-size:16px;
+      transition:0.3s;
     }
 
     .btn:hover{
       background:#e68900;
     }
 
+    .kategori{
+      font-size:30px;
+      font-weight:bold;
+      padding:0 30px;
+      margin-top:30px;
+      color:#333;
+    }
+
     .bottom{
       padding:30px;
     }
+
   </style>
 </head>
 <body>
@@ -93,6 +103,10 @@
   <header>
     🛍️ Daftar Produk Warung Teh Tia
   </header>
+
+  <div class="kategori">
+    🍜 Makanan
+  </div>
 
   <div class="produk-container">
 
@@ -234,6 +248,184 @@
 
   </div>
 
+  <div class="kategori">
+    🍚 Kategori Beras
+  </div>
+
+  <div class="produk-container">
+
+    <!-- Berasania -->
+    <div class="produk">
+
+      <div class="nama">
+        🍚 Berasania 5KG
+      </div>
+
+      <div class="harga">
+        Rp 74.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="berasania"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Berasania 5KG',
+      74000,
+      document.getElementById('berasania').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
+    </div>
+
+    <!-- Beras Laris -->
+    <div class="produk">
+
+      <div class="nama">
+        🍚 Beras Laris 5KG
+      </div>
+
+      <div class="harga">
+        Rp 73.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="beraslaris"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Beras Laris 5KG',
+      73000,
+      document.getElementById('beraslaris').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
+    </div>
+
+    <!-- Beras Beputs -->
+    <div class="produk">
+
+      <div class="nama">
+        🍚 Beras Beputs 5KG
+      </div>
+
+      <div class="harga">
+        Rp 73.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="berasbeputs"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Beras Beputs 5KG',
+      73000,
+      document.getElementById('berasbeputs').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
+    </div>
+
+    <!-- Sumo Merah -->
+    <div class="produk">
+
+      <div class="nama">
+        🍚 Beras Sumo Merah 5KG
+      </div>
+
+      <div class="harga">
+        Rp 95.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="sumomerah"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Beras Sumo Merah 5KG',
+      95000,
+      document.getElementById('sumomerah').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
+    </div>
+
+    <!-- Sumo Kuning -->
+    <div class="produk">
+
+      <div class="nama">
+        🍚 Beras Sumo Kuning 5KG
+      </div>
+
+      <div class="harga">
+        Rp 85.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="sumokuning"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Beras Sumo Kuning 5KG',
+      85000,
+      document.getElementById('sumokuning').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
+    </div>
+
+  </div>
+
   <div class="bottom">
 
     <a href="keranjang.html" class="btn">
@@ -257,14 +449,22 @@
 
       jumlah = parseInt(jumlah);
 
-      let total = harga * jumlah;
+      let itemLama =
+      keranjang.find(item => item.nama === nama);
 
-      keranjang.push({
-        nama: nama,
-        harga: harga,
-        jumlah: jumlah,
-        total: total
-      });
+      if(itemLama){
+
+        itemLama.jumlah += jumlah;
+
+      } else {
+
+        keranjang.push({
+          nama: nama,
+          harga: harga,
+          jumlah: jumlah
+        });
+
+      }
 
       localStorage.setItem(
         "keranjang",
@@ -273,10 +473,7 @@
 
       alert(
         nama +
-        " berhasil ditambah 🔥\nJumlah: " +
-        jumlah +
-        "\nTotal: Rp " +
-        total.toLocaleString("id-ID")
+        " berhasil ditambah 🔥"
       );
     }
 
