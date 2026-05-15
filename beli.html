@@ -53,6 +53,18 @@
       margin-top:10px;
     }
 
+    .jumlah{
+      margin-top:15px;
+    }
+
+    input{
+      padding:10px;
+      width:70px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      font-size:16px;
+    }
+
     .btn{
       display:inline-block;
       margin-top:15px;
@@ -60,12 +72,19 @@
       background:#ff9800;
       color:white;
       text-decoration:none;
+      border:none;
       border-radius:10px;
       transition:0.3s;
+      cursor:pointer;
+      font-size:16px;
     }
 
     .btn:hover{
       background:#e68900;
+    }
+
+    .bottom{
+      padding:30px;
     }
   </style>
 </head>
@@ -77,47 +96,191 @@
 
   <div class="produk-container">
 
+    <!-- Mie Goreng -->
     <div class="produk">
-      <div class="nama">🍜 Mie Goreng</div>
-      <div class="harga">~3.000</div>
 
-      <a href="https://wa.me/6285820028734?text=Halo%20Warung%20Teh%20Tia%2C%20saya%20mau%20beli%20Mie%20Goreng" class="btn">
-        Beli
-      </a>
+      <div class="nama">
+        🍜 Mie Goreng
+      </div>
+
+      <div class="harga">
+        Rp 3.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="miegoreng"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Mie Goreng',
+      3000,
+      document.getElementById('miegoreng').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
     </div>
 
+    <!-- Mie Soto -->
     <div class="produk">
-      <div class="nama">🍲 Mie Soto</div>
-      <div class="harga">~3.000</div>
 
-      <a href="https://wa.me/6285820028734?text=Halo%20Warung%20Teh%20Tia%2C%20saya%20mau%20beli%20Mie%20Soto" class="btn">
-        Beli
-      </a>
+      <div class="nama">
+        🍲 Mie Soto
+      </div>
+
+      <div class="harga">
+        Rp 3.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="miesoto"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Mie Soto',
+      3000,
+      document.getElementById('miesoto').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
     </div>
 
+    <!-- Telur -->
     <div class="produk">
-      <div class="nama">🥚 Telur</div>
-      <div class="harga">~28.000</div>
 
-      <a href="https://wa.me/6285820028734?text=Halo%20Warung%20Teh%20Tia%2C%20saya%20mau%20beli%20Telur" class="btn">
-        Beli
-      </a>
+      <div class="nama">
+        🥚 Telur
+      </div>
+
+      <div class="harga">
+        Rp 28.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="telur"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Telur',
+      28000,
+      document.getElementById('telur').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
     </div>
-    
-    <div class="produk">
-      <div class="nama">🧼Sabun Daia</div>
-      <div class="harga">~28.000</div>
 
-      <a href="https://wa.me/6285820028734?text=Halo%20Warung%20Teh%20Tia%2C%20saya%20mau%20beli%20Sabun" class="btn">
-        Beli
-      </a>
-   </div>
-   
-   <a href="index.html" class="btn">
-     ⬅ Kembali
-   </a>
+    <!-- Sabun -->
+    <div class="produk">
+
+      <div class="nama">
+        🧼 Sabun Daia
+      </div>
+
+      <div class="harga">
+        Rp 28.000
+      </div>
+
+      <div class="jumlah">
+        Jumlah:
+        <input
+        type="number"
+        id="sabun"
+        value="1"
+        min="1">
+      </div>
+
+      <button
+      class="btn"
+      onclick="tambahKeranjang(
+      'Sabun Daia',
+      28000,
+      document.getElementById('sabun').value
+      )">
+
+        Tambah ke Keranjang
+
+      </button>
+
+    </div>
 
   </div>
+
+  <div class="bottom">
+
+    <a href="keranjang.html" class="btn">
+      🛒 Lihat Keranjang
+    </a>
+
+    <br><br>
+
+    <a href="index.html" class="btn">
+      ⬅ Kembali
+    </a>
+
+  </div>
+
+  <script>
+
+    let keranjang =
+    JSON.parse(localStorage.getItem("keranjang")) || [];
+
+    function tambahKeranjang(nama, harga, jumlah){
+
+      jumlah = parseInt(jumlah);
+
+      let total = harga * jumlah;
+
+      keranjang.push({
+        nama: nama,
+        harga: harga,
+        jumlah: jumlah,
+        total: total
+      });
+
+      localStorage.setItem(
+        "keranjang",
+        JSON.stringify(keranjang)
+      );
+
+      alert(
+        nama +
+        " berhasil ditambah 🔥\nJumlah: " +
+        jumlah +
+        "\nTotal: Rp " +
+        total.toLocaleString("id-ID")
+      );
+    }
+
+  </script>
 
 </body>
 </html>
