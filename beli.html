@@ -223,7 +223,7 @@
       </div>
 
       <div class="harga">
-        Rp 28.000
+        Rp 18.000
       </div>
 
       <div class="jumlah">
@@ -246,8 +246,40 @@
         Tambah ke Keranjang
 
       </button>
+      
+<div class="produk">
 
-      <p>sisanya bisa dibeli di: warung teh tia.</p>
+  <div class="nama">
+     🧼 Mamalemon
+  </div>
+
+  <div class="harga">
+    Rp 14.000
+  </div>
+
+  <div class="jumlah">
+    Jumlah:
+    <input
+      type="number"
+      id="sabun"
+      value="1"
+      min="1">
+  </div>
+
+  <button
+    class="btn"
+    onclick="tambahKeranjang(
+      'Sabun Mamalemon',
+      14.000,
+      document.getElementById('sabunmamalemon').value
+    )">
+
+    Tambah ke Keranjang
+
+  </button>
+
+</div>
+      
 
     </div>
 
@@ -483,6 +515,10 @@
     }
 
   </script>
+  <p>Jika Anda tidak puas, Anda bisa beli di:</p>
+  <a href="alamat.html" class="btn">
+    📍 Alamat Warung Teh Tia
+  </a>
 
 </body>
 </html>
