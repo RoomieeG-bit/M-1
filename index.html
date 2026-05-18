@@ -40,6 +40,8 @@
     .btn{
       display:inline-block;
       margin-top:30px;
+      margin-left:10px;
+      margin-right:10px;
       padding:15px 40px;
       background:#ff9800;
       color:white;
@@ -53,6 +55,13 @@
     .btn:hover{
       background:#e68900;
       transform:scale(1.05);
+    }
+
+    #status{
+      margin-top:35px;
+      font-size:25px;
+      font-weight:bold;
+      color:#333;
     }
 
     footer{
@@ -70,20 +79,47 @@
   </header>
 
   <div class="container">
+
     <h1>Selamat Datang 👋</h1>
+
     <p>Website Grosir Termurah Se-Planet Bumi 🔥</p>
-    <p>Semua Ada Disini! Tekan tombol beli untuk beli! 😁</p>
-  </div>
-      <a href="beli.html" class="btn">
+
+    <p>Semua Ada Disini! Tekan tombol beli untuk beli 😎</p>
+
+    <div id="status">
+      Belum Login ❌
+    </div>
+
+    <a href="beli.html" class="btn">
       Beli 🛍️
     </a>
+
     <a href="alamat.html" class="btn">
       Alamat Warung 🏬
     </a>
 
+    <a href="akun.html" class="btn">
+      Akun 👤
+    </a>
+
+  </div>
+
   <footer>
     © 2026 Warung Teh Tia
   </footer>
+
+  <script>
+
+    let username = localStorage.getItem("username");
+
+    if(username){
+
+      document.getElementById("status").innerHTML =
+      "LOGIN SEBAGAI 😎<br><br>" + username;
+
+    }
+
+  </script>
 
 </body>
 </html>
