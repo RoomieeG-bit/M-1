@@ -1,0 +1,177 @@
+<!-- akun.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akun Warung Teh Tia</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#fff8e7;
+      text-align:center;
+    }
+
+    header{
+      background:#ff9800;
+      color:white;
+      padding:25px;
+      font-size:35px;
+      font-weight:bold;
+      box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .container{
+      margin-top:60px;
+    }
+
+    h1{
+      color:#333;
+      font-size:40px;
+    }
+
+    p{
+      color:#666;
+      font-size:20px;
+    }
+
+    input{
+      display:block;
+      margin:20px auto;
+      padding:15px;
+      width:280px;
+      border-radius:12px;
+      border:2px solid #ccc;
+      font-size:18px;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:20px;
+      padding:15px 40px;
+      background:#ff9800;
+      color:white;
+      border:none;
+      border-radius:15px;
+      font-size:22px;
+      cursor:pointer;
+      transition:0.3s;
+      box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover{
+      background:#e68900;
+      transform:scale(1.05);
+    }
+
+    #hasil{
+      margin-top:35px;
+      font-size:24px;
+      color:#333;
+      font-weight:bold;
+    }
+
+    .back{
+      margin-top:30px;
+      display:inline-block;
+      color:#ff9800;
+      text-decoration:none;
+      font-size:20px;
+      font-weight:bold;
+    }
+
+    .back:hover{
+      text-decoration:underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    👤 Akun Warung Teh Tia
+  </header>
+
+  <div class="container">
+
+    <h1>Buat Akun 🔥</h1>
+    <p>Simpan akun lu langsung ke LocalStorage 😎</p>
+
+    <input 
+      type="text" 
+      id="username" 
+      placeholder="Masukkan Username"
+    >
+
+    <input 
+      type="password" 
+      id="password" 
+      placeholder="Masukkan Password"
+    >
+
+    <button class="btn" onclick="buatAkun()">
+      Simpan Akun 💾
+    </button>
+
+    <br>
+
+    <button class="btn" onclick="logout()">
+      Logout 🚪
+    </button>
+
+    <div id="hasil"></div>
+
+    <a href="index.html" class="back">
+      ⬅ Kembali ke Beranda
+    </a>
+
+  </div>
+
+  <script>
+
+    // CEK APAKAH SUDAH ADA AKUN
+    let savedUsername = localStorage.getItem("username");
+
+    if(savedUsername){
+      document.getElementById("hasil").innerHTML =
+      "ANDA SUDAH LOGIN SEBAGAI 😎<br><br>" + savedUsername;
+    }
+
+    // BUAT AKUN
+    function buatAkun(){
+
+      let username = document.getElementById("username").value;
+      let password = document.getElementById("password").value;
+
+      if(username === "" || password === ""){
+        alert("ISI SEMUA DULU WOIII 🔥");
+        return;
+      }
+
+      localStorage.setItem("username", username);
+      localStorage.setItem("password", password);
+
+      document.getElementById("hasil").innerHTML =
+      "AKUN BERHASIL DIBUAT 🚀<br><br>Halo, " 
+      + username + " 😎";
+
+      alert("AKUN BERHASIL DISIMPAN 🔥");
+    }
+
+    // LOGOUT
+    function logout(){
+
+      localStorage.removeItem("username");
+      localStorage.removeItem("password");
+
+      document.getElementById("hasil").innerHTML =
+      "ANDA SUDAH LOGOUT 🚪";
+
+      alert("LOGOUT BERHASIL 🔥");
+    }
+
+  </script>
+
+</body>
+</html>
