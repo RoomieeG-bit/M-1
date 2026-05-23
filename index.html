@@ -50,6 +50,8 @@
       font-size:22px;
       transition:0.3s;
       box-shadow:0 4px 10px rgba(0,0,0,0.2);
+      cursor:pointer;
+      border:none;
     }
 
     .btn:hover{
@@ -72,35 +74,42 @@
     }
   </style>
 </head>
+
 <body>
 
-  <header>
+  <header id="title">
     🛒 Warung Teh Tia
   </header>
 
   <div class="container">
 
-    <h1>Selamat Datang 👋</h1>
+    <h1 id="welcome">Selamat Datang 👋</h1>
 
-    <p>Website Grosir Termurah Se-Planet Bumi 🔥</p>
+    <p id="desc1">Website Grosir Termurah Se-Planet Bumi 🔥</p>
 
-    <p>Semua Ada Disini! Tekan tombol beli untuk beli 😎</p>
+    <p id="desc2">Semua Ada Disini! Tekan tombol beli untuk beli 😎</p>
 
     <div id="status">
       Belum Login ❌
     </div>
 
-    <a href="beli.html" class="btn">
+    <a href="beli.html" class="btn" id="btnBuy">
       Beli 🛍️
     </a>
 
-    <a href="alamat.html" class="btn">
+    <a href="alamat.html" class="btn" id="btnAddr">
       Alamat Warung 🏬
     </a>
 
-    <a href="akun.html" class="btn">
+    <a href="akun.html" class="btn" id="btnAcc">
       Akun 👤
     </a>
+
+    <br>
+
+    <button class="btn" onclick="toggleLang()" id="langBtn">
+      Ganti Bahasa 🌐
+    </button>
 
   </div>
 
@@ -109,16 +118,59 @@
   </footer>
 
   <script>
-
     let username = localStorage.getItem("username");
 
-    if(username){
+    let lang = "id";
 
-      document.getElementById("status").innerHTML =
-      "LOGIN SEBAGAI 😎<br><br>" + username;
+    const text = {
+      id: {
+        welcome: "Selamat Datang 👋",
+        desc1: "Website Grosir Termurah Se-Planet Bumi 🔥",
+        desc2: "Semua Ada Disini! Tekan tombol beli untuk beli 😎",
+        buy: "Beli 🛍️",
+        addr: "Alamat Warung 🏬",
+        acc: "Akun 👤",
+        statusDefault: "Belum Login ❌",
+        langBtn: "Ganti Bahasa 🌐",
+        title: "🛒 Warung Teh Tia"
+      },
+      en: {
+        welcome: "Welcome 👋",
+        desc1: "The Cheapest Wholesale Website on Earth 🔥",
+        desc2: "Everything is here! Press buy button to shop 😎",
+        buy: "Buy 🛍️",
+        addr: "Shop Address 🏬",
+        acc: "Account 👤",
+        statusDefault: "Not Logged In ❌",
+        langBtn: "Change Language 🌐",
+        title: "🛒 Teh Tia Shop"
+      }
+    };
 
+    function applyLang(){
+      document.getElementById("welcome").innerText = text[lang].welcome;
+      document.getElementById("desc1").innerText = text[lang].desc1;
+      document.getElementById("desc2").innerText = text[lang].desc2;
+      document.getElementById("btnBuy").innerText = text[lang].buy;
+      document.getElementById("btnAddr").innerText = text[lang].addr;
+      document.getElementById("btnAcc").innerText = text[lang].acc;
+      document.getElementById("langBtn").innerText = text[lang].langBtn;
+      document.getElementById("title").innerText = text[lang].title;
+
+      if(username){
+        document.getElementById("status").innerHTML =
+        (lang === "id" ? "LOGIN SEBAGAI 😎<br><br>" : "LOGGED IN AS 😎<br><br>") + username;
+      } else {
+        document.getElementById("status").innerText = text[lang].statusDefault;
+      }
     }
 
+    function toggleLang(){
+      lang = (lang === "id") ? "en" : "id";
+      applyLang();
+    }
+
+    applyLang();
   </script>
 
 </body>
