@@ -1,92 +1,162 @@
-<!-- alamat.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alamat - Warung Teh Tia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alamat - Warung Teh Tia</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:#fff8e7;
-      text-align:center;
-    }
+<style>
 
-    header{
-      background:#ff9800;
-      color:white;
-      padding:25px;
-      font-size:32px;
-      font-weight:bold;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-    }
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#fff8e7;
+  text-align:center;
+}
 
-    .container{
-      margin-top:60px;
-      padding:20px;
-    }
+/* TOPBAR */
+.topbar{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:15px;
+  background:#ff9800;
+}
 
-    .card{
-      background:white;
-      max-width:500px;
-      margin:auto;
-      padding:30px;
-      border-radius:20px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    }
+.topbar button{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+  background:white;
+}
 
-    h1{
-      color:#333;
-      font-size:35px;
-    }
+.topbar button:hover{
+  background:#ffe0b2;
+}
 
-    p{
-      color:#666;
-      font-size:22px;
-      margin-top:20px;
-    }
+/* HEADER */
+header{
+  background:#ff9800;
+  color:white;
+  padding:20px;
+  font-size:28px;
+  font-weight:bold;
+}
 
-    .btn{
-      display:inline-block;
-      margin-top:30px;
-      padding:12px 30px;
-      background:#ff9800;
-      color:white;
-      text-decoration:none;
-      border-radius:12px;
-      transition:0.3s;
-      font-size:20px;
-    }
+/* CARD */
+.container{
+  margin-top:60px;
+  padding:20px;
+}
 
-    .btn:hover{
-      background:#e68900;
-      transform:scale(1.05);
-    }
-  </style>
+.card{
+  background:white;
+  max-width:500px;
+  margin:auto;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+h1{
+  font-size:32px;
+  color:#333;
+}
+
+p{
+  font-size:20px;
+  color:#666;
+  margin-top:20px;
+  line-height:1.5;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:25px;
+  padding:12px 25px;
+  background:#ff9800;
+  color:white;
+  text-decoration:none;
+  border-radius:12px;
+  font-size:18px;
+}
+
+.btn:hover{
+  background:#e68900;
+}
+
+</style>
 </head>
+
 <body>
 
-  <header>
-    📍 Alamat Warung Teh Tia
-  </header>
+<!-- TOPBAR -->
+<div class="topbar">
 
-  <div class="container">
-    <div class="card">
+  <button onclick="location.href='index.html'">
+    ⬅ Back
+  </button>
 
-      <h1>🏪 Warung Teh Tia</h1>
+  <button onclick="toggleLang()" id="langBtn">
+    🌐 EN
+  </button>
 
-      <p>
-        Indonesia, Banten, Tangerang Selatan, Ciater Permai, Depan Sekolahan Aulady Ciater
-      </p>
+</div>
 
-      <a href="index.html" class="btn">
-        ⬅ Kembali
-      </a>
+<header id="title">
+  📍 Alamat Warung Teh Tia
+</header>
 
-    </div>
+<div class="container">
+  <div class="card">
+
+    <h1 id="shopName">🏪 Warung Teh Tia</h1>
+
+    <p id="address">
+      Indonesia, Banten, Tangerang Selatan, Ciater Permai, Depan Sekolahan Aulady Ciater
+    </p>
+
+    <a href="index.html" class="btn" id="backBtn">
+      ⬅ Kembali
+    </a>
+
   </div>
+</div>
+
+<script>
+
+let lang="id";
+
+function toggleLang(){
+
+  lang = lang==="id"?"en":"id";
+
+  document.getElementById("langBtn").innerText =
+  lang==="id"?"🌐 EN":"🌐 ID";
+
+  document.getElementById("title").innerText =
+  lang==="id"
+  ?"📍 Alamat Warung Teh Tia"
+  :"📍 Teh Tia Shop Address";
+
+  document.getElementById("shopName").innerText =
+  lang==="id"
+  ?"🏪 Warung Teh Tia"
+  :"🏪 Teh Tia Shop";
+
+  document.getElementById("address").innerText =
+  lang==="id"
+  ?"Indonesia, Banten, Tangerang Selatan, Ciater Permai, Depan Sekolahan Aulady Ciater"
+  :"Indonesia, Banten, South Tangerang, Ciater Permai, In front of Aulady Ciater School";
+
+  document.getElementById("backBtn").innerText =
+  lang==="id"?"⬅ Kembali":"⬅ Back";
+
+}
+
+</script>
 
 </body>
 </html>
