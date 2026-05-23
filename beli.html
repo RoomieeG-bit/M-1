@@ -31,7 +31,6 @@ body{
   border:none;
   border-radius:10px;
   width:200px;
-  outline:none;
 }
 
 .topbar button{
@@ -41,10 +40,6 @@ body{
   background:white;
   cursor:pointer;
   font-weight:bold;
-}
-
-.topbar button:hover{
-  background:#ffe0b2;
 }
 
 /* HEADER */
@@ -61,7 +56,6 @@ header{
   font-size:28px;
   font-weight:bold;
   padding:20px;
-  color:#333;
 }
 
 /* PRODUK */
@@ -106,10 +100,6 @@ input{
   color:white;
 }
 
-.btn:hover{
-  background:#e68900;
-}
-
 .hidden{
   display:none;
 }
@@ -119,7 +109,6 @@ input{
 
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
 
   <button onclick="location.href='index.html'">⬅</button>
@@ -133,9 +122,7 @@ input{
 
 </div>
 
-<header id="title">
-  🛍️ Daftar Produk Warung Teh Tia
-</header>
+<header id="title">🛍️ Daftar Produk Warung Teh Tia</header>
 
 <div id="produkList">
 
@@ -145,21 +132,21 @@ input{
 <div class="produk" data-name="mie goreng">
   <div class="nama">🍜 Mie Goreng</div>
   <div class="harga">Rp 3.500</div>
-  <input id="miegoreng" type="number" value="1">
+  <input id="miegoreng" type="number" value="1" min="1">
   <button class="btn" onclick="add('Mie Goreng',3500,'miegoreng')">🛒</button>
 </div>
 
 <div class="produk" data-name="mie soto">
   <div class="nama">🍲 Mie Soto</div>
   <div class="harga">Rp 3.000</div>
-  <input id="miesoto" type="number" value="1">
+  <input id="miesoto" type="number" value="1" min="1">
   <button class="btn" onclick="add('Mie Soto',3000,'miesoto')">🛒</button>
 </div>
 
 <div class="produk" data-name="telur">
   <div class="nama">🥚 Telur</div>
   <div class="harga">Rp 28.000</div>
-  <input id="telur" type="number" value="1">
+  <input id="telur" type="number" value="1" min="1">
   <button class="btn" onclick="add('Telur',28000,'telur')">🛒</button>
 </div>
 
@@ -169,14 +156,14 @@ input{
 <div class="produk" data-name="sabun daia">
   <div class="nama">🧼 Sabun Daia</div>
   <div class="harga">Rp 18.000</div>
-  <input id="daia" type="number" value="1">
+  <input id="daia" type="number" value="1" min="1">
   <button class="btn" onclick="add('Sabun Daia',18000,'daia')">🛒</button>
 </div>
 
 <div class="produk" data-name="mamalemon">
   <div class="nama">🧼 Mamalemon</div>
   <div class="harga">Rp 14.000</div>
-  <input id="mama" type="number" value="1">
+  <input id="mama" type="number" value="1" min="1">
   <button class="btn" onclick="add('Sabun Mamalemon',14000,'mama')">🛒</button>
 </div>
 
@@ -186,36 +173,36 @@ input{
 <div class="produk" data-name="beras sania">
   <div class="nama">🍚 Beras Sania 5KG</div>
   <div class="harga">Rp 74.000</div>
-  <input id="sania" type="number" value="1">
+  <input id="sania" type="number" value="1" min="1">
   <button class="btn" onclick="add('Beras Sania 5KG',74000,'sania')">🛒</button>
 </div>
 
 <div class="produk" data-name="beras laris">
   <div class="nama">🍚 Beras Laris 5KG</div>
   <div class="harga">Rp 73.000</div>
-  <input id="laris" type="number" value="1">
+  <input id="laris" type="number" value="1" min="1">
   <button class="btn" onclick="add('Beras Laris 5KG',73000,'laris')">🛒</button>
 </div>
 
 <div class="produk" data-name="beras befoods">
   <div class="nama">🍚 Beras Befoods 5KG</div>
   <div class="harga">Rp 73.000</div>
-  <input id="befoods" type="number" value="1">
+  <input id="befoods" type="number" value="1" min="1">
   <button class="btn" onclick="add('Beras Befoods 5KG',73000,'befoods')">🛒</button>
 </div>
 
 <div class="produk" data-name="beras sumo merah">
   <div class="nama">🍚 Beras Sumo Merah 5KG</div>
   <div class="harga">Rp 95.000</div>
-  <input id="merah" type="number" value="1">
-  <button class="btn" onclick="add('Beras Sumo Merah 5KG',95000,'merah')">🛒</button>
+  <input id="sumo-merah" type="number" value="1" min="1">
+  <button class="btn" onclick="add('Beras Sumo Merah 5KG',95000,'sumo-merah')">🛒</button>
 </div>
 
 <div class="produk" data-name="beras sumo kuning">
   <div class="nama">🍚 Beras Sumo Kuning 5KG</div>
   <div class="harga">Rp 85.000</div>
-  <input id="kuning" type="number" value="1">
-  <button class="btn" onclick="add('Beras Sumo Kuning 5KG',85000,'kuning')">🛒</button>
+  <input id="sumo-kuning" type="number" value="1" min="1">
+  <button class="btn" onclick="add('Beras Sumo Kuning 5KG',85000,'sumo-kuning')">🛒</button>
 </div>
 
 </div>
@@ -224,27 +211,38 @@ input{
 
 let lang="id";
 
-function add(nama,harga,id){
+/* FIXED ADD FUNCTION (ANTI UNDEFINED) */
+function add(nama, harga, id){
 
-  let qty=document.getElementById(id).value;
+  let input = document.getElementById(id);
 
-  let cart=JSON.parse(localStorage.getItem("keranjang"))||[];
+  let qty = parseInt(input ? input.value : 1);
 
-  cart.push({nama,harga,qty});
+  if(isNaN(qty) || qty < 1){
+    qty = 1;
+  }
 
-  localStorage.setItem("keranjang",JSON.stringify(cart));
+  let cart = JSON.parse(localStorage.getItem("keranjang")) || [];
 
-  alert(nama+" masuk keranjang 🔥");
+  cart.push({
+    nama: nama,
+    harga: harga,
+    jumlah: qty
+  });
+
+  localStorage.setItem("keranjang", JSON.stringify(cart));
+
+  alert(nama + " masuk keranjang 🔥");
 }
 
 /* SEARCH */
 function searchProduk(){
 
-  let q=document.getElementById("search").value.toLowerCase();
+  let q = document.getElementById("search").value.toLowerCase();
 
   document.querySelectorAll(".produk").forEach(p=>{
 
-    let name=p.getAttribute("data-name");
+    let name = p.getAttribute("data-name");
 
     p.style.display = name.includes(q) ? "block" : "none";
 
@@ -252,18 +250,18 @@ function searchProduk(){
 
 }
 
-/* LANGUAGE */
+/* LANGUAGE SIMPLE */
 function toggleLang(){
 
   lang = lang==="id"?"en":"id";
+
+  document.getElementById("langBtn").innerText =
+  lang==="id"?"🌐 EN":"🌐 ID";
 
   document.getElementById("title").innerText =
   lang==="id"
   ?"🛍️ Daftar Produk Warung Teh Tia"
   :"🛍️ Teh Tia Shop Products";
-
-  document.getElementById("langBtn").innerText =
-  lang==="id"?"🌐 EN":"🌐 ID";
 
 }
 
