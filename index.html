@@ -1,111 +1,112 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Warung Teh Tia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warung Teh Tia</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:#fff8e7;
-      text-align:center;
-    }
+<style>
 
-    header{
-      background:#ff9800;
-      color:white;
-      padding:30px;
-      font-size:35px;
-      font-weight:bold;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-    }
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#fff8e7;
+  text-align:center;
+}
 
-    .container{
-      margin-top:80px;
-    }
+/* HEADER */
+header{
+  background:#ff9800;
+  color:white;
+  padding:30px;
+  font-size:35px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
-    h1{
-      font-size:45px;
-      color:#333;
-    }
+/* CONTAINER */
+.container{
+  margin-top:60px;
+}
 
-    p{
-      color:#666;
-      font-size:20px;
-    }
+h1{
+  font-size:45px;
+  color:#333;
+}
 
-    .btn{
-      display:inline-block;
-      margin-top:30px;
-      margin-left:10px;
-      margin-right:10px;
-      padding:15px 40px;
-      background:#ff9800;
-      color:white;
-      text-decoration:none;
-      border-radius:15px;
-      font-size:22px;
-      transition:0.3s;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-      cursor:pointer;
-      border:none;
-    }
+p{
+  color:#666;
+  font-size:20px;
+}
 
-    .btn:hover{
-      background:#e68900;
-      transform:scale(1.05);
-    }
+/* NAV SECTION (REFRACTORED) */
+.nav{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:15px;
+}
 
-    #status{
-      margin-top:35px;
-      font-size:25px;
-      font-weight:bold;
-      color:#333;
-    }
+/* BUTTON BASE */
+.btn{
+  padding:15px 30px;
+  background:#ff9800;
+  color:white;
+  text-decoration:none;
+  border-radius:15px;
+  font-size:20px;
+  transition:0.3s;
+  cursor:pointer;
+  border:none;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
-    footer{
-      margin-top:120px;
-      padding:20px;
-      background:#222;
-      color:white;
-    }
-  </style>
+.btn:hover{
+  background:#e68900;
+  transform:scale(1.05);
+}
+
+/* STATUS CARD */
+#status{
+  margin-top:30px;
+  font-size:22px;
+  font-weight:bold;
+  color:#333;
+}
+
+/* FOOTER */
+footer{
+  margin-top:100px;
+  padding:20px;
+  background:#222;
+  color:white;
+}
+
+</style>
 </head>
 
 <body>
 
-  <header id="title">
-    🛒 Warung Teh Tia
-  </header>
+<header id="title">🛒 Warung Teh Tia</header>
 
-  <div class="container">
+<div class="container">
 
-    <h1 id="welcome">Selamat Datang 👋</h1>
+  <h1 id="welcome">Selamat Datang 👋</h1>
 
-    <p id="desc1">Website Grosir Termurah Se-Planet Bumi 🔥</p>
+  <p id="desc1">Website Grosir Termurah Se-Planet Bumi 🔥</p>
+  <p id="desc2">Semua Ada Disini! Tekan tombol beli untuk beli 😎</p>
 
-    <p id="desc2">Semua Ada Disini! Tekan tombol beli untuk beli 😎</p>
+  <div id="status">Belum Login ❌</div>
 
-    <div id="status">
-      Belum Login ❌
-    </div>
+  <!-- NAV BAR CLEAN -->
+  <div class="nav">
 
-    <a href="beli.html" class="btn" id="btnBuy">
-      Beli 🛍️
-    </a>
+    <a href="beli.html" class="btn" id="btnBuy">Beli 🛍️</a>
 
-    <a href="alamat.html" class="btn" id="btnAddr">
-      Alamat Warung 🏬
-    </a>
+    <a href="alamat.html" class="btn" id="btnAddr">Alamat 🏬</a>
 
-    <a href="akun.html" class="btn" id="btnAcc">
-      Akun 👤
-    </a>
-
-    <br>
+    <a href="akun.html" class="btn" id="btnAcc">Akun 👤</a>
 
     <button class="btn" onclick="toggleLang()" id="langBtn">
       Ganti Bahasa 🌐
@@ -113,65 +114,80 @@
 
   </div>
 
-  <footer>
-    © 2026 Warung Teh Tia
-  </footer>
+</div>
 
-  <script>
-    let username = localStorage.getItem("username");
+<footer>© 2026 Warung Teh Tia</footer>
 
-    let lang = "id";
+<script>
 
-    const text = {
-      id: {
-        welcome: "Selamat Datang 👋",
-        desc1: "Website Grosir Termurah Se-Planet Bumi 🔥",
-        desc2: "Semua Ada Disini! Tekan tombol beli untuk beli 😎",
-        buy: "Beli 🛍️",
-        addr: "Alamat Warung 🏬",
-        acc: "Akun 👤",
-        statusDefault: "Belum Login ❌",
-        langBtn: "Ganti Bahasa 🌐",
-        title: "🛒 Warung Teh Tia"
-      },
-      en: {
-        welcome: "Welcome 👋",
-        desc1: "The Cheapest Wholesale Website on Earth 🔥",
-        desc2: "Everything is here! Press buy button to shop 😎",
-        buy: "Buy 🛍️",
-        addr: "Shop Address 🏬",
-        acc: "Account 👤",
-        statusDefault: "Not Logged In ❌",
-        langBtn: "Change Language 🌐",
-        title: "🛒 Teh Tia Shop"
-      }
-    };
+/* STATE */
+let lang = "id";
+let username = localStorage.getItem("username");
 
-    function applyLang(){
-      document.getElementById("welcome").innerText = text[lang].welcome;
-      document.getElementById("desc1").innerText = text[lang].desc1;
-      document.getElementById("desc2").innerText = text[lang].desc2;
-      document.getElementById("btnBuy").innerText = text[lang].buy;
-      document.getElementById("btnAddr").innerText = text[lang].addr;
-      document.getElementById("btnAcc").innerText = text[lang].acc;
-      document.getElementById("langBtn").innerText = text[lang].langBtn;
-      document.getElementById("title").innerText = text[lang].title;
+/* TEXT MAP */
+const text = {
+  id: {
+    welcome: "Selamat Datang 👋",
+    desc1: "Website Grosir Termurah Se-Planet Bumi 🔥",
+    desc2: "Semua Ada Disini! Tekan tombol beli untuk beli 😎",
+    buy: "Beli 🛍️",
+    addr: "Alamat 🏬",
+    acc: "Akun 👤",
+    status: "Belum Login ❌",
+    langBtn: "Ganti Bahasa 🌐",
+    title: "🛒 Warung Teh Tia",
+    login: "LOGIN SEBAGAI 😎"
+  },
+  en: {
+    welcome: "Welcome 👋",
+    desc1: "The Cheapest Wholesale Website on Earth 🔥",
+    desc2: "Everything is here! Press buy to shop 😎",
+    buy: "Buy 🛍️",
+    addr: "Address 🏬",
+    acc: "Account 👤",
+    status: "Not Logged In ❌",
+    langBtn: "Change Language 🌐",
+    title: "🛒 Teh Tia Shop",
+    login: "LOGGED IN AS 😎"
+  }
+};
 
-      if(username){
-        document.getElementById("status").innerHTML =
-        (lang === "id" ? "LOGIN SEBAGAI 😎<br><br>" : "LOGGED IN AS 😎<br><br>") + username;
-      } else {
-        document.getElementById("status").innerText = text[lang].statusDefault;
-      }
-    }
+/* HELPER */
+const setText = (id, value) =>
+  document.getElementById(id).innerText = value;
 
-    function toggleLang(){
-      lang = (lang === "id") ? "en" : "id";
-      applyLang();
-    }
+/* APPLY LANGUAGE */
+function applyLang(){
 
-    applyLang();
-  </script>
+  const t = text[lang];
+
+  setText("welcome", t.welcome);
+  setText("desc1", t.desc1);
+  setText("desc2", t.desc2);
+  setText("btnBuy", t.buy);
+  setText("btnAddr", t.addr);
+  setText("btnAcc", t.acc);
+  setText("langBtn", t.langBtn);
+  setText("title", t.title);
+
+  if(username){
+    document.getElementById("status").innerHTML =
+    `${t.login}<br><br>${username}`;
+  } else {
+    setText("status", t.status);
+  }
+}
+
+/* TOGGLE LANGUAGE */
+function toggleLang(){
+  lang = (lang === "id") ? "en" : "id";
+  applyLang();
+}
+
+/* INIT */
+applyLang();
+
+</script>
 
 </body>
 </html>
