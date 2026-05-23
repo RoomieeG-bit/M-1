@@ -1,177 +1,229 @@
-<!-- akun.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akun Warung Teh Tia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akun Warung Teh Tia</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:#fff8e7;
-      text-align:center;
-    }
+<style>
 
-    header{
-      background:#ff9800;
-      color:white;
-      padding:25px;
-      font-size:35px;
-      font-weight:bold;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-    }
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#fff8e7;
+  text-align:center;
+}
 
-    .container{
-      margin-top:60px;
-    }
+/* TOPBAR */
+.topbar{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:15px;
+  background:#ff9800;
+}
 
-    h1{
-      color:#333;
-      font-size:40px;
-    }
+.topbar button{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  background:white;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    p{
-      color:#666;
-      font-size:20px;
-    }
+.topbar button:hover{
+  background:#ffe0b2;
+}
 
-    input{
-      display:block;
-      margin:20px auto;
-      padding:15px;
-      width:280px;
-      border-radius:12px;
-      border:2px solid #ccc;
-      font-size:18px;
-    }
+/* HEADER */
+header{
+  background:#ff9800;
+  color:white;
+  padding:20px;
+  font-size:28px;
+  font-weight:bold;
+}
 
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:15px 40px;
-      background:#ff9800;
-      color:white;
-      border:none;
-      border-radius:15px;
-      font-size:22px;
-      cursor:pointer;
-      transition:0.3s;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-    }
+/* CARD */
+.container{
+  margin-top:60px;
+}
 
-    .btn:hover{
-      background:#e68900;
-      transform:scale(1.05);
-    }
+.card{
+  background:white;
+  max-width:420px;
+  margin:auto;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
 
-    #hasil{
-      margin-top:35px;
-      font-size:24px;
-      color:#333;
-      font-weight:bold;
-    }
+h1{
+  font-size:30px;
+  color:#333;
+}
 
-    .back{
-      margin-top:30px;
-      display:inline-block;
-      color:#ff9800;
-      text-decoration:none;
-      font-size:20px;
-      font-weight:bold;
-    }
+p{
+  font-size:18px;
+  color:#666;
+}
 
-    .back:hover{
-      text-decoration:underline;
-    }
-  </style>
+input{
+  display:block;
+  margin:15px auto;
+  padding:12px;
+  width:80%;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+
+/* BUTTON */
+.btn{
+  margin-top:10px;
+  padding:12px 20px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:#ff9800;
+  color:white;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:#e68900;
+}
+
+#hasil{
+  margin-top:20px;
+  font-size:18px;
+  font-weight:bold;
+  color:#333;
+}
+
+</style>
 </head>
+
 <body>
 
-  <header>
-    👤 Akun Warung Teh Tia
-  </header>
+<!-- TOPBAR -->
+<div class="topbar">
 
-  <div class="container">
+  <button onclick="location.href='index.html'">⬅ Back</button>
 
-    <h1>Buat Akun 🔥</h1>
-    <p>Simpan akun lu langsung ke LocalStorage 😎</p>
+  <button onclick="toggleLang()" id="langBtn">🌐 EN</button>
 
-    <input 
-      type="text" 
-      id="username" 
-      placeholder="Masukkan Username"
-    >
+</div>
 
-    <input 
-      type="password" 
-      id="password" 
-      placeholder="Masukkan Password"
-    >
+<header id="title">
+  👤 Akun Warung Teh Tia
+</header>
 
-    <button class="btn" onclick="buatAkun()">
-      Simpan Akun 💾
+<div class="container">
+
+  <div class="card">
+
+    <h1 id="head">Buat Akun 🔥</h1>
+
+    <p id="desc">
+      Simpan akun kamu ke localStorage 😎
+    </p>
+
+    <input id="username" type="text" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+
+    <button class="btn" onclick="buatAkun()" id="saveBtn">
+      Simpan 💾
     </button>
 
-    <br>
-
-    <button class="btn" onclick="logout()">
+    <button class="btn" onclick="logout()" id="logoutBtn">
       Logout 🚪
     </button>
 
     <div id="hasil"></div>
 
-    <a href="index.html" class="back">
-      ⬅ Kembali ke Beranda
-    </a>
-
   </div>
 
-  <script>
+</div>
 
-    // CEK APAKAH SUDAH ADA AKUN
-    let savedUsername = localStorage.getItem("username");
+<script>
 
-    if(savedUsername){
-      document.getElementById("hasil").innerHTML =
-      "ANDA SUDAH LOGIN SEBAGAI 😎<br><br>" + savedUsername;
-    }
+let lang="id";
 
-    // BUAT AKUN
-    function buatAkun(){
+/* CEK LOGIN */
+let savedUsername = localStorage.getItem("username");
 
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
+if(savedUsername){
+  document.getElementById("hasil").innerText =
+  "LOGIN AS 😎 " + savedUsername;
+}
 
-      if(username === "" || password === ""){
-        alert("ISI SEMUA DULU WOIII 🔥");
-        return;
-      }
+/* CREATE ACCOUNT */
+function buatAkun(){
 
-      localStorage.setItem("username", username);
-      localStorage.setItem("password", password);
+  let username=document.getElementById("username").value;
+  let password=document.getElementById("password").value;
 
-      document.getElementById("hasil").innerHTML =
-      "AKUN BERHASIL DIBUAT 🚀<br><br>Halo, " 
-      + username + " 😎";
+  if(!username || !password){
+    alert(lang==="id"?"ISI DULU WOI 🔥":"FILL ALL FIELDS 🔥");
+    return;
+  }
 
-      alert("AKUN BERHASIL DISIMPAN 🔥");
-    }
+  localStorage.setItem("username",username);
+  localStorage.setItem("password",password);
 
-    // LOGOUT
-    function logout(){
+  document.getElementById("hasil").innerText =
+  (lang==="id"?"AKUN DIBUAT 🚀 Halo ":"ACCOUNT CREATED 🚀 Hello ")
+  + username;
 
-      localStorage.removeItem("username");
-      localStorage.removeItem("password");
+}
 
-      document.getElementById("hasil").innerHTML =
-      "ANDA SUDAH LOGOUT 🚪";
+/* LOGOUT */
+function logout(){
 
-      alert("LOGOUT BERHASIL 🔥");
-    }
+  localStorage.removeItem("username");
+  localStorage.removeItem("password");
 
-  </script>
+  document.getElementById("hasil").innerText =
+  lang==="id"?"LOGOUT BERHASIL 🚪":"LOGOUT SUCCESS 🚪";
+
+}
+
+/* LANGUAGE TOGGLE */
+function toggleLang(){
+
+  lang = lang==="id"?"en":"id";
+
+  document.getElementById("langBtn").innerText =
+  lang==="id"?"🌐 EN":"🌐 ID";
+
+  document.getElementById("title").innerText =
+  lang==="id"?"👤 Akun Warung Teh Tia":"👤 Teh Tia Account";
+
+  document.getElementById("head").innerText =
+  lang==="id"?"Buat Akun 🔥":"Create Account 🔥";
+
+  document.getElementById("desc").innerText =
+  lang==="id"
+  ?"Simpan akun kamu ke localStorage 😎"
+  :"Save your account to localStorage 😎";
+
+  document.getElementById("username").placeholder =
+  lang==="id"?"Username":"Username";
+
+  document.getElementById("password").placeholder =
+  lang==="id"?"Password":"Password";
+
+  document.getElementById("saveBtn").innerText =
+  lang==="id"?"Simpan 💾":"Save 💾";
+
+  document.getElementById("logoutBtn").innerText =
+  lang==="id"?"Logout 🚪":"Logout 🚪";
+
+}
+
+</script>
 
 </body>
 </html>
