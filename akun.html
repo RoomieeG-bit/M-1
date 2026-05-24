@@ -145,7 +145,6 @@ input{
 <input type="text" id="username" placeholder="Username">
 <input type="password" id="password" placeholder="Password">
 
-<!-- CAPTCHA -->
 <div class="g-recaptcha"
 data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-"></div>
 
@@ -161,9 +160,11 @@ data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-"></div>
 <script>
 
 let lang = localStorage.getItem("lang") || "id";
-
 let dark = localStorage.getItem("dark") || "off";
-if(dark === "on") document.body.classList.add("dark");
+
+if(dark === "on"){
+document.body.classList.add("dark");
+}
 
 /* MULTILANG */
 const text = {
@@ -177,7 +178,7 @@ logout:"🚪 Logout",
 back:"⬅ Kembali",
 nologin:"Belum Login ❌",
 logged:"LOGIN SEBAGAI 😎",
-captcha:"Selesaikan CAPTCHA dulu 🔥"
+captcha:"CAPTCHA dulu 🔥"
 },
 
 en:{
@@ -189,7 +190,7 @@ logout:"🚪 Logout",
 back:"⬅ Back",
 nologin:"Not Logged In ❌",
 logged:"LOGGED IN 😎",
-captcha:"Complete CAPTCHA first 🔥"
+captcha:"Complete CAPTCHA 🔥"
 },
 
 jp:{
@@ -201,7 +202,7 @@ logout:"🚪 ログアウト",
 back:"⬅ 戻る",
 nologin:"未ログイン ❌",
 logged:"ログイン中 😎",
-captcha:"CAPTCHA を完了してください 🔥"
+captcha:"CAPTCHA 完了 🔥"
 },
 
 ar:{
@@ -209,23 +210,23 @@ title:"👤 الحساب",
 welcome:"إنشاء حساب 🔥",
 desc:"حفظ الحساب 😎",
 save:"💾 حفظ",
-logout:"🚪 تسجيل خروج",
+logout:"🚪 خروج",
 back:"⬅ رجوع",
 nologin:"غير مسجل ❌",
 logged:"تم تسجيل الدخول 😎",
-captcha:"أكمل CAPTCHA أولاً 🔥"
+captcha:"أكمل CAPTCHA 🔥"
 },
 
 ru:{
 title:"👤 Аккаунт",
 welcome:"Создать аккаунт 🔥",
-desc:"Сохранить аккаунт 😎",
+desc:"Сохранить 😎",
 save:"💾 Сохранить",
 logout:"🚪 Выйти",
 back:"⬅ Назад",
 nologin:"Не вошли ❌",
-logged:"ВОШЛИ 😎",
-captcha:"Сначала CAPTCHA 🔥"
+logged:"ВЫ ВОШЛИ 😎",
+captcha:"CAPTCHA сначала 🔥"
 }
 
 };
@@ -253,15 +254,18 @@ user
 
 }
 
-function changeLang(l){
-lang = l;
-applyLang();
-}
-
+/* DARK */
 function toggleDark(){
+
 document.body.classList.toggle("dark");
-localStorage.setItem("dark",
-document.body.classList.contains("dark") ? "on":"off");
+
+localStorage.setItem(
+"dark",
+document.body.classList.contains("dark")
+? "on"
+: "off"
+);
+
 }
 
 /* CAPTCHA CHECK */
@@ -269,7 +273,7 @@ function captchaOK(){
 return grecaptcha.getResponse().length > 0;
 }
 
-/* REGISTER / LOGIN SYSTEM */
+/* 🔥 FIX UTAMA LOGIN SYSTEM */
 function buatAkun(){
 
 if(!captchaOK()){
@@ -285,20 +289,26 @@ alert("ISI SEMUA 🔥");
 return;
 }
 
-/* SIMPAN DATA */
+/* SIMPAN SEMUA DATA */
 localStorage.setItem("username", username);
 localStorage.setItem("password", password);
-localStorage.setItem("login","true"); // 🔥 FIX PENTING
+
+/* 🔥 INI FIX UTAMA BIAR INDEX DETECT LOGIN */
+localStorage.setItem("login","true");
+
+console.log("LOGIN SET:", localStorage.getItem("login"));
+console.log("USER SET:", localStorage.getItem("username"));
 
 hasil.innerHTML =
 text[lang].logged + "<br><br>" + username;
 
-alert("🔥 AKUN BERHASIL DIBUAT");
+alert("AKUN BERHASIL 🔥");
 
 grecaptcha.reset();
 
 }
 
+/* LOGOUT */
 function logout(){
 
 localStorage.removeItem("username");
@@ -311,7 +321,7 @@ alert("LOGOUT 🔥");
 
 }
 
-/* INIT */
+/* LANG INIT */
 document.getElementById("langSelect").value = lang;
 applyLang();
 
