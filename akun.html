@@ -8,7 +8,6 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <style>
-
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -20,15 +19,15 @@ header{
   background:#ff9800;
   color:white;
   padding:25px;
-  font-size:30px;
+  font-size:28px;
   font-weight:bold;
 }
 
 .card{
   max-width:420px;
-  margin:40px auto;
+  margin:30px auto;
   background:white;
-  padding:30px;
+  padding:25px;
   border-radius:20px;
   box-shadow:0 4px 10px rgba(0,0,0,0.15);
 }
@@ -51,6 +50,7 @@ button{
   background:#ff9800;
   color:white;
   font-size:16px;
+  font-weight:bold;
   cursor:pointer;
 }
 
@@ -58,9 +58,22 @@ button:hover{
   background:#e68900;
 }
 
-#status{
-  margin-top:20px;
+.topbar{
+  margin-top:10px;
+}
+
+.back-btn,
+.lang-btn{
+  display:inline-block;
+  margin:8px 5px;
+  padding:10px 16px;
+  background:#ff9800;
+  color:white;
+  border:none;
+  border-radius:12px;
   font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
 }
 
 .g-recaptcha{
@@ -69,148 +82,168 @@ button:hover{
   justify-content:center;
 }
 
+#status{
+  margin-top:10px;
+  font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<header>👤 Akun Warung Teh Tia</header>
+<header id="title">👤 Akun Warung Teh Tia</header>
+
+<div class="topbar">
+
+<a href="index.html" class="back-btn" id="backBtn">⬅ Kembali</a>
+
+<button class="lang-btn" onclick="toggleLang()" id="langBtn">
+🌐 Ganti Bahasa
+</button>
+
+</div>
 
 <div class="card">
 
-<h2>Login / Register 🔥</h2>
+<h2 id="h2">Login / Register</h2>
 
-<input id="email" type="email" placeholder="Email">
+<input id="username" type="text" placeholder="Username">
 <input id="password" type="password" placeholder="Password">
 
-<!-- CAPTCHA -->
+<!-- 🔥 CAPTCHA -->
 <div class="g-recaptcha"
 data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-"></div>
 
-<button onclick="register()">Daftar 🆕</button>
-<button onclick="login()">Login 🔑</button>
-<button onclick="logout()">Logout 🚪</button>
+<button onclick="register()" id="btnReg">Daftar 🆕</button>
+<button onclick="login()" id="btnLogin">Login 🔑</button>
+<button onclick="logout()" id="btnLogout">Logout 🚪</button>
 
 <div id="status">Loading...</div>
 
 </div>
 
-<!-- FIREBASE -->
-<script type="module">
+<script>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+let lang = localStorage.getItem("lang") || "id";
 
-/* FIREBASE CONFIG */
-const firebaseConfig = {
-  apiKey: "AIzaSyDFJxpGTfvL7YVuTfDh8iNd9qKIBwjjLXQ",
-  authDomain: "warung-teh-tia.firebaseapp.com",
-  projectId: "warung-teh-tia",
-  storageBucket: "warung-teh-tia.firebasestorage.app",
-  messagingSenderId: "230262012309",
-  appId: "1:230262012309:web:254412772aa803c0815e9c",
-  measurementId: "G-9P43TMREGH"
+/* 🌐 MULTILANG */
+const text = {
+  id:{back:"⬅ Kembali",lang:"🌐 Ganti Bahasa",title:"👤 Akun",h2:"Login / Register",reg:"Daftar 🆕",login:"Login 🔑",logout:"Logout 🚪",status:"BELUM LOGIN ❌",ok:"LOGIN SEBAGAI 😎"},
+  en:{back:"⬅ Back",lang:"🌐 Language",title:"👤 Account",h2:"Login / Register",reg:"Register 🆕",login:"Login 🔑",logout:"Logout 🚪",status:"NOT LOGGED IN ❌",ok:"LOGGED IN 😎"},
+  jp:{back:"⬅ 戻る",lang:"🌐 言語",title:"👤 アカウント",h2:"ログイン / 登録",reg:"登録 🆕",login:"ログイン 🔑",logout:"ログアウト 🚪",status:"未ログイン ❌",ok:"ログイン中 😎"},
+  ar:{back:"⬅ رجوع",lang:"🌐 اللغة",title:"👤 الحساب",h2:"تسجيل / دخول",reg:"تسجيل 🆕",login:"دخول 🔑",logout:"خروج 🚪",status:"غير مسجل ❌",ok:"تم تسجيل الدخول 😎"},
+  ru:{back:"⬅ Назад",lang:"🌐 Язык",title:"👤 Аккаунт",h2:"Вход / Регистрация",reg:"Регистрация 🆕",login:"Войти 🔑",logout:"Выйти 🚪",status:"НЕ ВОШЕЛ ❌",ok:"ВЫ ВОШЛИ 😎"}
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-/* CAPTCHA CHECK */
+/* 🔥 CAPTCHA CHECK */
 function captchaOK(){
   return grecaptcha.getResponse().length > 0;
 }
 
-/* CLEAN EMAIL */
-function getEmail(){
-  return document.getElementById("email")
-    .value
-    .trim()
-    .replace(/\s/g,'');
+function applyLang(){
+
+document.getElementById("backBtn").innerText=text[lang].back;
+document.getElementById("langBtn").innerText=text[lang].lang;
+document.getElementById("title").innerText=text[lang].title;
+document.getElementById("h2").innerText=text[lang].h2;
+
+document.getElementById("btnReg").innerText=text[lang].reg;
+document.getElementById("btnLogin").innerText=text[lang].login;
+document.getElementById("btnLogout").innerText=text[lang].logout;
+
+localStorage.setItem("lang",lang);
+
+updateStatus();
+
 }
 
-/* PASSWORD */
-function getPassword(){
-  return document.getElementById("password").value;
+function toggleLang(){
+const order=["id","en","jp","ar","ru"];
+let i=order.indexOf(lang);
+lang=order[(i+1)%order.length];
+applyLang();
 }
 
-/* REGISTER */
-window.register = async function(){
+/* 🔥 REGISTER */
+function register(){
 
 if(!captchaOK()){
-alert("CAPTCHA dulu 🔥");
+alert("CAPTCHA DULU 🔥");
 return;
 }
 
-let email = getEmail();
-let password = getPassword();
+let u=document.getElementById("username").value.trim();
+let p=document.getElementById("password").value;
 
-if(!email.includes("@")){
-alert("EMAIL GAK VALID 🔥");
+if(!u||!p){
+alert("ISI DULU 🔥");
 return;
 }
 
-try{
-await createUserWithEmailAndPassword(auth, email, password);
-alert("DAFTAR BERHASIL 🔥");
+localStorage.setItem("user",u);
+localStorage.setItem("pass",p);
+
 grecaptcha.reset();
-}catch(e){
-alert(e.code);
-}
+
+alert("REGISTER BERHASIL 🔥");
 
 }
 
-/* LOGIN */
-window.login = async function(){
+/* 🔥 LOGIN */
+function login(){
 
 if(!captchaOK()){
-alert("CAPTCHA dulu 🔥");
+alert("CAPTCHA DULU 🔥");
 return;
 }
 
-let email = getEmail();
-let password = getPassword();
+let u=document.getElementById("username").value.trim();
+let p=document.getElementById("password").value;
 
-if(!email.includes("@")){
-alert("EMAIL GAK VALID 🔥");
-return;
-}
+if(u===localStorage.getItem("user") &&
+p===localStorage.getItem("pass")){
 
-try{
-await signInWithEmailAndPassword(auth, email, password);
+localStorage.setItem("login","true");
+localStorage.setItem("currentUser",u);
+
 alert("LOGIN BERHASIL 😎");
-grecaptcha.reset();
-}catch(e){
-alert(e.code);
-}
 
-}
-
-/* LOGOUT */
-window.logout = async function(){
-await signOut(auth);
-alert("LOGOUT 🔥");
-}
-
-/* STATUS */
-onAuthStateChanged(auth, (user)=>{
-
-let status = document.getElementById("status");
-
-if(user){
-status.innerHTML =
-"LOGIN SEBAGAI 😎<br><br>" + user.email;
 }else{
-status.innerHTML =
-"BELUM LOGIN ❌";
+alert("SALAH USER / PASS 💀");
 }
 
-});
+grecaptcha.reset();
+
+updateStatus();
+
+}
+
+/* 🔥 LOGOUT */
+function logout(){
+
+localStorage.removeItem("login");
+localStorage.removeItem("currentUser");
+
+alert("LOGOUT 🔥");
+
+updateStatus();
+
+}
+
+/* 🔥 STATUS */
+function updateStatus(){
+
+let status=document.getElementById("status");
+
+if(localStorage.getItem("login")==="true"){
+status.innerHTML=text[lang].ok+"<br><br>"+localStorage.getItem("currentUser");
+}else{
+status.innerHTML=text[lang].status;
+}
+
+}
+
+applyLang();
 
 </script>
 
