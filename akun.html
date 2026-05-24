@@ -1,247 +1,431 @@
+<!-- akun.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Akun - Warung Teh Tia</title>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- RECAPTCHA -->
+<script
+src="https://www.google.com/recaptcha/api.js"
+async defer>
+</script>
 
 <style>
+
+:root{
+  --bg:#fff8e7;
+  --card:#ffffff;
+  --text:#333;
+  --primary:#ff9800;
+}
+
+body.dark{
+  --bg:#121212;
+  --card:#1e1e1e;
+  --text:#f5f5f5;
+}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#fff8e7;
-  text-align:center;
+  background:var(--bg);
+  color:var(--text);
+  transition:0.3s;
 }
 
 header{
-  background:#ff9800;
+  background:var(--primary);
   color:white;
   padding:25px;
-  font-size:28px;
+  text-align:center;
+  font-size:32px;
   font-weight:bold;
 }
 
+.topbar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:15px;
+}
+
+.navBtn{
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+  text-decoration:none;
+  font-size:15px;
+}
+
+.container{
+  padding:30px;
+}
+
 .card{
-  max-width:420px;
-  margin:30px auto;
-  background:white;
-  padding:25px;
-  border-radius:20px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+  max-width:500px;
+  margin:auto;
+  background:var(--card);
+  padding:35px;
+  border-radius:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+h1{
+  text-align:center;
+}
+
+p{
+  text-align:center;
 }
 
 input{
   width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:10px;
-  border:1px solid #ccc;
-  font-size:16px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:#ff9800;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#e68900;
-}
-
-.topbar{
-  margin-top:10px;
-}
-
-.back-btn,
-.lang-btn{
-  display:inline-block;
-  margin:8px 5px;
-  padding:10px 16px;
-  background:#ff9800;
-  color:white;
+  padding:15px;
+  margin-top:15px;
   border:none;
   border-radius:12px;
-  font-weight:bold;
+  background:#ececec;
+  font-size:16px;
+  box-sizing:border-box;
+}
+
+.btn{
+  width:100%;
+  margin-top:15px;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:var(--primary);
+  color:white;
+  font-size:17px;
   cursor:pointer;
-  text-decoration:none;
+}
+
+#hasil{
+  margin-top:20px;
+  text-align:center;
+  font-weight:bold;
 }
 
 .g-recaptcha{
-  margin-top:10px;
+  margin-top:20px;
   display:flex;
   justify-content:center;
 }
 
-#status{
-  margin-top:10px;
-  font-weight:bold;
-}
 </style>
 </head>
 
 <body>
 
-<header id="title">👤 Akun Warung Teh Tia</header>
+<header id="title">
+👤 Akun Warung Teh Tia
+</header>
 
 <div class="topbar">
 
-<a href="index.html" class="back-btn" id="backBtn">⬅ Kembali</a>
+<a href="index.html"
+class="navBtn"
+id="backBtn">
 
-<button class="lang-btn" onclick="toggleLang()" id="langBtn">
-🌐 Ganti Bahasa
+⬅ Kembali
+
+</a>
+
+<button
+class="navBtn"
+onclick="toggleDark()">
+
+🌙
+
 </button>
+
+<select
+class="navBtn"
+onchange="changeLang(this.value)"
+id="langSelect">
+
+<option value="id">
+🇮🇩 ID
+</option>
+
+<option value="en">
+🇺🇸 EN
+</option>
+
+<option value="jp">
+🇯🇵 JP
+</option>
+
+<option value="ar">
+🇸🇦 AR
+</option>
+
+<option value="ru">
+🇷🇺 RU
+</option>
+
+</select>
 
 </div>
 
+<div class="container">
+
 <div class="card">
 
-<h2 id="h2">Login / Register</h2>
+<h1 id="welcome">
+Buat Akun 🔥
+</h1>
 
-<input id="username" type="text" placeholder="Username">
-<input id="password" type="password" placeholder="Password">
+<p id="desc">
+Simpan akun ke LocalStorage 😎
+</p>
 
-<!-- 🔥 CAPTCHA -->
-<div class="g-recaptcha"
-data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-"></div>
+<input
+type="text"
+id="username"
+placeholder="Username">
 
-<button onclick="register()" id="btnReg">Daftar 🆕</button>
-<button onclick="login()" id="btnLogin">Login 🔑</button>
-<button onclick="logout()" id="btnLogout">Logout 🚪</button>
+<input
+type="password"
+id="password"
+placeholder="Password">
 
-<div id="status">Loading...</div>
+<!-- RECAPTCHA -->
+<div
+class="g-recaptcha"
+data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-">
+</div>
+
+<button
+class="btn"
+onclick="buatAkun()"
+id="saveBtn">
+
+💾 Simpan Akun
+
+</button>
+
+<button
+class="btn"
+onclick="logout()"
+id="logoutBtn">
+
+🚪 Logout
+
+</button>
+
+<div id="hasil">
+</div>
+
+</div>
 
 </div>
 
 <script>
 
-let lang = localStorage.getItem("lang") || "id";
+/* SETTINGS */
 
-/* 🌐 MULTILANG */
-const text = {
-  id:{back:"⬅ Kembali",lang:"🌐 Ganti Bahasa",title:"👤 Akun",h2:"Login / Register",reg:"Daftar 🆕",login:"Login 🔑",logout:"Logout 🚪",status:"BELUM LOGIN ❌",ok:"LOGIN SEBAGAI 😎"},
-  en:{back:"⬅ Back",lang:"🌐 Language",title:"👤 Account",h2:"Login / Register",reg:"Register 🆕",login:"Login 🔑",logout:"Logout 🚪",status:"NOT LOGGED IN ❌",ok:"LOGGED IN 😎"},
-  jp:{back:"⬅ 戻る",lang:"🌐 言語",title:"👤 アカウント",h2:"ログイン / 登録",reg:"登録 🆕",login:"ログイン 🔑",logout:"ログアウト 🚪",status:"未ログイン ❌",ok:"ログイン中 😎"},
-  ar:{back:"⬅ رجوع",lang:"🌐 اللغة",title:"👤 الحساب",h2:"تسجيل / دخول",reg:"تسجيل 🆕",login:"دخول 🔑",logout:"خروج 🚪",status:"غير مسجل ❌",ok:"تم تسجيل الدخول 😎"},
-  ru:{back:"⬅ Назад",lang:"🌐 Язык",title:"👤 Аккаунт",h2:"Вход / Регистрация",reg:"Регистрация 🆕",login:"Войти 🔑",logout:"Выйти 🚪",status:"НЕ ВОШЕЛ ❌",ok:"ВЫ ВОШЛИ 😎"}
-};
+let lang =
+localStorage.getItem("lang")
+|| "id";
 
-/* 🔥 CAPTCHA CHECK */
-function captchaOK(){
-  return grecaptcha.getResponse().length > 0;
+let dark =
+localStorage.getItem("dark")
+|| "off";
+
+if(dark === "on"){
+document.body.classList.add("dark");
 }
+
+/* MULTILANG */
+
+const text = {
+
+id:{
+title:"👤 Akun Warung Teh Tia",
+welcome:"Buat Akun 🔥",
+desc:"Simpan akun ke LocalStorage 😎",
+save:"💾 Simpan Akun",
+logout:"🚪 Logout",
+back:"⬅ Kembali",
+nologin:"Belum Login ❌",
+logged:"LOGIN SEBAGAI 😎",
+captcha:"Selesaikan CAPTCHA dulu 🔥"
+},
+
+en:{
+title:"👤 Teh Tia Account",
+welcome:"Create Account 🔥",
+desc:"Save account to LocalStorage 😎",
+save:"💾 Save Account",
+logout:"🚪 Logout",
+back:"⬅ Back",
+nologin:"Not Logged In ❌",
+logged:"LOGGED IN 😎",
+captcha:"Complete CAPTCHA first 🔥"
+},
+
+jp:{
+title:"👤 アカウント",
+welcome:"アカウント作成 🔥",
+desc:"LocalStorage に保存 😎",
+save:"💾 保存",
+logout:"🚪 ログアウト",
+back:"⬅ 戻る",
+nologin:"未ログイン ❌",
+logged:"ログイン中 😎",
+captcha:"CAPTCHA を完了してください 🔥"
+},
+
+ar:{
+title:"👤 الحساب",
+welcome:"إنشاء حساب 🔥",
+desc:"حفظ الحساب 😎",
+save:"💾 حفظ",
+logout:"🚪 تسجيل خروج",
+back:"⬅ رجوع",
+nologin:"غير مسجل ❌",
+logged:"تم تسجيل الدخول 😎",
+captcha:"أكمل CAPTCHA أولاً 🔥"
+},
+
+ru:{
+title:"👤 Аккаунт",
+welcome:"Создать аккаунт 🔥",
+desc:"Сохранить аккаунт 😎",
+save:"💾 Сохранить",
+logout:"🚪 Выйти",
+back:"⬅ Назад",
+nologin:"Не вошли ❌",
+logged:"ВОШЛИ 😎",
+captcha:"Сначала пройдите CAPTCHA 🔥"
+}
+
+};
 
 function applyLang(){
 
-document.getElementById("backBtn").innerText=text[lang].back;
-document.getElementById("langBtn").innerText=text[lang].lang;
-document.getElementById("title").innerText=text[lang].title;
-document.getElementById("h2").innerText=text[lang].h2;
+let t = text[lang];
 
-document.getElementById("btnReg").innerText=text[lang].reg;
-document.getElementById("btnLogin").innerText=text[lang].login;
-document.getElementById("btnLogout").innerText=text[lang].logout;
+title.innerText = t.title;
+welcome.innerText = t.welcome;
+desc.innerText = t.desc;
+
+saveBtn.innerText = t.save;
+logoutBtn.innerText = t.logout;
+backBtn.innerText = t.back;
 
 localStorage.setItem("lang",lang);
 
-updateStatus();
+let username =
+localStorage.getItem("username");
+
+hasil.innerHTML =
+username
+? t.logged + "<br><br>" + username
+: t.nologin;
 
 }
 
-function toggleLang(){
-const order=["id","en","jp","ar","ru"];
-let i=order.indexOf(lang);
-lang=order[(i+1)%order.length];
+function changeLang(newLang){
+
+lang = newLang;
+
 applyLang();
+
 }
 
-/* 🔥 REGISTER */
-function register(){
+function toggleDark(){
 
-if(!captchaOK()){
-alert("CAPTCHA DULU 🔥");
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"dark",
+document.body.classList.contains("dark")
+? "on"
+: "off"
+);
+
+}
+
+/* BUAT AKUN */
+
+function buatAkun(){
+
+let captcha =
+grecaptcha.getResponse();
+
+if(captcha.length === 0){
+
+alert(text[lang].captcha);
+
 return;
+
 }
 
-let u=document.getElementById("username").value.trim();
-let p=document.getElementById("password").value;
+let username =
+document.getElementById("username").value;
 
-if(!u||!p){
-alert("ISI DULU 🔥");
+let password =
+document.getElementById("password").value;
+
+if(username === "" || password === ""){
+
+alert("ISI SEMUA 🔥");
+
 return;
+
 }
 
-localStorage.setItem("user",u);
-localStorage.setItem("pass",p);
+localStorage.setItem(
+"username",
+username
+);
+
+localStorage.setItem(
+"password",
+password
+);
+
+hasil.innerHTML =
+text[lang].logged +
+"<br><br>" +
+username;
+
+alert("🔥");
 
 grecaptcha.reset();
 
-alert("REGISTER BERHASIL 🔥");
-
 }
 
-/* 🔥 LOGIN */
-function login(){
+/* LOGOUT */
 
-if(!captchaOK()){
-alert("CAPTCHA DULU 🔥");
-return;
-}
-
-let u=document.getElementById("username").value.trim();
-let p=document.getElementById("password").value;
-
-if(u===localStorage.getItem("user") &&
-p===localStorage.getItem("pass")){
-
-localStorage.setItem("login","true");
-localStorage.setItem("currentUser",u);
-
-alert("LOGIN BERHASIL 😎");
-
-}else{
-alert("SALAH USER / PASS 💀");
-}
-
-grecaptcha.reset();
-
-updateStatus();
-
-}
-
-/* 🔥 LOGOUT */
 function logout(){
 
-localStorage.removeItem("login");
-localStorage.removeItem("currentUser");
+localStorage.removeItem("username");
+localStorage.removeItem("password");
+
+hasil.innerHTML =
+text[lang].nologin;
 
 alert("LOGOUT 🔥");
 
-updateStatus();
-
 }
 
-/* 🔥 STATUS */
-function updateStatus(){
+/* INIT */
 
-let status=document.getElementById("status");
-
-if(localStorage.getItem("login")==="true"){
-status.innerHTML=text[lang].ok+"<br><br>"+localStorage.getItem("currentUser");
-}else{
-status.innerHTML=text[lang].status;
-}
-
-}
+document.getElementById("langSelect").value =
+lang;
 
 applyLang();
 
