@@ -238,55 +238,56 @@ ru:{
 
 /* APPLY ALL */
 function applyAll(){
-
-let t = text[lang];
-
-title.innerText = t.title;
-welcome.innerText = t.welcome;
-desc1.innerText = t.desc1;
-desc2.innerText = t.desc2;
-
-buyBtn.innerText = t.buy;
-cartBtn.innerText = t.cart;
-accBtn.innerText = t.acc;
-addrBtn.innerText = t.addr;
-shopBtn.innerText = t.shop;
-}
-
-/* SAVE LANG */
-localStorage.setItem("lang", lang);
+  let t = text[lang];
+  
+  document.getElementById("title").innerText = t.title;
+  document.getElementById("welcome").innerText = t.welcome;
+  document.getElementById("desc1").innerText = t.desc1;
+  document.getElementById("desc2").innerText = t.desc2;
+  
+  document.getElementById("buyBtn").innerText = t.buy;
+  document.getElementById("cartBtn").innerText = t.cart;
+  document.getElementById("accBtn").innerText = t.acc;
+  document.getElementById("addrBtn").innerText = t.addr;
+  document.getElementById("shopBtn").innerText = t.shop;
+  
+  localStorage.setItem("lang", lang);
 }
 
 /* 🌙 DARK */
 function toggleDark(){
-document.body.classList.toggle("dark");
-localStorage.setItem("dark",
-document.body.classList.contains("dark") ? "on" : "off");
+  document.body.classList.toggle("dark");
+  localStorage.setItem("dark",
+    document.body.classList.contains("dark") ? "on" : "off");
 }
 
 /* 🌍 LANG */
 function changeLang(v){
-lang = v;
-applyAll();
+  lang = v;
+  applyAll();
 }
 
 /* 👁️ COLORBLIND */
 function changeColorblind(v){
-colorblind = v;
-localStorage.setItem("colorblind", v);
-
-document.body.classList.remove(
-"protanopia","deuteranopia","tritanopia"
-);
-
-if(v !== "normal"){
-document.body.classList.add(v);
-}
+  colorblind = v;
+  localStorage.setItem("colorblind", v);
+  
+  document.body.classList.remove(
+    "protanopia","deuteranopia","tritanopia"
+  );
+  
+  if(v !== "normal"){
+    document.body.classList.add(v);
+  }
 }
 
 /* INIT */
 document.getElementById("langSelect").value = lang;
 document.getElementById("cbSelect").value = colorblind;
+
+if(colorblind !== "normal"){
+  document.body.classList.add(colorblind);
+}
 
 applyAll();
 
