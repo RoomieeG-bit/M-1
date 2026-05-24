@@ -1,10 +1,8 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Warung Teh Tia</title>
 
@@ -32,24 +30,11 @@ body{
 }
 
 /* COLORBLIND */
-
-body.protanopia{
-  filter:hue-rotate(-20deg)
-  saturate(0.8);
-}
-
-body.deuteranopia{
-  filter:hue-rotate(40deg)
-  saturate(0.7);
-}
-
-body.tritanopia{
-  filter:hue-rotate(90deg)
-  saturate(0.8);
-}
+body.protanopia{ filter:hue-rotate(-20deg) saturate(0.8); }
+body.deuteranopia{ filter:hue-rotate(40deg) saturate(0.7); }
+body.tritanopia{ filter:hue-rotate(90deg) saturate(0.8); }
 
 /* HEADER */
-
 header{
   background:var(--primary);
   color:white;
@@ -57,11 +42,9 @@ header{
   padding:30px;
   font-size:32px;
   font-weight:bold;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* TOPBAR */
-
 .topbar{
   display:flex;
   justify-content:center;
@@ -83,10 +66,7 @@ header{
 }
 
 /* MAIN */
-
-.container{
-  padding:30px;
-}
+.container{ padding:30px; }
 
 .card{
   max-width:700px;
@@ -98,14 +78,8 @@ header{
   box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
-h1{
-  font-size:45px;
-}
-
-p{
-  font-size:20px;
-  line-height:1.7;
-}
+h1{ font-size:45px; }
+p{ font-size:20px; line-height:1.7; }
 
 .mainBtn{
   display:inline-block;
@@ -125,7 +99,6 @@ p{
 }
 
 /* FOOTER */
-
 footer{
   margin-top:50px;
   background:#222;
@@ -134,184 +107,84 @@ footer{
   padding:20px;
 }
 
-select{
-  border:none;
-}
+select{ border:none; }
 
 </style>
 </head>
 
 <body>
 
-
 <header id="title">
 🛒 Warung Teh Tia
 </header>
 
 <!-- TOPBAR -->
-
 <div class="topbar">
 
-<a href="beli.html"
-class="navBtn"
-id="buyBtn">
+<a href="beli.html" class="navBtn" id="buyBtn">🛒 Beli</a>
 
-🛒 Beli
+<a href="keranjang.html" class="navBtn" id="cartBtn">🛍️ Keranjang</a>
 
-</a>
+<a href="akun.html" class="navBtn" id="accBtn">👤 Login</a>
 
-<a href="keranjang.html"
-class="navBtn"
-id="cartBtn">
+<a href="alamat.html" class="navBtn" id="addrBtn">📍 Alamat</a>
 
-🛍️ Keranjang
+<button class="navBtn" onclick="toggleDark()">🌙</button>
 
-</a>
-
-<a href="akun.html"
-class="navBtn"
-id="accBtn">
-
-👤 Login 
-
-</a>
-
-<a href="alamat.html"
-class="navBtn"
-id="addrBtn">
-
-📍 Alamat
-
-</a>
-
-<button
-class="navBtn"
-onclick="toggleDark()">
-
-🌙
-
-</button>
-
-<select
-class="navBtn"
-onchange="changeLang(this.value)"
-id="langSelect">
-
-<option value="id">
-🇮🇩 ID
-</option>
-
-<option value="en">
-🇺🇸 EN
-</option>
-
-<option value="jp">
-🇯🇵 JP
-</option>
-
-<option value="ar">
-🇸🇦 AR
-</option>
-
-<option value="ru">
-🇷🇺 RU
-</option>
-
+<select class="navBtn" onchange="changeLang(this.value)" id="langSelect">
+<option value="id">🇮🇩 ID</option>
+<option value="en">🇺🇸 EN</option>
+<option value="jp">🇯🇵 JP</option>
+<option value="ar">🇸🇦 AR</option>
+<option value="ru">🇷🇺 RU</option>
 </select>
 
-<select
-class="navBtn"
-onchange="changeColorblind(this.value)"
-id="cbSelect">
-
-<option value="normal">
-👁️ Normal
-</option>
-
-<option value="protanopia">
-🔴 Protanopia
-</option>
-
-<option value="deuteranopia">
-🟢 Deuteranopia
-</option>
-
-<option value="tritanopia">
-🔵 Tritanopia
-</option>
-
+<select class="navBtn" onchange="changeColorblind(this.value)" id="cbSelect">
+<option value="normal">👁️ Normal</option>
+<option value="protanopia">🔴 Protanopia</option>
+<option value="deuteranopia">🟢 Deuteranopia</option>
+<option value="tritanopia">🔵 Tritanopia</option>
 </select>
 
 </div>
 
 <!-- CONTENT -->
-
 <div class="container">
 
 <div class="card">
 
-<h1 id="welcome">
-Selamat Datang 👋
-</h1>
+<h1 id="welcome">Selamat Datang 👋</h1>
 
-<p id="desc1">
-Website Grosir Termurah Se-Planet Bumi 🔥
-</p>
+<p id="desc1">Website Grosir Termurah Se-Planet Bumi 🔥</p>
+<p id="desc2">Semua Ada Disini! Tekan tombol beli untuk beli 😎</p>
 
-<p id="desc2">
-Semua Ada Disini! Tekan tombol beli untuk beli 😎
-</p>
+<div id="status">Belum Login ❌</div>
 
-<div id="status">
-Belum Login ❌
-</div>
-
-<a href="beli.html"
-class="mainBtn"
-id="shopBtn">
-
-🛒 Mulai Belanja
-
-</a>
+<a href="beli.html" class="mainBtn" id="shopBtn">🛒 Mulai Belanja</a>
 
 </div>
 
 </div>
 
-<footer>
-© 2026 Warung Teh Tia
-</footer>
+<footer>© 2026 Warung Teh Tia</footer>
 
 <script>
 
 /* SETTINGS */
-
-let lang =
-localStorage.getItem("lang")
-|| "id";
-
-let dark =
-localStorage.getItem("dark")
-|| "off";
-
-let colorblind =
-localStorage.getItem("colorblind")
-|| "normal";
+let lang = localStorage.getItem("lang") || "id";
+let dark = localStorage.getItem("dark") || "off";
+let colorblind = localStorage.getItem("colorblind") || "normal";
 
 /* DARK */
-
 if(dark === "on"){
 document.body.classList.add("dark");
 }
 
 /* COLORBLIND */
-
 applyColorblind();
 
 /* MULTILANG */
-
 const text = {
-
 id:{
 title:"🛒 Warung Teh Tia",
 welcome:"Selamat Datang 👋",
@@ -325,12 +198,11 @@ shop:"🛒 Mulai Belanja",
 notlogin:"Belum Login ❌",
 logged:"LOGIN SEBAGAI 😎"
 },
-
 en:{
 title:"🛒 Teh Tia Shop",
 welcome:"Welcome 👋",
 desc1:"The Cheapest Wholesale Website on Earth 🔥",
-desc2:"Everything is here! Press the buy button to shop 😎",
+desc2:"Everything is here! Press buy button to shop 😎",
 buy:"🛒 Buy",
 cart:"🛍️ Cart",
 acc:"👤 Account",
@@ -339,7 +211,6 @@ shop:"🛒 Start Shopping",
 notlogin:"Not Logged In ❌",
 logged:"LOGGED IN 😎"
 },
-
 jp:{
 title:"🛒 テーティアショップ",
 welcome:"ようこそ 👋",
@@ -353,7 +224,6 @@ shop:"🛒 買い物開始",
 notlogin:"未ログイン ❌",
 logged:"ログイン中 😎"
 },
-
 ar:{
 title:"🛒 متجر تيه تيا",
 welcome:"مرحباً 👋",
@@ -367,7 +237,6 @@ shop:"🛒 ابدأ التسوق",
 notlogin:"غير مسجل ❌",
 logged:"تم تسجيل الدخول 😎"
 },
-
 ru:{
 title:"🛒 Магазин Те Тиа",
 welcome:"Добро пожаловать 👋",
@@ -381,7 +250,6 @@ shop:"🛒 Начать покупки",
 notlogin:"Не вошли ❌",
 logged:"ВОШЛИ 😎"
 }
-
 };
 
 function applyLang(){
@@ -399,11 +267,12 @@ accBtn.innerText = t.acc;
 addrBtn.innerText = t.addr;
 shopBtn.innerText = t.shop;
 
-let username =
-localStorage.getItem("username");
+/* 💀 FIX LOGIN SYNC */
+let login = localStorage.getItem("login");
+let username = localStorage.getItem("currentUser");
 
 status.innerHTML =
-username
+(login === "true" && username)
 ? t.logged + "<br><br>" + username
 : t.notlogin;
 
@@ -412,68 +281,42 @@ localStorage.setItem("lang",lang);
 }
 
 function changeLang(newLang){
-
 lang = newLang;
-
 applyLang();
-
 }
 
 function toggleDark(){
-
 document.body.classList.toggle("dark");
 
 localStorage.setItem(
 "dark",
-document.body.classList.contains("dark")
-? "on"
-: "off"
+document.body.classList.contains("dark") ? "on" : "off"
 );
-
 }
 
 /* COLORBLIND */
-
 function changeColorblind(mode){
-
-localStorage.setItem(
-"colorblind",
-mode
-);
-
+localStorage.setItem("colorblind",mode);
 applyColorblind();
-
 }
 
 function applyColorblind(){
 
 document.body.classList.remove(
-"protanopia",
-"deuteranopia",
-"tritanopia"
+"protanopia","deuteranopia","tritanopia"
 );
 
-colorblind =
-localStorage.getItem("colorblind")
-|| "normal";
+colorblind = localStorage.getItem("colorblind") || "normal";
 
 if(colorblind !== "normal"){
-
-document.body.classList.add(
-colorblind
-);
-
+document.body.classList.add(colorblind);
 }
 
 }
 
 /* INIT */
-
-document.getElementById("langSelect").value =
-lang;
-
-document.getElementById("cbSelect").value =
-colorblind;
+document.getElementById("langSelect").value = lang;
+document.getElementById("cbSelect").value = colorblind;
 
 applyLang();
 
