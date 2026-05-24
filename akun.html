@@ -107,6 +107,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDFJxpGTfvL7YVuTfDh8iNd9qKIBwjjLXQ",
   authDomain: "warung-teh-tia.firebaseapp.com",
@@ -120,10 +121,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* 🔥 CEK CAPTCHA */
+/* CAPTCHA CHECK */
 function checkCaptcha(){
-  let response = grecaptcha.getResponse();
-  return response.length !== 0;
+  return grecaptcha.getResponse().length !== 0;
 }
 
 /* REGISTER */
@@ -134,15 +134,15 @@ alert("CAPTCHA dulu 🔥");
 return;
 }
 
-let email = emailInput.value;
-let password = passwordInput.value;
+let email = document.getElementById("email").value.trim();
+let password = document.getElementById("password").value;
 
 try{
 await createUserWithEmailAndPassword(auth, email, password);
 alert("DAFTAR BERHASIL 🔥");
 grecaptcha.reset();
 }catch(e){
-alert(e.message);
+alert(e.code);
 }
 
 }
@@ -155,15 +155,15 @@ alert("CAPTCHA dulu 🔥");
 return;
 }
 
-let email = emailInput.value;
-let password = passwordInput.value;
+let email = document.getElementById("email").value.trim();
+let password = document.getElementById("password").value;
 
 try{
 await signInWithEmailAndPassword(auth, email, password);
 alert("LOGIN BERHASIL 😎");
 grecaptcha.reset();
 }catch(e){
-alert(e.message);
+alert(e.code);
 }
 
 }
@@ -188,10 +188,6 @@ status.innerHTML =
 }
 
 });
-
-/* shortcut */
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
 
 </script>
 
