@@ -3,9 +3,16 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Akun - Warung Teh Tia</title>
+
+<!-- RECAPTCHA -->
+<script
+src="https://www.google.com/recaptcha/api.js"
+async defer>
+</script>
 
 <style>
 
@@ -27,6 +34,7 @@ body{
   font-family:Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
+  transition:0.3s;
 }
 
 header{
@@ -34,56 +42,84 @@ header{
   color:white;
   padding:25px;
   text-align:center;
-  font-size:30px;
+  font-size:32px;
   font-weight:bold;
 }
 
 .topbar{
   display:flex;
   justify-content:center;
+  align-items:center;
   gap:10px;
   flex-wrap:wrap;
   padding:15px;
 }
 
+.navBtn{
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+  text-decoration:none;
+  font-size:15px;
+}
+
 .container{
-  padding:20px;
+  padding:30px;
 }
 
 .card{
   max-width:500px;
   margin:auto;
   background:var(--card);
-  padding:25px;
-  border-radius:20px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  padding:35px;
+  border-radius:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+h1{
+  text-align:center;
+}
+
+p{
+  text-align:center;
 }
 
 input{
   width:100%;
   padding:15px;
   margin-top:15px;
-  border-radius:12px;
   border:none;
+  border-radius:12px;
   background:#ececec;
   font-size:16px;
   box-sizing:border-box;
 }
 
 .btn{
+  width:100%;
   margin-top:15px;
-  padding:14px 20px;
+  padding:15px;
   border:none;
   border-radius:12px;
   background:var(--primary);
   color:white;
+  font-size:17px;
   cursor:pointer;
-  font-size:16px;
 }
 
 #hasil{
   margin-top:20px;
+  text-align:center;
   font-weight:bold;
+}
+
+.g-recaptcha{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
 }
 
 </style>
@@ -97,38 +133,45 @@ input{
 
 <div class="topbar">
 
-<button class="btn"
-onclick="history.back()"
+<a href="index.html"
+class="navBtn"
 id="backBtn">
+
 ⬅ Kembali
+
+</a>
+
+<button
+class="navBtn"
+onclick="toggleDark()">
+
+🌙
+
 </button>
 
-<button class="btn"
-onclick="toggleDark()"
-id="darkBtn">
-🌙 Dark
-</button>
-
-<select onchange="changeLang(this.value)" id="langSelect">
+<select
+class="navBtn"
+onchange="changeLang(this.value)"
+id="langSelect">
 
 <option value="id">
-🇮🇩 Indonesia
+🇮🇩 ID
 </option>
 
 <option value="en">
-🇺🇸 English
+🇺🇸 EN
 </option>
 
 <option value="jp">
-🇯🇵 日本語
+🇯🇵 JP
 </option>
 
 <option value="ar">
-🇸🇦 العربية
+🇸🇦 AR
 </option>
 
 <option value="ru">
-🇷🇺 Русский
+🇷🇺 RU
 </option>
 
 </select>
@@ -144,7 +187,7 @@ Buat Akun 🔥
 </h1>
 
 <p id="desc">
-Simpan akun ke localStorage 😎
+Simpan akun ke LocalStorage 😎
 </p>
 
 <input
@@ -156,6 +199,12 @@ placeholder="Username">
 type="password"
 id="password"
 placeholder="Password">
+
+<!-- RECAPTCHA -->
+<div
+class="g-recaptcha"
+data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-">
+</div>
 
 <button
 class="btn"
@@ -175,7 +224,8 @@ id="logoutBtn">
 
 </button>
 
-<div id="hasil"></div>
+<div id="hasil">
+</div>
 
 </div>
 
@@ -183,49 +233,58 @@ id="logoutBtn">
 
 <script>
 
+/* SETTINGS */
+
 let lang =
-localStorage.getItem("lang") || "id";
+localStorage.getItem("lang")
+|| "id";
 
 let dark =
-localStorage.getItem("dark") || "off";
+localStorage.getItem("dark")
+|| "off";
 
 if(dark === "on"){
-  document.body.classList.add("dark");
+document.body.classList.add("dark");
 }
+
+/* MULTILANG */
 
 const text = {
 
 id:{
 title:"👤 Akun Warung Teh Tia",
 welcome:"Buat Akun 🔥",
-desc:"Simpan akun ke localStorage 😎",
+desc:"Simpan akun ke LocalStorage 😎",
 save:"💾 Simpan Akun",
 logout:"🚪 Logout",
 back:"⬅ Kembali",
-saved:"AKUN BERHASIL DISIMPAN 🔥",
-logged:"LOGIN SEBAGAI 😎"
+nologin:"Belum Login ❌",
+logged:"LOGIN SEBAGAI 😎",
+captcha:"Selesaikan CAPTCHA dulu 🔥"
 },
 
 en:{
 title:"👤 Teh Tia Account",
 welcome:"Create Account 🔥",
-desc:"Save account to localStorage 😎",
+desc:"Save account to LocalStorage 😎",
 save:"💾 Save Account",
 logout:"🚪 Logout",
 back:"⬅ Back",
-saved:"ACCOUNT SAVED 🔥",
-logged:"LOGGED IN AS 😎"
+nologin:"Not Logged In ❌",
+logged:"LOGGED IN 😎",
+captcha:"Complete CAPTCHA first 🔥"
 },
 
 jp:{
 title:"👤 アカウント",
 welcome:"アカウント作成 🔥",
-desc:"localStorage に保存 😎",
+desc:"LocalStorage に保存 😎",
 save:"💾 保存",
 logout:"🚪 ログアウト",
 back:"⬅ 戻る",
-saved:"保存成功 🔥",
-logged:"ログイン中 😎"
+nologin:"未ログイン ❌",
+logged:"ログイン中 😎",
+captcha:"CAPTCHA を完了してください 🔥"
 },
 
 ar:{
@@ -235,8 +294,9 @@ desc:"حفظ الحساب 😎",
 save:"💾 حفظ",
 logout:"🚪 تسجيل خروج",
 back:"⬅ رجوع",
-saved:"تم الحفظ 🔥",
-logged:"تم تسجيل الدخول 😎"
+nologin:"غير مسجل ❌",
+logged:"تم تسجيل الدخول 😎",
+captcha:"أكمل CAPTCHA أولاً 🔥"
 },
 
 ru:{
@@ -246,8 +306,9 @@ desc:"Сохранить аккаунт 😎",
 save:"💾 Сохранить",
 logout:"🚪 Выйти",
 back:"⬅ Назад",
-saved:"СОХРАНЕНО 🔥",
-logged:"ВОШЛИ КАК 😎"
+nologin:"Не вошли ❌",
+logged:"ВОШЛИ 😎",
+captcha:"Сначала пройдите CAPTCHA 🔥"
 }
 
 };
@@ -256,35 +317,23 @@ function applyLang(){
 
 let t = text[lang];
 
-document.getElementById("title").innerText =
-t.title;
+title.innerText = t.title;
+welcome.innerText = t.welcome;
+desc.innerText = t.desc;
 
-document.getElementById("welcome").innerText =
-t.welcome;
-
-document.getElementById("desc").innerText =
-t.desc;
-
-document.getElementById("saveBtn").innerText =
-t.save;
-
-document.getElementById("logoutBtn").innerText =
-t.logout;
-
-document.getElementById("backBtn").innerText =
-t.back;
+saveBtn.innerText = t.save;
+logoutBtn.innerText = t.logout;
+backBtn.innerText = t.back;
 
 localStorage.setItem("lang",lang);
 
 let username =
 localStorage.getItem("username");
 
-if(username){
-
-document.getElementById("hasil").innerHTML =
-t.logged + "<br><br>" + username;
-
-}
+hasil.innerHTML =
+username
+? t.logged + "<br><br>" + username
+: t.nologin;
 
 }
 
@@ -309,7 +358,20 @@ document.body.classList.contains("dark")
 
 }
 
+/* BUAT AKUN */
+
 function buatAkun(){
+
+let captcha =
+grecaptcha.getResponse();
+
+if(captcha.length === 0){
+
+alert(text[lang].captcha);
+
+return;
+
+}
 
 let username =
 document.getElementById("username").value;
@@ -318,8 +380,11 @@ let password =
 document.getElementById("password").value;
 
 if(username === "" || password === ""){
-alert("ISI DULU 🔥");
+
+alert("ISI SEMUA 🔥");
+
 return;
+
 }
 
 localStorage.setItem(
@@ -332,25 +397,32 @@ localStorage.setItem(
 password
 );
 
-document.getElementById("hasil").innerHTML =
+hasil.innerHTML =
 text[lang].logged +
 "<br><br>" +
 username;
 
-alert(text[lang].saved);
+alert("🔥");
+
+grecaptcha.reset();
 
 }
+
+/* LOGOUT */
 
 function logout(){
 
 localStorage.removeItem("username");
-
 localStorage.removeItem("password");
 
-document.getElementById("hasil").innerHTML =
-"Logout sukses 🔥";
+hasil.innerHTML =
+text[lang].nologin;
+
+alert("LOGOUT 🔥");
 
 }
+
+/* INIT */
 
 document.getElementById("langSelect").value =
 lang;
