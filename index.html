@@ -8,7 +8,6 @@
 
 <style>
 
-/* ===== THEME ===== */
 :root{
   --bg:#fff8e7;
   --card:#ffffff;
@@ -22,7 +21,6 @@ body.dark{
   --text:#f5f5f5;
 }
 
-/* ===== BASE ===== */
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -31,12 +29,12 @@ body{
   transition:0.3s;
 }
 
-/* ===== COLORBLIND ===== */
+/* COLORBLIND */
 body.protanopia{ filter:hue-rotate(-20deg) saturate(0.8); }
 body.deuteranopia{ filter:hue-rotate(40deg) saturate(0.7); }
 body.tritanopia{ filter:hue-rotate(90deg) saturate(0.8); }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{
   background:var(--primary);
   color:white;
@@ -46,7 +44,7 @@ header{
   font-weight:bold;
 }
 
-/* ===== TOPBAR ===== */
+/* TOPBAR */
 .topbar{
   display:flex;
   justify-content:center;
@@ -66,7 +64,7 @@ header{
   text-decoration:none;
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 .container{ padding:30px; }
 
 .card{
@@ -80,12 +78,26 @@ header{
 }
 
 #status{
-  margin-top:25px;
+  display:block;
+  margin:25px 0;
   font-size:23px;
   font-weight:bold;
 }
 
-/* ===== FOOTER ===== */
+.mainBtnWrap{
+  margin-top:20px;
+}
+
+.mainBtn{
+  display:inline-block;
+  padding:16px 28px;
+  background:var(--primary);
+  color:white;
+  border-radius:15px;
+  text-decoration:none;
+  font-size:20px;
+}
+
 footer{
   margin-top:50px;
   background:#222;
@@ -101,7 +113,7 @@ footer{
 
 <header id="title">🛒 Warung Teh Tia</header>
 
-<!-- TOPBAR (FULL TETAP ADA) -->
+<!-- TOPBAR -->
 <div class="topbar">
 
 <a href="beli.html" class="navBtn" id="buyBtn">🛒 Beli</a>
@@ -109,26 +121,9 @@ footer{
 <a href="akun.html" class="navBtn" id="accBtn">👤 Akun</a>
 <a href="alamat.html" class="navBtn" id="addrBtn">📍 Alamat</a>
 
-<button class="navBtn" onclick="toggleDark()">🌙</button>
-
-<select class="navBtn" onchange="changeLang(this.value)" id="langSelect">
-<option value="id">🇮🇩 ID</option>
-<option value="en">🇺🇸 EN</option>
-<option value="jp">🇯🇵 JP</option>
-<option value="ar">🇸🇦 AR</option>
-<option value="ru">🇷🇺 RU</option>
-</select>
-
-<select class="navBtn" onchange="changeColorblind(this.value)" id="cbSelect">
-<option value="normal">Normal</option>
-<option value="protanopia">Protanopia</option>
-<option value="deuteranopia">Deuteranopia</option>
-<option value="tritanopia">Tritanopia</option>
-</select>
-
 </div>
 
-<!-- CONTENT (FULL TETAP ADA) -->
+<!-- CONTENT -->
 <div class="container">
 
 <div class="card">
@@ -139,7 +134,9 @@ footer{
 
 <div id="status">Belum Login ❌</div>
 
-<a href="beli.html" class="navBtn">🛒 Mulai Belanja</a>
+<div class="mainBtnWrap">
+  <a href="beli.html" class="mainBtn" id="shopBtn">🛒 Mulai Belanja</a>
+</div>
 
 </div>
 
@@ -149,58 +146,99 @@ footer{
 
 <script>
 
-/* ===== SETTINGS ===== */
+/* SETTINGS */
 let lang = localStorage.getItem("lang") || "id";
-let dark = localStorage.getItem("dark") || "off";
-let colorblind = localStorage.getItem("colorblind") || "normal";
 
-/* ===== DARK ===== */
-if(dark === "on") document.body.classList.add("dark");
+/* MULTILANG DICTIONARY FULL BALIK */
+const text = {
+id:{
+  title:"🛒 Warung Teh Tia",
+  welcome:"Selamat Datang 👋",
+  desc1:"Website Grosir Termurah 🔥",
+  desc2:"Semua Ada Disini 😎",
+  buy:"🛒 Beli",
+  cart:"🛍️ Keranjang",
+  acc:"👤 Akun",
+  addr:"📍 Alamat",
+  shop:"🛒 Mulai Belanja"
+},
+en:{
+  title:"🛒 Teh Tia Shop",
+  welcome:"Welcome 👋",
+  desc1:"The Cheapest Wholesale Website 🔥",
+  desc2:"Everything is here 😎",
+  buy:"🛒 Buy",
+  cart:"🛍️ Cart",
+  acc:"👤 Account",
+  addr:"📍 Address",
+  shop:"🛒 Start Shopping"
+},
+jp:{
+  title:"🛒 ショップ",
+  welcome:"ようこそ 👋",
+  desc1:"最安のサイト 🔥",
+  desc2:"全部ここ 😎",
+  buy:"🛒 購入",
+  cart:"🛍️ カート",
+  acc:"👤 アカウント",
+  addr:"📍 住所",
+  shop:"🛒 買う"
+},
+ar:{
+  title:"🛒 المتجر",
+  welcome:"مرحباً 👋",
+  desc1:"أرخص موقع 🔥",
+  desc2:"كل شيء هنا 😎",
+  buy:"🛒 شراء",
+  cart:"🛍️ السلة",
+  acc:"👤 الحساب",
+  addr:"📍 العنوان",
+  shop:"🛒 تسوق"
+},
+ru:{
+  title:"🛒 Магазин",
+  welcome:"Добро пожаловать 👋",
+  desc1:"Самый дешёвый сайт 🔥",
+  desc2:"Всё здесь 😎",
+  buy:"🛒 Купить",
+  cart:"🛍️ Корзина",
+  acc:"👤 Аккаунт",
+  addr:"📍 Адрес",
+  shop:"🛒 Купить"
+}
+};
 
-/* ===== COLORBLIND ===== */
-applyColorblind();
+function applyLang(){
 
-/* ===== LOGIN FIX ONLY (NO FEATURE REMOVED) ===== */
-function updateLogin(){
-  let login = localStorage.getItem("login");
-  let username = localStorage.getItem("username");
+let t = text[lang];
 
-  let status = document.getElementById("status");
+title.innerText = t.title;
+welcome.innerText = t.welcome;
+desc1.innerText = t.desc1;
+desc2.innerText = t.desc2;
 
-  if(login === "true" && username){
-    status.innerHTML = "LOGIN SEBAGAI 😎<br><br>" + username;
-  }else{
-    status.innerHTML = "BELUM LOGIN ❌";
-  }
+buyBtn.innerText = t.buy;
+cartBtn.innerText = t.cart;
+accBtn.innerText = t.acc;
+addrBtn.innerText = t.addr;
+shopBtn.innerText = t.shop;
+
+/* LOGIN FIX */
+let login = localStorage.getItem("login");
+let username = localStorage.getItem("username");
+
+let status = document.getElementById("status");
+
+if(login === "true" && username){
+  status.innerHTML = "LOGIN SEBAGAI 😎<br><br>" + username;
+}else{
+  status.innerHTML = "BELUM LOGIN ❌";
 }
 
-/* ===== LANG (tetap bisa kamu expand) ===== */
-function changeLang(l){
-  lang = l;
-  localStorage.setItem("lang", lang);
+localStorage.setItem("lang", lang);
 }
 
-/* ===== DARK ===== */
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  localStorage.setItem("dark",
-    document.body.classList.contains("dark") ? "on" : "off"
-  );
-}
-
-/* ===== COLORBLIND ===== */
-function changeColorblind(mode){
-  localStorage.setItem("colorblind", mode);
-  applyColorblind();
-}
-
-function applyColorblind(){
-  document.body.classList.remove("protanopia","deuteranopia","tritanopia");
-  if(colorblind !== "normal") document.body.classList.add(colorblind);
-}
-
-/* ===== INIT ===== */
-updateLogin();
+applyLang();
 
 </script>
 
