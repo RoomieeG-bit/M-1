@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - Warung Teh Tia</title>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff8e7;
+  text-align:center;
+}
+
+.card{
+  max-width:420px;
+  margin:40px auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.primary{
+  background:#ff9800;
+  color:white;
+}
+
+.google{
+  background:#4285F4;
+  color:white;
+}
+
+a{
+  display:block;
+  margin-top:10px;
+  color:#ff9800;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.g-recaptcha{
+  margin-top:10px;
+  display:flex;
+  justify-content:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Register 🔥</h2>
+
+<!-- 🧠 USERNAME SEKARANG WAJIB ADA -->
+<input id="username" type="text" placeholder="Username kamu">
+
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<div class="g-recaptcha"
+data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-"></div>
+
+<button class="primary" onclick="register()">Buat Akun 🆕</button>
+
+<button class="google" onclick="loginGoogle()">
+Login dengan Google 🔵
+</button>
+
+<a href="akun.html">⬅ Sudah punya akun? Login</a>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+getAuth,
+createUserWithEmailAndPassword,
+GoogleAuthProvider,
+signInWithPopup,
+updateProfile
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const app = initializeApp({
+apiKey:"AIzaSyDFJxpGTfvL7YVuTfDh8iNd9qKIBwjjLXQ",
+authDomain:"warung-teh-tia.firebaseapp.com",
+projectId:"warung-teh-tia"
+});
+
+const auth = getAuth(app);
+
+/* CAPTCHA */
+function captchaOK(){
+return grecaptcha.getResponse().length > 0;
+}
+
+/* REGISTER EMAIL + USERNAME */
+window.register = async function(){
+
+if(!captchaOK()){
+alert("CAPTCHA dulu 🔥");
+return;
+}
+
+let username = document.getElementById("username").value.trim();
+let email = document.getElementById("email").value.trim();
+let pass = document.getElementById("password").value;
+
+if(!username || !email || !pass){
+alert("ISI SEMUA FIELD 🔥");
+return;
+}
+
+if(!email.includes("@")){
+alert("EMAIL GAK VALID 💀");
+return;
+}
+
+try{
+
+const cred = await createUserWithEmailAndPassword(auth,email,pass);
+
+/* 🔥 SIMPAN USERNAME KE FIREBASE PROFILE */
+await updateProfile(cred.user,{
+displayName: username
+});
+
+/* 🔥 SIMPAN JUGA DI LOCALSTORAGE (UI USE) */
+localStorage.setItem("username", username);
+
+alert("REGISTER BERHASIL 🔥");
+
+location.href="akun.html";
+
+}catch(e){
+alert(e.code);
+}
+
+}
+
+/* GOOGLE LOGIN */
+const provider = new GoogleAuthProvider();
+
+window.loginGoogle = async function(){
+
+try{
+
+const result = await signInWithPopup(auth, provider);
+const user = result.user;
+
+localStorage.setItem("username", user.displayName || "Google User");
+
+alert("LOGIN GOOGLE BERHASIL 😎");
+
+location.href="index.html";
+
+}catch(e){
+alert(e.code);
+}
+
+}
+
+</script>
+
+</body>
+</html>
