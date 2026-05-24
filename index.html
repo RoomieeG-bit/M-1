@@ -157,9 +157,6 @@ footer{
 <h1 id="welcome">Selamat Datang 👋</h1>
 <p id="desc1">Website Grosir Termurah di Bumi!</p>
 <p id="desc2">Semua ada disini! Tekan tombol untuk beli!</p>
-
-<div id="status">Belum Login ❌</div>
-
 <div class="mainBtnWrap">
   <a href="beli.html" class="mainBtn" id="shopBtn">🛒 Mulai Belanja</a>
 </div>
@@ -254,17 +251,6 @@ cartBtn.innerText = t.cart;
 accBtn.innerText = t.acc;
 addrBtn.innerText = t.addr;
 shopBtn.innerText = t.shop;
-
-/* LOGIN FIX */
-let login = localStorage.getItem("login");
-let username = localStorage.getItem("username");
-
-let status = document.getElementById("status");
-
-if(login === "true" && username){
-  status.innerHTML = "LOGIN SEBAGAI 😎<br><br>" + username;
-}else{
-  status.innerHTML = "BELUM LOGIN ❌";
 }
 
 /* SAVE LANG */
