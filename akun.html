@@ -122,20 +122,38 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 /* CAPTCHA CHECK */
-function checkCaptcha(){
-  return grecaptcha.getResponse().length !== 0;
+function captchaOK(){
+  return grecaptcha.getResponse().length > 0;
+}
+
+/* CLEAN EMAIL */
+function getEmail(){
+  return document.getElementById("email")
+    .value
+    .trim()
+    .replace(/\s/g,'');
+}
+
+/* PASSWORD */
+function getPassword(){
+  return document.getElementById("password").value;
 }
 
 /* REGISTER */
 window.register = async function(){
 
-if(!checkCaptcha()){
+if(!captchaOK()){
 alert("CAPTCHA dulu 🔥");
 return;
 }
 
-let email = document.getElementById("email").value.trim();
-let password = document.getElementById("password").value;
+let email = getEmail();
+let password = getPassword();
+
+if(!email.includes("@")){
+alert("EMAIL GAK VALID 🔥");
+return;
+}
 
 try{
 await createUserWithEmailAndPassword(auth, email, password);
@@ -150,13 +168,18 @@ alert(e.code);
 /* LOGIN */
 window.login = async function(){
 
-if(!checkCaptcha()){
+if(!captchaOK()){
 alert("CAPTCHA dulu 🔥");
 return;
 }
 
-let email = document.getElementById("email").value.trim();
-let password = document.getElementById("password").value;
+let email = getEmail();
+let password = getPassword();
+
+if(!email.includes("@")){
+alert("EMAIL GAK VALID 🔥");
+return;
+}
 
 try{
 await signInWithEmailAndPassword(auth, email, password);
@@ -174,7 +197,7 @@ await signOut(auth);
 alert("LOGOUT 🔥");
 }
 
-/* STATUS USER */
+/* STATUS */
 onAuthStateChanged(auth, (user)=>{
 
 let status = document.getElementById("status");
