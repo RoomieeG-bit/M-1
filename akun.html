@@ -1,123 +1,70 @@
-<!-- akun.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Akun - Warung Teh Tia</title>
 
-<!-- RECAPTCHA -->
-<script
-src="https://www.google.com/recaptcha/api.js"
-async defer>
-</script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <style>
-
-:root{
-  --bg:#fff8e7;
-  --card:#ffffff;
-  --text:#333;
-  --primary:#ff9800;
-}
-
-body.dark{
-  --bg:#121212;
-  --card:#1e1e1e;
-  --text:#f5f5f5;
-}
 
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:0.3s;
+  background:#fff8e7;
+  text-align:center;
 }
 
 header{
-  background:var(--primary);
+  background:#ff9800;
   color:white;
   padding:25px;
-  text-align:center;
-  font-size:32px;
+  font-size:30px;
   font-weight:bold;
 }
 
-.topbar{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:15px;
-}
-
-.navBtn{
-  padding:12px 18px;
-  border:none;
-  border-radius:12px;
-  background:var(--primary);
-  color:white;
-  cursor:pointer;
-  text-decoration:none;
-  font-size:15px;
-}
-
-.container{
-  padding:30px;
-}
-
 .card{
-  max-width:500px;
-  margin:auto;
-  background:var(--card);
-  padding:35px;
-  border-radius:25px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-h1{
-  text-align:center;
-}
-
-p{
-  text-align:center;
+  max-width:420px;
+  margin:40px auto;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
 }
 
 input{
   width:100%;
-  padding:15px;
-  margin-top:15px;
-  border:none;
-  border-radius:12px;
-  background:#ececec;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
   font-size:16px;
-  box-sizing:border-box;
 }
 
-.btn{
+button{
   width:100%;
-  margin-top:15px;
-  padding:15px;
+  padding:12px;
+  margin-top:10px;
   border:none;
-  border-radius:12px;
-  background:var(--primary);
+  border-radius:10px;
+  background:#ff9800;
   color:white;
-  font-size:17px;
+  font-size:16px;
   cursor:pointer;
 }
 
-#hasil{
+button:hover{
+  background:#e68900;
+}
+
+#status{
   margin-top:20px;
-  text-align:center;
   font-weight:bold;
 }
 
 .g-recaptcha{
-  margin-top:20px;
+  margin-top:10px;
   display:flex;
   justify-content:center;
 }
@@ -127,307 +74,124 @@ input{
 
 <body>
 
-<header id="title">
-👤 Akun Warung Teh Tia
-</header>
-
-<div class="topbar">
-
-<a href="index.html"
-class="navBtn"
-id="backBtn">
-
-⬅ Kembali
-
-</a>
-
-<button
-class="navBtn"
-onclick="toggleDark()">
-
-🌙
-
-</button>
-
-<select
-class="navBtn"
-onchange="changeLang(this.value)"
-id="langSelect">
-
-<option value="id">
-🇮🇩 ID
-</option>
-
-<option value="en">
-🇺🇸 EN
-</option>
-
-<option value="jp">
-🇯🇵 JP
-</option>
-
-<option value="ar">
-🇸🇦 AR
-</option>
-
-<option value="ru">
-🇷🇺 RU
-</option>
-
-</select>
-
-</div>
-
-<div class="container">
+<header>👤 Akun Warung Teh Tia</header>
 
 <div class="card">
 
-<h1 id="welcome">
-Buat Akun 🔥
-</h1>
+<h2>Login / Register 🔥</h2>
 
-<p id="desc">
-Simpan akun ke LocalStorage 😎
-</p>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
-<input
-type="text"
-id="username"
-placeholder="Username">
+<!-- CAPTCHA -->
+<div class="g-recaptcha"
+data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-"></div>
 
-<input
-type="password"
-id="password"
-placeholder="Password">
+<button onclick="register()">Daftar 🆕</button>
+<button onclick="login()">Login 🔑</button>
+<button onclick="logout()">Logout 🚪</button>
 
-<!-- RECAPTCHA -->
-<div
-class="g-recaptcha"
-data-sitekey="6LdAyvksAAAAAIGFI3m7_CUbHznN46LZGAIVerE-">
-</div>
-
-<button
-class="btn"
-onclick="buatAkun()"
-id="saveBtn">
-
-💾 Simpan Akun
-
-</button>
-
-<button
-class="btn"
-onclick="logout()"
-id="logoutBtn">
-
-🚪 Logout
-
-</button>
-
-<div id="hasil">
-</div>
+<div id="status">Loading...</div>
 
 </div>
 
-</div>
+<!-- FIREBASE -->
+<script type="module">
 
-<script>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-/* SETTINGS */
-
-let lang =
-localStorage.getItem("lang")
-|| "id";
-
-let dark =
-localStorage.getItem("dark")
-|| "off";
-
-if(dark === "on"){
-document.body.classList.add("dark");
-}
-
-/* MULTILANG */
-
-const text = {
-
-id:{
-title:"👤 Akun Warung Teh Tia",
-welcome:"Buat Akun 🔥",
-desc:"Simpan akun ke LocalStorage 😎",
-save:"💾 Simpan Akun",
-logout:"🚪 Logout",
-back:"⬅ Kembali",
-nologin:"Belum Login ❌",
-logged:"LOGIN SEBAGAI 😎",
-captcha:"Selesaikan CAPTCHA dulu 🔥"
-},
-
-en:{
-title:"👤 Teh Tia Account",
-welcome:"Create Account 🔥",
-desc:"Save account to LocalStorage 😎",
-save:"💾 Save Account",
-logout:"🚪 Logout",
-back:"⬅ Back",
-nologin:"Not Logged In ❌",
-logged:"LOGGED IN 😎",
-captcha:"Complete CAPTCHA first 🔥"
-},
-
-jp:{
-title:"👤 アカウント",
-welcome:"アカウント作成 🔥",
-desc:"LocalStorage に保存 😎",
-save:"💾 保存",
-logout:"🚪 ログアウト",
-back:"⬅ 戻る",
-nologin:"未ログイン ❌",
-logged:"ログイン中 😎",
-captcha:"CAPTCHA を完了してください 🔥"
-},
-
-ar:{
-title:"👤 الحساب",
-welcome:"إنشاء حساب 🔥",
-desc:"حفظ الحساب 😎",
-save:"💾 حفظ",
-logout:"🚪 تسجيل خروج",
-back:"⬅ رجوع",
-nologin:"غير مسجل ❌",
-logged:"تم تسجيل الدخول 😎",
-captcha:"أكمل CAPTCHA أولاً 🔥"
-},
-
-ru:{
-title:"👤 Аккаунт",
-welcome:"Создать аккаунт 🔥",
-desc:"Сохранить аккаунт 😎",
-save:"💾 Сохранить",
-logout:"🚪 Выйти",
-back:"⬅ Назад",
-nologin:"Не вошли ❌",
-logged:"ВОШЛИ 😎",
-captcha:"Сначала пройдите CAPTCHA 🔥"
-}
-
+const firebaseConfig = {
+  apiKey: "AIzaSyDFJxpGTfvL7YVuTfDh8iNd9qKIBwjjLXQ",
+  authDomain: "warung-teh-tia.firebaseapp.com",
+  projectId: "warung-teh-tia",
+  storageBucket: "warung-teh-tia.firebasestorage.app",
+  messagingSenderId: "230262012309",
+  appId: "1:230262012309:web:254412772aa803c0815e9c",
+  measurementId: "G-9P43TMREGH"
 };
 
-function applyLang(){
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-let t = text[lang];
-
-title.innerText = t.title;
-welcome.innerText = t.welcome;
-desc.innerText = t.desc;
-
-saveBtn.innerText = t.save;
-logoutBtn.innerText = t.logout;
-backBtn.innerText = t.back;
-
-localStorage.setItem("lang",lang);
-
-let username =
-localStorage.getItem("username");
-
-hasil.innerHTML =
-username
-? t.logged + "<br><br>" + username
-: t.nologin;
-
+/* 🔥 CEK CAPTCHA */
+function checkCaptcha(){
+  let response = grecaptcha.getResponse();
+  return response.length !== 0;
 }
 
-function changeLang(newLang){
+/* REGISTER */
+window.register = async function(){
 
-lang = newLang;
-
-applyLang();
-
-}
-
-function toggleDark(){
-
-document.body.classList.toggle("dark");
-
-localStorage.setItem(
-"dark",
-document.body.classList.contains("dark")
-? "on"
-: "off"
-);
-
-}
-
-/* BUAT AKUN */
-
-function buatAkun(){
-
-let captcha =
-grecaptcha.getResponse();
-
-if(captcha.length === 0){
-
-alert(text[lang].captcha);
-
+if(!checkCaptcha()){
+alert("CAPTCHA dulu 🔥");
 return;
-
 }
 
-let username =
-document.getElementById("username").value;
+let email = emailInput.value;
+let password = passwordInput.value;
 
-let password =
-document.getElementById("password").value;
-
-if(username === "" || password === ""){
-
-alert("ISI SEMUA 🔥");
-
-return;
-
-}
-
-localStorage.setItem(
-"username",
-username
-);
-
-localStorage.setItem(
-"password",
-password
-);
-
-hasil.innerHTML =
-text[lang].logged +
-"<br><br>" +
-username;
-
-alert("🔥");
-
+try{
+await createUserWithEmailAndPassword(auth, email, password);
+alert("DAFTAR BERHASIL 🔥");
 grecaptcha.reset();
+}catch(e){
+alert(e.message);
+}
+
+}
+
+/* LOGIN */
+window.login = async function(){
+
+if(!checkCaptcha()){
+alert("CAPTCHA dulu 🔥");
+return;
+}
+
+let email = emailInput.value;
+let password = passwordInput.value;
+
+try{
+await signInWithEmailAndPassword(auth, email, password);
+alert("LOGIN BERHASIL 😎");
+grecaptcha.reset();
+}catch(e){
+alert(e.message);
+}
 
 }
 
 /* LOGOUT */
-
-function logout(){
-
-localStorage.removeItem("username");
-localStorage.removeItem("password");
-
-hasil.innerHTML =
-text[lang].nologin;
-
+window.logout = async function(){
+await signOut(auth);
 alert("LOGOUT 🔥");
-
 }
 
-/* INIT */
+/* STATUS USER */
+onAuthStateChanged(auth, (user)=>{
 
-document.getElementById("langSelect").value =
-lang;
+let status = document.getElementById("status");
 
-applyLang();
+if(user){
+status.innerHTML =
+"LOGIN SEBAGAI 😎<br><br>" + user.email;
+}else{
+status.innerHTML =
+"BELUM LOGIN ❌";
+}
+
+});
+
+/* shortcut */
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
 
 </script>
 
