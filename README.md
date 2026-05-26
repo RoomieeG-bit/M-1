@@ -4,7 +4,7 @@ What is M-1?
 - M-1 mean: MAIN-1
 
 # Download
-https://github.com/RoomieeG-bit/M-1/releases/download/latest/1.0.0/app-release.apk
+https://github.com/RoomieeG-bit/M-1/releases/download/1.0.0/app-release.apk
 
 # Web
 https://roomieeg-bit.github.io/M-1/
