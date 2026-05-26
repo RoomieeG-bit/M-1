@@ -6,8 +6,8 @@
 
 <title>Akun - Warung Teh Tia</title>
 
-<!-- RECAPTCHA -->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- TURNSTILE -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
 
@@ -100,7 +100,7 @@ input{
 }
 
 /* CAPTCHA */
-.g-recaptcha{
+.cf-turnstile{
   margin-top:20px;
   display:flex;
   justify-content:center;
@@ -147,9 +147,10 @@ input{
 <input type="text" id="username" placeholder="Username">
 <input type="password" id="password" placeholder="Password">
 
-<!-- CAPTCHA -->
-<div class="g-recaptcha"
-data-sitekey="6LeRhv0sAAAAAMHAfRoX9dobg7kazmFdT_QkPJMs"></div>
+<!-- CAPTCHA (TURNSTILE) -->
+<div class="cf-turnstile"
+data-sitekey="0x4AAAAAADWozkOth1c1sT1G"
+data-theme="light"></div>
 
 <button class="btn" onclick="buatAkun()" id="saveBtn">
 💾 Simpan Akun
@@ -276,8 +277,9 @@ document.body.classList.contains("dark") ? "on" : "off");
 /* CREATE ACCOUNT */
 function buatAkun(){
 
-let captcha = grecaptcha.getResponse();
-if(captcha.length === 0){
+let captcha = document.querySelector('[name="cf-turnstile-response"]').value;
+
+if(!captcha){
 alert(text[lang].captcha);
 return;
 }
@@ -296,8 +298,6 @@ localStorage.setItem("password", password);
 hasil.innerHTML = text[lang].logged + "<br><br>" + username;
 
 alert("AKUN DISIMPAN 🔥");
-
-grecaptcha.reset();
 }
 
 /* LOGOUT */
