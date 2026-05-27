@@ -5,66 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keranjang - Warung Teh Tia</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f5f5;
+/* 🎨 THEME */
+:root{
+  --bg1:#fff3d6;
+  --bg2:#ffe6a1;
+  --card:rgba(255,255,255,0.75);
+  --text:#222;
+  --sub:#666;
+  --primary:#ff9800;
 }
 
-/* TOPBAR */
+body.dark{
+  --bg1:#0f0f0f;
+  --bg2:#1a1a1a;
+  --card:rgba(30,30,30,0.75);
+  --text:#f5f5f5;
+  --sub:#aaa;
+}
+
+/* 🌍 BASE */
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  transition:0.4s;
+}
+
+/* 🧊 TOPBAR GLASS */
 .topbar{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
   justify-content:center;
   align-items:center;
-  background:#ff9800;
+
   padding:15px;
   position:sticky;
   top:0;
+  z-index:100;
+
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
 }
 
-.topbar button{
-  padding:10px 15px;
+body.dark .topbar{
+  background:rgba(20,20,20,0.4);
+}
+
+/* 🔘 BUTTON */
+button{
+  padding:10px 14px;
   border:none;
-  border-radius:10px;
-  background:white;
+  border-radius:14px;
   cursor:pointer;
-  font-weight:bold;
+  font-weight:600;
+  color:white;
+
+  background:linear-gradient(135deg,#ff9800,#ffb347);
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+  transition:0.25s;
 }
 
-.topbar button:hover{
-  background:#ffe0b2;
+button:hover{
+  transform:translateY(-3px) scale(1.03);
 }
 
-.topbar input{
-  padding:10px;
+/* INPUT */
+input{
+  padding:12px;
   border:none;
-  border-radius:10px;
-  width:200px;
+  border-radius:12px;
+  width:220px;
+  outline:none;
 }
 
-/* HEADER */
+/* 🏷️ HEADER */
 header{
   text-align:center;
-  padding:20px;
-  font-size:28px;
-  font-weight:bold;
-  background:white;
+  padding:28px;
+  font-size:26px;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(135deg,#ff9800,#ffb347);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  border-bottom-left-radius:25px;
+  border-bottom-right-radius:25px;
 }
 
-/* CARD */
+/* 📦 CONTAINER */
 .container{
   padding:25px;
+  display:flex;
+  justify-content:center;
 }
 
+/* 🧊 CARD GLASS */
 .card{
-  background:white;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  width:100%;
+  max-width:750px;
+  padding:30px;
+  border-radius:25px;
+
+  background:var(--card);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
 }
 
 /* LIST */
@@ -74,32 +126,25 @@ li{
 }
 
 .kosong{
-  color:gray;
+  color:var(--sub);
 }
 
-/* BUTTON */
-.btn{
-  margin-top:10px;
-  padding:10px 15px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:#ff9800;
-  color:white;
-}
-
-.btn:hover{
-  background:#e68900;
-}
-
+/* TOTAL */
 #totalHarga{
   margin-top:20px;
-  font-weight:bold;
+  font-weight:700;
+  font-size:18px;
 }
 
-.hidden{
-  display:none;
+/* BUTTON ACTION */
+.btnRow{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
 }
+
+.hidden{display:none;}
 
 </style>
 </head>
@@ -109,160 +154,199 @@ li{
 <!-- TOPBAR -->
 <div class="topbar">
 
-  <button onclick="location.href='beli.html'">⬅</button>
+<button onclick="location.href='beli.html'">⬅</button>
 
-  <input type="text" id="search" placeholder="Cari item..." onkeyup="searchItem()">
+<input type="text" id="search" placeholder="Cari item..." onkeyup="searchItem()">
 
-  <button onclick="toggleLang()" id="langBtn">🌐 EN</button>
+<button onclick="toggleDark()">🌙</button>
+<button onclick="toggleLang()" id="langBtn">🌐 EN</button>
 
 </div>
 
-<header id="title">
-  🛒 Keranjang Warung Teh Tia
-</header>
+<header id="title">🛒 Keranjang Warung Teh Tia</header>
 
 <div class="container">
+<div class="card">
 
-  <div class="card">
+<h2 id="head">Isi Keranjang 🔥</h2>
 
-    <h2 id="head">Isi Keranjang 🔥</h2>
+<ul id="listKeranjang"></ul>
 
-    <ul id="listKeranjang"></ul>
+<h3 id="totalHarga">Total Harga: Rp 0</h3>
 
-    <h3 id="totalHarga">Total Harga: Rp 0</h3>
+<div class="btnRow">
 
-    <button class="btn" onclick="checkoutWhatsApp()" id="checkoutBtn">
-      Checkout WhatsApp 📱
-    </button>
+<button onclick="checkoutWhatsApp()" id="checkoutBtn">
+Checkout WhatsApp 📱
+</button>
 
-    <button class="btn" onclick="hapusKeranjang()" id="hapusBtn">
-      Hapus Keranjang 🗑️
-    </button>
+<button onclick="hapusKeranjang()" id="hapusBtn">
+Hapus Keranjang 🗑️
+</button>
 
-  </div>
+</div>
 
+</div>
 </div>
 
 <script>
 
-let lang="id";
+/* 🌍 STATE */
+let lang = "id";
+let dark = localStorage.getItem("dark") || "off";
 
-let keranjang =
-JSON.parse(localStorage.getItem("keranjang")) || [];
+if(dark === "on") document.body.classList.add("dark");
 
-/* RENDER */
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+
+/* 🌐 TEXT */
+const text = {
+id:{
+title:"🛒 Keranjang Warung Teh Tia",
+head:"Isi Keranjang 🔥",
+empty:"Keranjang kosong 😭",
+total:"Total Harga: Rp ",
+checkout:"Checkout WhatsApp 📱",
+clear:"Hapus Keranjang 🗑️",
+search:"Cari item..."
+},
+en:{
+title:"🛒 Teh Tia Cart",
+head:"Cart Items 🔥",
+empty:"Cart is empty 😭",
+total:"Total Price: Rp ",
+checkout:"Checkout WhatsApp 📱",
+clear:"Clear Cart 🗑️",
+search:"Search item..."
+},
+jp:{
+title:"🛒 カート",
+head:"カート内容 🔥",
+empty:"空です 😭",
+total:"合計: Rp ",
+checkout:"WhatsApp注文 📱",
+clear:"削除 🗑️",
+search:"検索..."
+},
+ar:{
+title:"🛒 السلة",
+head:"محتويات السلة 🔥",
+empty:"السلة فارغة 😭",
+total:"المجموع: Rp ",
+checkout:"واتساب 📱",
+clear:"حذف 🗑️",
+search:"بحث..."
+},
+ru:{
+title:"🛒 Корзина",
+head:"Товары 🔥",
+empty:"Пусто 😭",
+total:"Итого: Rp ",
+checkout:"Заказ WhatsApp 📱",
+clear:"Очистить 🗑️",
+search:"Поиск..."
+}
+};
+
+/* 🧠 RENDER */
 function tampilkanKeranjang(){
 
-  let list=document.getElementById("listKeranjang");
-  let totalHarga=document.getElementById("totalHarga");
+let list=document.getElementById("listKeranjang");
+let totalHarga=document.getElementById("totalHarga");
 
-  list.innerHTML="";
+list.innerHTML="";
+let total=0;
 
-  let total=0;
+if(keranjang.length===0){
+list.innerHTML=`<p class='kosong'>${text[lang].empty}</p>`;
+totalHarga.innerText=text[lang].total+"0";
+return;
+}
 
-  if(keranjang.length===0){
-    list.innerHTML="<p class='kosong'>"+(lang==="id"?"Keranjang kosong 😭":"Cart is empty 😭")+"</p>";
-    totalHarga.innerText=lang==="id"?"Total Harga: Rp 0":"Total Price: Rp 0";
-    return;
-  }
+keranjang.forEach(item=>{
+let subtotal=item.harga*item.jumlah;
+total+=subtotal;
 
-  keranjang.forEach(item=>{
+list.innerHTML+=`
+<li data-name="${item.nama.toLowerCase()}">
+${item.nama} x${item.jumlah} = Rp ${subtotal.toLocaleString("id-ID")}
+</li>
+`;
+});
 
-    let subtotal=item.harga*item.jumlah;
-    total+=subtotal;
-
-    list.innerHTML+=`
-      <li data-name="${item.nama.toLowerCase()}">
-        ${item.nama} x${item.jumlah} = Rp ${subtotal.toLocaleString("id-ID")}
-      </li>
-    `;
-
-  });
-
-  totalHarga.innerText=
-  (lang==="id"?"Total Harga: Rp ":"Total Price: Rp ")
-  + total.toLocaleString("id-ID");
+totalHarga.innerText=text[lang].total + total.toLocaleString("id-ID");
 
 }
 
-/* SEARCH */
+/* 🔍 SEARCH */
 function searchItem(){
+let q=document.getElementById("search").value.toLowerCase();
 
-  let q=document.getElementById("search").value.toLowerCase();
-
-  document.querySelectorAll("#listKeranjang li").forEach(li=>{
-
-    let name=li.getAttribute("data-name");
-
-    li.style.display=name.includes(q)?"block":"none";
-
-  });
-
+document.querySelectorAll("#listKeranjang li").forEach(li=>{
+li.style.display=li.innerText.toLowerCase().includes(q)?"block":"none";
+});
 }
 
-/* CHECKOUT */
+/* 📱 CHECKOUT */
 function checkoutWhatsApp(){
 
-  if(keranjang.length===0){
-    alert(lang==="id"?"Keranjang kosong 😭":"Cart empty 😭");
-    return;
-  }
-
-  let pesan=lang==="id"
-  ?"Halo Warung Teh Tia,%0ASaya mau beli:%0A"
-  :"Hello Teh Tia Shop,%0AI want to buy:%0A";
-
-  let total=0;
-
-  keranjang.forEach(item=>{
-
-    let sub=item.harga*item.jumlah;
-    total+=sub;
-
-    pesan+=`- ${item.nama} x${item.jumlah} = Rp ${sub.toLocaleString("id-ID")}%0A`;
-
-  });
-
-  pesan+=`%0A${lang==="id"?"Total":"Total"}: Rp ${total.toLocaleString("id-ID")}`;
-
-  location.href="https://wa.me/6285820028734?text="+pesan;
-
+if(keranjang.length===0){
+alert(text[lang].empty);
+return;
 }
 
-/* CLEAR */
+let pesan="";
+let total=0;
+
+keranjang.forEach(item=>{
+let sub=item.harga*item.jumlah;
+total+=sub;
+pesan+=`- ${item.nama} x${item.jumlah} = Rp ${sub.toLocaleString("id-ID")}%0A`;
+});
+
+let finalMsg=
+(lang==="id"?"Halo Warung Teh Tia,%0A":"Hello,%0A")
++pesan
++`%0A${text[lang].total}${total.toLocaleString("id-ID")}`;
+
+location.href="https://wa.me/6285820028734?text="+finalMsg;
+}
+
+/* 🗑️ CLEAR */
 function hapusKeranjang(){
-
-  localStorage.removeItem("keranjang");
-  keranjang=[];
-
-  tampilkanKeranjang();
-
-  alert(lang==="id"?"Keranjang dihapus 🔥":"Cart cleared 🔥");
-
+localStorage.removeItem("keranjang");
+keranjang=[];
+tampilkanKeranjang();
+alert(text[lang].clear);
 }
 
-/* LANGUAGE */
+/* 🌙 DARK */
+function toggleDark(){
+document.body.classList.toggle("dark");
+localStorage.setItem("dark",
+document.body.classList.contains("dark")?"on":"off");
+}
+
+/* 🌍 LANG */
 function toggleLang(){
 
-  lang=lang==="id"?"en":"id";
+const order=["id","en","jp","ar","ru"];
+let i=order.indexOf(lang);
+lang=order[(i+1)%order.length];
 
-  document.getElementById("langBtn").innerText=lang==="id"?"🌐 EN":"🌐 ID";
+document.getElementById("langBtn").innerText="🌐 "+lang.toUpperCase();
 
-  document.getElementById("title").innerText=
-  lang==="id"?"🛒 Keranjang Warung Teh Tia":"🛒 Teh Tia Cart";
+document.getElementById("title").innerText=text[lang].title;
+document.getElementById("head").innerText=text[lang].head;
+document.getElementById("checkoutBtn").innerText=text[lang].checkout;
+document.getElementById("hapusBtn").innerText=text[lang].clear;
+document.getElementById("search").placeholder=text[lang].search;
 
-  document.getElementById("head").innerText=
-  lang==="id"?"Isi Keranjang 🔥":"Cart Items 🔥";
-
-  document.getElementById("checkoutBtn").innerText=
-  lang==="id"?"Checkout WhatsApp 📱":"Checkout WhatsApp 📱";
-
-  document.getElementById("hapusBtn").innerText=
-  lang==="id"?"Hapus Keranjang 🗑️":"Clear Cart 🗑️";
-
-  tampilkanKeranjang();
-
+tampilkanKeranjang();
 }
+
+/* INIT */
+document.getElementById("search").placeholder=text.id.search;
 
 tampilkanKeranjang();
 
