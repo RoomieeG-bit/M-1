@@ -298,7 +298,7 @@ alert("OK 🔥");
 /* 💸 CHECKOUT */
 function checkout(nama,harga,jumlah){
 let total = harga * jumlah;
-let pesan = `Halo, saya mau beli\n{nama}: {jumlah}\nTerimakasih!`;
+let pesan = `Halo, saya mau beli\n$nama: $jumlah\nTerimakasih!`;
 location.href = `https://wa.me/6285820028734?text=${encodeURIComponent(pesan)}`;
 }
 
