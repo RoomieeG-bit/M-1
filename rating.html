@@ -6,11 +6,11 @@
 
 <title>Rating - Warung Teh Tia</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* 🎨 THEME */
 :root{
   --bg1:#fff3d6;
   --bg2:#ffe6a1;
@@ -28,7 +28,6 @@ body.dark{
   --sub:#aaa;
 }
 
-/* 🌍 BASE */
 body{
   margin:0;
   font-family:Poppins,sans-serif;
@@ -37,7 +36,7 @@ body{
   transition:0.4s;
 }
 
-/* 🔥 HEADER */
+/* HEADER */
 header{
   text-align:center;
   padding:28px;
@@ -50,7 +49,7 @@ header{
   border-bottom-right-radius:25px;
 }
 
-/* 🧊 TOPBAR */
+/* TOPBAR */
 .topbar{
   display:flex;
   gap:10px;
@@ -64,13 +63,14 @@ header{
 
   background:rgba(255,255,255,0.25);
   backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
 }
 
 body.dark .topbar{
   background:rgba(20,20,20,0.4);
 }
 
-/* 🔘 BUTTON */
+/* BUTTON */
 .btn{
   padding:10px 14px;
   border:none;
@@ -82,22 +82,22 @@ body.dark .topbar{
 
   background:linear-gradient(135deg,var(--primary),#ffb347);
   box-shadow:0 6px 15px rgba(0,0,0,0.15);
-
   transition:0.25s;
 }
 
 .btn:hover{
-  transform:translateY(-3px);
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 12px 25px rgba(0,0,0,0.25);
 }
 
-/* 📦 CONTAINER */
+/* CONTAINER */
 .container{
-  padding:30px;
   display:flex;
   justify-content:center;
+  padding:35px 20px;
 }
 
-/* 🧊 CARD */
+/* CARD */
 .card{
   width:100%;
   max-width:650px;
@@ -105,71 +105,69 @@ body.dark .topbar{
   background:var(--card);
   backdrop-filter:blur(10px);
 
+  border-radius:28px;
   padding:35px;
-  border-radius:30px;
-
-  box-shadow:0 12px 30px rgba(0,0,0,0.2);
 
   text-align:center;
+
+  border:1px solid rgba(255,255,255,0.3);
+
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
-/* ⭐ STAR */
-.starWrap{
-  margin-top:25px;
+/* EMOJI RATING */
+.ratingBox{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.rateEmoji{
   font-size:55px;
-}
-
-.star{
   cursor:pointer;
-  transition:0.2s;
-  opacity:0.4;
+  transition:0.25s;
+  opacity:0.45;
+  user-select:none;
 }
 
-.star:hover{
-  transform:scale(1.2);
-}
-
-.star.active{
+.rateEmoji.active{
   opacity:1;
+  transform:scale(1.15);
 }
 
-/* 📝 TEXTAREA */
+.rateEmoji:hover{
+  transform:scale(1.2) rotate(5deg);
+}
+
+/* LABEL */
+#ratingLabel{
+  margin-top:20px;
+  font-size:22px;
+  font-weight:700;
+  color:var(--primary);
+}
+
+/* TEXTAREA */
 textarea{
   width:100%;
-  height:130px;
-
   margin-top:25px;
   padding:15px;
-
   border:none;
-  border-radius:18px;
-
+  border-radius:16px;
   resize:none;
-
+  height:130px;
   box-sizing:border-box;
-
   font-family:Poppins,sans-serif;
-  font-size:15px;
-
-  background:rgba(255,255,255,0.8);
+  outline:none;
 }
 
-body.dark textarea{
-  background:#222;
-  color:white;
-}
-
-/* 📊 RESULT */
-.result{
-  margin-top:25px;
-  font-size:20px;
+/* RESULT */
+#hasil{
+  margin-top:20px;
   font-weight:600;
-}
-
-.footer{
-  text-align:center;
-  padding:25px;
-  color:var(--sub);
+  color:var(--primary);
 }
 
 </style>
@@ -177,23 +175,13 @@ body.dark textarea{
 
 <body>
 
-<header id="title">
-⭐ Rating Warung Teh Tia
-</header>
+<header id="title">🎯 Rating Warung Teh Tia</header>
 
 <div class="topbar">
 
-<a href="index.html" class="btn" id="homeBtn">
-🏠 Home
-</a>
+<a href="index.html" class="btn" id="backBtn">⬅ Kembali</a>
 
-<a href="beli.html" class="btn" id="buyBtn">
-🛒 Beli
-</a>
-
-<a href="keranjang.html" class="btn" id="cartBtn">
-🛍️ Keranjang
-</a>
+<button onclick="toggleDark()" class="btn">🌙</button>
 
 <select onchange="changeLang(this.value)" id="langSelect" class="btn">
 <option value="id">🇮🇩 ID</option>
@@ -203,195 +191,226 @@ body.dark textarea{
 <option value="ru">🇷🇺 RU</option>
 </select>
 
-<button onclick="toggleDark()" class="btn">
-🌙
-</button>
-
 </div>
 
 <div class="container">
 
 <div class="card">
 
-<h1 id="head">
-Kasih Rating 🔥
-</h1>
+<h1 id="welcome">Kasih Rating 🔥</h1>
 
 <p id="desc">
-Pilih berapa bintang untuk Warung Teh Tia 😎
+Pilih emoji sesuai pengalaman lu 😎
 </p>
 
-<div class="starWrap">
+<div class="ratingBox">
 
-<span class="star" onclick="setRating(1)">⭐</span>
-<span class="star" onclick="setRating(2)">⭐</span>
-<span class="star" onclick="setRating(3)">⭐</span>
-<span class="star" onclick="setRating(4)">⭐</span>
-<span class="star" onclick="setRating(5)">⭐</span>
+<span class="rateEmoji" onclick="setRating(1)">😫</span>
+<span class="rateEmoji" onclick="setRating(2)">🙁</span>
+<span class="rateEmoji" onclick="setRating(3)">😐</span>
+<span class="rateEmoji" onclick="setRating(4)">😃</span>
+<span class="rateEmoji" onclick="setRating(5)">😁</span>
 
 </div>
 
-<textarea id="komen" placeholder="Tulis komentar..."></textarea>
+<div id="ratingLabel">Belum pilih rating</div>
 
-<br><br>
+<textarea id="review" placeholder="Tulis review lu disini..."></textarea>
+
+<br>
 
 <button class="btn" onclick="kirimRating()" id="sendBtn">
 🚀 Kirim Rating
 </button>
 
-<div class="result" id="result">
-Belum ada rating 👀
-</div>
+<div id="hasil"></div>
 
 </div>
 
-</div>
-
-<div class="footer">
-© 2026 Warung Teh Tia ⭐
 </div>
 
 <script>
 
-/* ⚙️ STATE */
+/* SETTINGS */
 let lang = localStorage.getItem("lang") || "id";
 let dark = localStorage.getItem("dark") || "off";
-let rating = 0;
 
 if(dark === "on"){
   document.body.classList.add("dark");
 }
 
-/* 🌍 TEXT */
+/* RATING */
+let currentRating = localStorage.getItem("ratingEmoji") || 0;
+
+/* LABEL EMOJI */
+const emojiText = {
+1:"😫 I don't like the service!",
+2:"🙁 I'm bored...",
+3:"😐 Good i think",
+4:"😃 So good!",
+5:"😁 THIS IS GOOD!"
+};
+
+/* TEXT */
 const text = {
 
 id:{
-  title:"⭐ Rating Warung Teh Tia",
-  head:"Kasih Rating 🔥",
-  desc:"Pilih berapa bintang untuk Warung Teh Tia 😎",
-  send:"🚀 Kirim Rating",
-  result:"Belum ada rating 👀",
-  placeholder:"Tulis komentar...",
-  thanks:"Makasih udah kasih",
-  star:"bintang ⭐"
+title:"🎯 Rating Warung Teh Tia",
+back:"⬅ Kembali",
+welcome:"Kasih Rating 🔥",
+desc:"Pilih emoji sesuai pengalaman lu 😎",
+placeholder:"Tulis review lu disini...",
+send:"🚀 Kirim Rating",
+done:"Rating berhasil dikirim 🔥",
+empty:"Pilih rating dulu 🔥",
+norating:"Belum pilih rating"
 },
 
 en:{
-  title:"⭐ Teh Tia Rating",
-  head:"Give Rating 🔥",
-  desc:"Choose stars for Teh Tia Shop 😎",
-  send:"🚀 Send Rating",
-  result:"No rating yet 👀",
-  placeholder:"Write comment...",
-  thanks:"Thanks for giving",
-  star:"stars ⭐"
+title:"🎯 Teh Tia Rating",
+back:"⬅ Back",
+welcome:"Give Rating 🔥",
+desc:"Choose emoji based on your experience 😎",
+placeholder:"Write your review here...",
+send:"🚀 Send Rating",
+done:"Rating sent successfully 🔥",
+empty:"Choose rating first 🔥",
+norating:"No rating selected"
 },
 
 jp:{
-  title:"⭐ レビュー",
-  head:"評価してください 🔥",
-  desc:"星を選択してください 😎",
-  send:"🚀 送信",
-  result:"まだ評価なし 👀",
-  placeholder:"コメントを書く...",
-  thanks:"ありがとうございます",
-  star:"星 ⭐"
+title:"🎯 レビュー",
+back:"⬅ 戻る",
+welcome:"評価してください 🔥",
+desc:"体験に合わせて絵文字を選んでください 😎",
+placeholder:"レビューを書いてください...",
+send:"🚀 送信",
+done:"送信成功 🔥",
+empty:"先に評価してください 🔥",
+norating:"未選択"
 },
 
 ar:{
-  title:"⭐ التقييم",
-  head:"أعط تقييم 🔥",
-  desc:"اختر عدد النجوم 😎",
-  send:"🚀 إرسال",
-  result:"لا يوجد تقييم 👀",
-  placeholder:"اكتب تعليق...",
-  thanks:"شكراً لك",
-  star:"نجوم ⭐"
+title:"🎯 التقييم",
+back:"⬅ رجوع",
+welcome:"أضف تقييم 🔥",
+desc:"اختر الإيموجي حسب تجربتك 😎",
+placeholder:"اكتب رأيك هنا...",
+send:"🚀 إرسال",
+done:"تم الإرسال 🔥",
+empty:"اختر تقييم أولاً 🔥",
+norating:"لا يوجد تقييم"
 },
 
 ru:{
-  title:"⭐ Рейтинг",
-  head:"Оцените 🔥",
-  desc:"Выберите звезды 😎",
-  send:"🚀 Отправить",
-  result:"Нет оценки 👀",
-  placeholder:"Написать комментарий...",
-  thanks:"Спасибо за",
-  star:"звезд ⭐"
+title:"🎯 Рейтинг",
+back:"⬅ Назад",
+welcome:"Оставьте рейтинг 🔥",
+desc:"Выберите эмодзи 😎",
+placeholder:"Напишите отзыв...",
+send:"🚀 Отправить",
+done:"Отправлено 🔥",
+empty:"Сначала выберите рейтинг 🔥",
+norating:"Рейтинг не выбран"
 }
 
 };
 
-/* ⭐ SET RATING */
-function setRating(num){
-
-  rating = num;
-
-  document.querySelectorAll(".star").forEach((s,index)=>{
-
-    if(index < num){
-      s.classList.add("active");
-    }else{
-      s.classList.remove("active");
-    }
-
-  });
-
-}
-
-/* 🚀 SEND */
-function kirimRating(){
-
-  if(rating === 0){
-    alert("Pilih bintang dulu 🔥");
-    return;
-  }
-
-  let komentar = document.getElementById("komen").value;
-
-  localStorage.setItem("rating",rating);
-  localStorage.setItem("komentar",komentar);
-
-  document.getElementById("result").innerHTML =
-  `${text[lang].thanks} <br><br> ${rating} ${text[lang].star}`;
-
-}
-
-/* 🌍 LANG */
-function changeLang(v){
-
-  lang = v;
-
-  localStorage.setItem("lang",lang);
-
-  applyLang();
-
-}
-
-/* 🌙 DARK */
-function toggleDark(){
-
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    "dark",
-    document.body.classList.contains("dark")
-    ? "on"
-    : "off"
-  );
-
-}
-
-/* 🌍 APPLY */
+/* APPLY LANG */
 function applyLang(){
 
-  let t = text[lang];
+let t = text[lang];
 
-  document.getElementById("title").innerText = t.title;
-  document.getElementById("head").innerText = t.head;
-  document.getElementById("desc").innerText = t.desc;
-  document.getElementById("sendBtn").innerText = t.send;
-  document.getElementById("komen").placeholder = t.placeholder;
+document.getElementById("title").innerText = t.title;
+document.getElementById("backBtn").innerText = t.back;
+document.getElementById("welcome").innerText = t.welcome;
+document.getElementById("desc").innerText = t.desc;
+document.getElementById("review").placeholder = t.placeholder;
+document.getElementById("sendBtn").innerText = t.send;
+
+if(currentRating == 0){
+document.getElementById("ratingLabel").innerText = t.norating;
+}
+
+localStorage.setItem("lang",lang);
+
+}
+
+/* DARK */
+function toggleDark(){
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"dark",
+document.body.classList.contains("dark")
+? "on"
+: "off"
+);
+
+}
+
+/* LANG */
+function changeLang(v){
+
+lang = v;
+
+applyLang();
+
+}
+
+/* SET RATING */
+function setRating(num){
+
+currentRating = num;
+
+localStorage.setItem("ratingEmoji",num);
+
+document.querySelectorAll(".rateEmoji").forEach((emoji,index)=>{
+
+if(index < num){
+emoji.classList.add("active");
+}else{
+emoji.classList.remove("active");
+}
+
+});
+
+document.getElementById("ratingLabel").innerText =
+emojiText[num];
+
+}
+
+/* SEND */
+function kirimRating(){
+
+if(currentRating == 0){
+
+alert(text[lang].empty);
+
+return;
+
+}
+
+let review = document.getElementById("review").value;
+
+localStorage.setItem("ratingReview",review);
+
+let emoji = ["😫","🙁","😐","🙂","😃","😁"][currentRating];
+
+let pesan =
+`🎯 RATING BARU%0A%0A` +
+`${emoji} Rating: ${currentRating}/5%0A` +
+`🏷️ Status: ${emojiText[currentRating]}%0A%0A` +
+`📝 Review:%0A${review}`;
+
+document.getElementById("hasil").innerText =
+text[lang].done;
+
+alert(text[lang].done);
+
+location.href =
+`https://wa.me/6285820028734?text=${pesan}`;
 
 }
 
@@ -400,7 +419,11 @@ document.getElementById("langSelect").value = lang;
 
 applyLang();
 
+if(currentRating > 0){
+setRating(currentRating);
+}
+
 </script>
 
 </body>
-  </html>
+</html>
