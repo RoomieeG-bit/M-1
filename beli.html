@@ -1,358 +1,347 @@
-<!DOCTYPE html>  
-<html lang="id">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>Beli Produk</title>  
-
-<style>  
-:root{  
-  --bg:#f5f5f5;  
-  --card:#fff;  
-  --text:#333;  
-  --sub:#666;  
-  --primary:#ff9800;  
-}  
-
-body.dark{  
-  --bg:#121212;  
-  --card:#1e1e1e;  
-  --text:#f5f5f5;  
-  --sub:#ccc;  
-}  
-
-body{  
-  margin:0;  
-  font-family:Arial,sans-serif;  
-  background:var(--bg);  
-  color:var(--text);  
-}  
-
-header{  
-  background:var(--primary);  
-  color:white;  
-  padding:20px;  
-  text-align:center;  
-  font-size:30px;  
-  font-weight:bold;  
-}  
-
-.topbar{  
-  display:flex;  
-  gap:10px;  
-  justify-content:center;  
-  flex-wrap:wrap;  
-  padding:15px;  
-}  
-
-.topbar button,  
-.topbar select,  
-.search{  
-  padding:12px;  
-  border:none;  
-  border-radius:10px;  
-}  
-
-.search{  
-  width:260px;  
-}  
-
-.container{  
-  padding:20px;  
-  display:grid;  
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));  
-  gap:20px;  
-}  
-
-.card{  
-  background:var(--card);  
-  padding:20px;  
-  border-radius:20px;  
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);  
-}  
-
-.nama{  
-  font-size:24px;  
-  font-weight:bold;  
-}  
-
-.harga{  
-  color:#4caf50;  
-  margin-top:10px;  
-  font-size:20px;  
-}  
-
-input[type=number]{  
-  margin-top:15px;  
-  width:80px;  
-  padding:10px;  
-  border-radius:10px;  
-}  
-
-.btn{  
-  display:inline-block;  
-  margin-top:15px;  
-  padding:12px 20px;  
-  background:var(--primary);  
-  color:white;  
-  border:none;  
-  border-radius:10px;  
-  cursor:pointer;  
-  text-decoration:none;  
-}  
-
-/* 🔥 KATEGORI BAR */  
-.kategori-bar{  
-  display:flex;  
-  gap:10px;  
-  justify-content:center;  
-  flex-wrap:wrap;  
-  padding:10px;  
-}  
-
-.kategori-bar button{  
-  padding:10px 14px;  
-  border:none;  
-  border-radius:10px;  
-  cursor:pointer;  
-  background:#ddd;  
-  font-weight:bold;  
-}  
-
-.kategori-bar button.active{  
-  background:var(--primary);  
-  color:white;  
-}  
-</style>  
-</head>  
-
-<body>  
-
-<header id="title">🛍️ Daftar Produk</header>  
-
-<div class="topbar">  
-
-<a href="index.html" class="btn" id="backBtn">⬅ Kembali</a>  
-<a href="keranjang.html" class="btn" id="cartBtn">🛒 Keranjang</a>  
-<a href="alamat.html" class="btn" id="addrBtn">📍 Alamat</a>  
-
-<select onchange="changeLang(this.value)" id="langSelect">  
-<option value="id">🇮🇩 ID</option>  
-<option value="en">🇺🇸 EN</option>  
-<option value="jp">🇯🇵 JP</option>  
-<option value="ar">🇸🇦 AR</option>  
-<option value="ru">🇷🇺 RU</option>  
-</select>  
-
-<button onclick="toggleDark()" class="btn">🌙</button>  
-
-<input type="text" class="search" id="search" placeholder="Cari produk..." onkeyup="cariProduk()">  
-
-</div>  
-
-<!-- 🔥 KATEGORI BAR TAMBAHAN -->  
-<div class="kategori-bar">  
-<button onclick="setKategori('all')" class="active">🔥 Semua</button>  
-<button onclick="setKategori('makanan')">🍜 Makanan</button>  
-<button onclick="setKategori('sabun')">🧼 Sabun</button>  
-<button onclick="setKategori('beras')">🍚 Beras</button>  
-</div>  
-
-<div class="container" id="produkContainer"></div>  
-
-<script>  
-
-let lang = localStorage.getItem("lang") || "id";  
-let dark = localStorage.getItem("dark") || "off";  
-let kategoriAktif = "all";  
-
-if(dark === "on"){  
-  document.body.classList.add("dark");  
-}  
-
-const text = {  
-  id:{  
-    title:"🛍️ Daftar Produk",  
-    back:"⬅ Kembali",  
-    cart:"🛒 Keranjang",  
-    addr:"📍 Alamat",  
-    search:"Cari produk...",  
-    add:"Tambah Keranjang",  
-    buy:"Checkout"  
-  },  
-  en:{  
-    title:"🛍️ Product List",  
-    back:"⬅ Back",  
-    cart:"🛒 Cart",  
-    addr:"📍 Address",  
-    search:"Search product...",  
-    add:"Add Cart",  
-    buy:"Checkout"  
-  },  
-  jp:{  
-    title:"🛍️ 商品一覧",  
-    back:"⬅ 戻る",  
-    cart:"🛒 カート",  
-    addr:"📍 住所",  
-    search:"検索...",  
-    add:"カート追加",  
-    buy:"購入"  
-  },  
-  ar:{  
-    title:"🛍️ المنتجات",  
-    back:"⬅ رجوع",  
-    cart:"🛒 السلة",  
-    addr:"📍 العنوان",  
-    search:"بحث...",  
-    add:"إضافة",  
-    buy:"شراء"  
-  },  
-  ru:{  
-    title:"🛍️ Товары",  
-    back:"⬅ Назад",  
-    cart:"🛒 Корзина",  
-    addr:"📍 Адрес",  
-    search:"Поиск...",  
-    add:"Добавить",  
-    buy:"Купить"  
-  }  
-};  
-
-const produk = [  
-
-  // MAKANAN  
-  {nama:"🍜 Mie Goreng", harga:3500, kategori:"makanan"},  
-  {nama:"🍲 Mie Soto", harga:3000, kategori:"makanan"},  
-  {nama:"🍛 Indomie Kari Ayam", harga:3500, kategori:"makanan"},  
-  {nama:"🍜 Indomie Ayam Bawang", harga:3500, kategori:"makanan"},  
-  {nama:"🥚 Telur", harga:26000, kategori:"makanan"},  
-
-  // SABUN  
-  {nama:"🧼 Sabun Daia", harga:18000, kategori:"sabun"},  
-  {nama:"🧼 Mamalemon", harga:14000, kategori:"sabun"},  
-  {nama:"🧼 Sabun Nuvo", harga:21000, kategori:"sabun"},  
-  {nama:"🧽 Rinso", harga:28000, kategori:"sabun"},  
-
-  // BERAS  
-  {nama:"🍚 Beras Sania 5KG", harga:74000, kategori:"beras"},  
-  {nama:"🍚 Beras Laris 5KG", harga:73000, kategori:"beras"},  
-  {nama:"🍚 Beras Sumo Merah 5KG", harga:95000, kategori:"beras"},  
-  {nama:"🍚 Beras Premium 5KG", harga:95000, kategori:"beras"},  
-  {nama:"👑🍚 Beras Anak Raja 5KG", harga:95000, kategori:"beras"}  
-
-];  
-
-function setKategori(k){  
-  kategoriAktif = k;  
-
-  document.querySelectorAll(".kategori-bar button")  
-  .forEach(b => b.classList.remove("active"));  
-
-  event.target.classList.add("active");  
-
-  renderProduk();  
-}  
-
-function renderProduk(){  
-
-  let html = "";  
-
-  produk.forEach((item,index)=>{  
-
-    if(kategoriAktif !== "all" && item.kategori !== kategoriAktif) return;  
-
-    html += `  
-    <div class="card produk-item">  
-      <div class="nama">${item.nama}</div>  
-      <div class="harga">Rp ${item.harga.toLocaleString("id-ID")}</div>  
-
-      <input type="number" id="qty${index}" value="1" min="1">  
-
-      <br>  
-
-      <button class="btn" onclick="tambahKeranjang('${item.nama}',${item.harga},document.getElementById('qty${index}').value)">  
-      ${text[lang].add}  
-      </button>  
-
-      <button class="btn" onclick="checkout('${item.nama}',${item.harga},document.getElementById('qty${index}').value)">  
-      ${text[lang].buy}  
-      </button>  
-
-    </div>  
-    `;  
-
-  });  
-
-  document.getElementById("produkContainer").innerHTML = html;  
-}  
-
-function tambahKeranjang(nama,harga,jumlah){  
-
-  jumlah = parseInt(jumlah);  
-
-  let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];  
-
-  keranjang.push({nama,harga,jumlah});  
-
-  localStorage.setItem("keranjang",JSON.stringify(keranjang));  
-
-  alert("OK 🔥");  
-}  
-
-function checkout(nama,harga,jumlah){  
-
-  let total = harga * jumlah;  
-
-  let pesan = `Halo, saya mau beli ${nama} x${jumlah} Total Rp ${total}`;  
-
-  location.href = `https://wa.me/6285820028734?text=${encodeURIComponent(pesan)}`;  
-}  
-
-function cariProduk(){  
-
-  let input = document.getElementById("search").value.toLowerCase();  
-
-  document.querySelectorAll(".produk-item").forEach(item=>{  
-
-    item.style.display = item.innerText.toLowerCase().includes(input)  
-    ? "block"  
-    : "none";  
-
-  });  
-}  
-
-function changeLang(newLang){  
-  lang = newLang;  
-  localStorage.setItem("lang",lang);  
-  applyLang();  
-  renderProduk();  
-}  
-
-function applyLang(){  
-
-  let t = text[lang];  
-
-  document.getElementById("title").innerText = t.title;  
-  document.getElementById("backBtn").innerText = t.back;  
-  document.getElementById("cartBtn").innerText = t.cart;  
-  document.getElementById("addrBtn").innerText = t.addr;  
-  document.getElementById("search").placeholder = t.search;  
-
-}  
-
-function toggleDark(){  
-
-  document.body.classList.toggle("dark");  
-
-  localStorage.setItem("dark", document.body.classList.contains("dark") ? "on" : "off");  
-}  
-
-document.getElementById("langSelect").value = lang;  
-
-applyLang();  
-renderProduk();  
-
-</script>  
-
-</body>  
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beli Produk</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* 🎨 THEME */
+:root{
+  --bg1:#fff3d6;
+  --bg2:#ffe6a1;
+  --card:rgba(255,255,255,0.75);
+  --text:#222;
+  --sub:#666;
+  --primary:#ff9800;
+}
+
+body.dark{
+  --bg1:#0f0f0f;
+  --bg2:#1a1a1a;
+  --card:rgba(30,30,30,0.75);
+  --text:#f5f5f5;
+  --sub:#aaa;
+}
+
+/* 🌍 BASE */
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  transition:0.4s;
+}
+
+/* 🔥 HEADER PREMIUM */
+header{
+  text-align:center;
+  padding:28px;
+  font-size:28px;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(135deg,#ff9800,#ffb347);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  border-bottom-left-radius:25px;
+  border-bottom-right-radius:25px;
+}
+
+/* 🧊 GLASS TOPBAR */
+.topbar{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:15px;
+
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+body.dark .topbar{
+  background:rgba(20,20,20,0.4);
+}
+
+/* 🔘 BUTTON PREMIUM */
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  text-decoration:none;
+  color:white;
+  font-weight:600;
+
+  background:linear-gradient(135deg,var(--primary),#ffb347);
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+  transition:0.25s;
+}
+
+.btn:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 12px 25px rgba(0,0,0,0.25);
+}
+
+/* 🔍 SEARCH PREMIUM */
+.search{
+  padding:12px 14px;
+  border:none;
+  border-radius:12px;
+  width:260px;
+  outline:none;
+  background:rgba(255,255,255,0.8);
+}
+
+/* 📦 GRID */
+.container{
+  padding:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+/* 🧊 PRODUCT CARD GLASS */
+.card{
+  background:var(--card);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+  padding:20px;
+  border-radius:25px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+/* TEXT */
+.nama{
+  font-size:20px;
+  font-weight:700;
+}
+
+.harga{
+  margin-top:8px;
+  font-size:18px;
+  color:#4caf50;
+  font-weight:600;
+}
+
+/* INPUT */
+input[type=number]{
+  margin-top:12px;
+  width:70px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+}
+
+/* 🏷️ KATEGORI BAR PREMIUM */
+.kategori-bar{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:10px;
+}
+
+.kategori-bar button{
+  padding:10px 14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:rgba(0,0,0,0.1);
+  font-weight:600;
+  transition:0.2s;
+}
+
+.kategori-bar button.active{
+  background:var(--primary);
+  color:white;
+}
+
+.kategori-bar button:hover{
+  transform:translateY(-2px);
+}
+
+</style>
+</head>
+
+<body>
+
+<header id="title">🛍️ Daftar Produk</header>
+
+<div class="topbar">
+
+<a href="index.html" class="btn" id="backBtn">⬅ Kembali</a>
+<a href="keranjang.html" class="btn" id="cartBtn">🛒 Keranjang</a>
+<a href="alamat.html" class="btn" id="addrBtn">📍 Alamat</a>
+
+<select onchange="changeLang(this.value)" id="langSelect" class="btn">
+<option value="id">🇮🇩 ID</option>
+<option value="en">🇺🇸 EN</option>
+<option value="jp">🇯🇵 JP</option>
+<option value="ar">🇸🇦 AR</option>
+<option value="ru">🇷🇺 RU</option>
+</select>
+
+<button onclick="toggleDark()" class="btn">🌙</button>
+
+<input type="text" class="search" id="search" placeholder="Cari produk..." onkeyup="cariProduk()">
+
+</div>
+
+<div class="kategori-bar">
+<button onclick="setKategori('all')" class="active">🔥 Semua</button>
+<button onclick="setKategori('makanan')">🍜 Makanan</button>
+<button onclick="setKategori('sabun')">🧼 Sabun</button>
+<button onclick="setKategori('beras')">🍚 Beras</button>
+</div>
+
+<div class="container" id="produkContainer"></div>
+
+<script>
+
+/* ⚙️ STATE */
+let lang = localStorage.getItem("lang") || "id";
+let dark = localStorage.getItem("dark") || "off";
+let kategoriAktif = "all";
+
+if(dark === "on") document.body.classList.add("dark");
+
+/* 🌍 TEXT */
+const text = {
+id:{title:"🛍️ Daftar Produk",back:"⬅ Kembali",cart:"🛒 Keranjang",addr:"📍 Alamat",search:"Cari produk...",add:"Tambah Keranjang",buy:"Checkout"},
+en:{title:"🛍️ Product List",back:"⬅ Back",cart:"🛒 Cart",addr:"📍 Address",search:"Search product...",add:"Add Cart",buy:"Checkout"},
+jp:{title:"🛍️ 商品一覧",back:"⬅ 戻る",cart:"🛒 カート",addr:"📍 住所",search:"検索...",add:"カート追加",buy:"購入"},
+ar:{title:"🛍️ المنتجات",back:"⬅ رجوع",cart:"🛒 السلة",addr:"📍 العنوان",search:"بحث...",add:"إضافة",buy:"شراء"},
+ru:{title:"🛍️ Товары",back:"⬅ Назад",cart:"🛒 Корзина",addr:"📍 Адрес",search:"Поиск...",add:"Добавить",buy:"Купить"}
+};
+
+/* 📦 PRODUK (TETAP SAMA) */
+const produk = [
+{nama:"🍜 Mie Goreng", harga:3500, kategori:"makanan"},
+{nama:"🍲 Mie Soto", harga:3000, kategori:"makanan"},
+{nama:"🍛 Indomie Kari Ayam", harga:3500, kategori:"makanan"},
+{nama:"🍜 Indomie Ayam Bawang", harga:3500, kategori:"makanan"},
+{nama:"🥚 Telur", harga:26000, kategori:"makanan"},
+
+{nama:"🧼 Sabun Daia", harga:18000, kategori:"sabun"},
+{nama:"🧼 Mamalemon", harga:14000, kategori:"sabun"},
+{nama:"🧼 Sabun Nuvo", harga:21000, kategori:"sabun"},
+{nama:"🧽 Rinso", harga:28000, kategori:"sabun"},
+
+{nama:"🍚 Beras Sania 5KG", harga:74000, kategori:"beras"},
+{nama:"🍚 Beras Laris 5KG", harga:73000, kategori:"beras"},
+{nama:"🍚 Beras Sumo Merah 5KG", harga:95000, kategori:"beras"},
+{nama:"🍚 Beras Premium 5KG", harga:95000, kategori:"beras"},
+{nama:"👑🍚 Beras Anak Raja 5KG", harga:95000, kategori:"beras"}
+];
+
+/* 🧠 RENDER */
+function renderProduk(){
+
+let html = "";
+
+produk.forEach((item,index)=>{
+
+if(kategoriAktif !== "all" && item.kategori !== kategoriAktif) return;
+
+html += `
+<div class="card produk-item">
+  <div class="nama">${item.nama}</div>
+  <div class="harga">Rp ${item.harga.toLocaleString("id-ID")}</div>
+
+  <input type="number" id="qty${index}" value="1" min="1">
+
+  <br><br>
+
+  <button class="btn" onclick="tambahKeranjang('${item.nama}',${item.harga},document.getElementById('qty${index}').value)">
+    ${text[lang].add}
+  </button>
+
+  <button class="btn" onclick="checkout('${item.nama}',${item.harga},document.getElementById('qty${index}').value)">
+    ${text[lang].buy}
+  </button>
+</div>
+`;
+
+});
+
+document.getElementById("produkContainer").innerHTML = html;
+}
+
+/* 🛒 KERANJANG */
+function tambahKeranjang(nama,harga,jumlah){
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+keranjang.push({nama,harga,jumlah:parseInt(jumlah)});
+localStorage.setItem("keranjang",JSON.stringify(keranjang));
+alert("OK 🔥");
+}
+
+/* 💸 CHECKOUT */
+function checkout(nama,harga,jumlah){
+let total = harga * jumlah;
+let pesan = `Halo, saya mau beli ${nama} x${jumlah} Total Rp ${total}`;
+location.href = `https://wa.me/6285820028734?text=${encodeURIComponent(pesan)}`;
+}
+
+/* 🔍 SEARCH */
+function cariProduk(){
+let input = document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".produk-item").forEach(item=>{
+item.style.display = item.innerText.toLowerCase().includes(input) ? "block" : "none";
+});
+}
+
+/* 🏷️ KATEGORI */
+function setKategori(k){
+kategoriAktif = k;
+document.querySelectorAll(".kategori-bar button").forEach(b=>b.classList.remove("active"));
+event.target.classList.add("active");
+renderProduk();
+}
+
+/* 🌍 LANG */
+function changeLang(v){
+lang = v;
+localStorage.setItem("lang",lang);
+applyLang();
+renderProduk();
+}
+
+function applyLang(){
+let t = text[lang];
+document.getElementById("title").innerText = t.title;
+document.getElementById("backBtn").innerText = t.back;
+document.getElementById("cartBtn").innerText = t.cart;
+document.getElementById("addrBtn").innerText = t.addr;
+document.getElementById("search").placeholder = t.search;
+}
+
+/* 🌙 DARK */
+function toggleDark(){
+document.body.classList.toggle("dark");
+localStorage.setItem("dark",document.body.classList.contains("dark") ? "on" : "off");
+}
+
+/* INIT */
+document.getElementById("langSelect").value = lang;
+
+applyLang();
+renderProduk();
+
+</script>
+
+</body>
 </html>
