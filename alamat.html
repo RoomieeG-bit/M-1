@@ -1,4 +1,3 @@
-<!-- alamat.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,94 +6,140 @@
 
 <title>Alamat - Warung Teh Tia</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
 
+/* 🎨 THEME */
 :root{
-  --bg:#fff8e7;
-  --card:#ffffff;
-  --text:#333;
+  --bg1:#fff3d6;
+  --bg2:#ffe6a1;
+  --card:rgba(255,255,255,0.75);
+  --text:#222;
+  --sub:#666;
   --primary:#ff9800;
 }
 
 body.dark{
-  --bg:#121212;
-  --card:#1e1e1e;
+  --bg1:#0f0f0f;
+  --bg2:#1a1a1a;
+  --card:rgba(30,30,30,0.75);
   --text:#f5f5f5;
+  --sub:#aaa;
 }
 
+/* 🌍 BASE */
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--bg);
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
   color:var(--text);
-  transition:0.3s;
+  transition:0.4s;
 }
 
+/* 🧠 HEADER PREMIUM */
 header{
-  background:var(--primary);
-  color:white;
-  padding:25px;
   text-align:center;
-  font-size:30px;
-  font-weight:bold;
+  padding:28px;
+  font-size:28px;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(135deg,#ff9800,#ffb347);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  border-bottom-left-radius:25px;
+  border-bottom-right-radius:25px;
 }
 
+/* 🧊 TOPBAR GLASS */
 .topbar{
   display:flex;
   justify-content:center;
-  align-items:center;
   gap:10px;
   flex-wrap:wrap;
   padding:15px;
+
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
 }
 
+body.dark .topbar{
+  background:rgba(20,20,20,0.4);
+}
+
+/* 🔘 BUTTON */
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:600;
+  color:white;
+
+  background:linear-gradient(135deg,var(--primary),#ffb347);
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+  transition:0.25s;
+}
+
+.btn:hover{
+  transform:translateY(-3px) scale(1.03);
+}
+
+/* 📦 CONTAINER */
 .container{
-  padding:25px;
+  padding:30px;
+  display:flex;
+  justify-content:center;
 }
 
+/* 🧊 CARD GLASS */
 .card{
+  width:100%;
+  max-width:780px;
+  padding:35px;
+  border-radius:25px;
+
   background:var(--card);
-  max-width:700px;
-  margin:auto;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.3);
+
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
   text-align:center;
 }
 
+/* TEXT */
 h1{
-  font-size:35px;
+  font-size:30px;
+  margin-bottom:10px;
 }
 
 p{
-  font-size:20px;
+  font-size:18px;
   line-height:1.7;
+  opacity:0.9;
 }
 
-.btn{
-  padding:14px 22px;
-  border:none;
-  border-radius:12px;
-  background:var(--primary);
-  color:white;
-  cursor:pointer;
-  text-decoration:none;
-  font-size:16px;
-}
-
+/* SELECT */
 select{
-  padding:12px;
-  border-radius:12px;
+  padding:10px;
   border:none;
-  font-size:15px;
+  border-radius:12px;
+  font-weight:600;
 }
 
+/* MAP */
 iframe{
   width:100%;
-  height:300px;
+  height:320px;
   border:none;
-  border-radius:15px;
+  border-radius:18px;
   margin-top:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
 </style>
@@ -102,53 +147,19 @@ iframe{
 
 <body>
 
-<header id="title">
-📍 Alamat Warung Teh Tia
-</header>
+<header id="title">📍 Alamat Warung Teh Tia</header>
 
 <div class="topbar">
 
-<button
-class="btn"
-onclick="history.back()"
-id="backBtn">
+<button class="btn" onclick="history.back()" id="backBtn">⬅ Kembali</button>
+<button class="btn" onclick="toggleDark()">🌙</button>
 
-⬅ Kembali
-
-</button>
-
-<button
-class="btn"
-onclick="toggleDark()">
-
-🌙 Dark
-
-</button>
-
-<select
-id="langSelect"
-onchange="changeLang(this.value)">
-
-<option value="id">
-🇮🇩 Indonesia
-</option>
-
-<option value="en">
-🇺🇸 English
-</option>
-
-<option value="jp">
-🇯🇵 日本語
-</option>
-
-<option value="ar">
-🇸🇦 العربية
-</option>
-
-<option value="ru">
-🇷🇺 Русский
-</option>
-
+<select id="langSelect" onchange="changeLang(this.value)" class="btn">
+<option value="id">🇮🇩 Indonesia</option>
+<option value="en">🇺🇸 English</option>
+<option value="jp">🇯🇵 日本語</option>
+<option value="ar">🇸🇦 العربية</option>
+<option value="ru">🇷🇺 Русский</option>
 </select>
 
 </div>
@@ -157,9 +168,7 @@ onchange="changeLang(this.value)">
 
 <div class="card">
 
-<h1 id="shopName">
-🏪 Warung Teh Tia
-</h1>
+<h1 id="shopName">🏪 Warung Teh Tia</h1>
 
 <p id="alamatText">
 Indonesia, Banten, Tangerang Selatan, Ciater Permai, Jalan Haji S. Nawi, Seberang Sekolah Aulady
@@ -175,99 +184,74 @@ src="https://maps.google.com/maps?q=ciater%20permai&t=&z=15&ie=UTF8&iwloc=&outpu
 
 <script>
 
-let lang =
-localStorage.getItem("lang") || "id";
+/* 🌍 STATE */
+let lang = localStorage.getItem("lang") || "id";
+let dark = localStorage.getItem("dark") || "off";
 
-let dark =
-localStorage.getItem("dark") || "off";
+if(dark === "on") document.body.classList.add("dark");
 
-if(dark === "on"){
-document.body.classList.add("dark");
-}
-
+/* 🌐 TEXT */
 const text = {
-
 id:{
 title:"📍 Alamat Warung Teh Tia",
 back:"⬅ Kembali",
 shop:"🏪 Warung Teh Tia",
-alamat:"Indonesia, Banten, Tangerang Selatan, Ciater Permai, Depan Sekolahan Aulady Ciater"
+alamat:"Indonesia, Banten, Tangerang Selatan, Ciater Permai, Depan Sekolah Aulady Ciater"
 },
-
 en:{
-title:"📍 Teh Tia Shop Address",
+title:"📍 Shop Address",
 back:"⬅ Back",
 shop:"🏪 Teh Tia Shop",
 alamat:"Indonesia, Banten, South Tangerang, Ciater Permai, Haji S. Nawi Street"
 },
-
 jp:{
 title:"📍 店舗住所",
 back:"⬅ 戻る",
 shop:"🏪 テーティアショップ",
 alamat:"インドネシア、バンテン州、南タンゲラン、ハジ・S・ナウィ通り"
 },
-
 ar:{
 title:"📍 عنوان المتجر",
 back:"⬅ رجوع",
 shop:"🏪 متجر تيه تيا",
-alamat:"إندونيسيا، بانتن، جنوب تانجيرانج، سياتر بيرماي، جالان حاج س. ناوي"
+alamat:"إندونيسيا، بانتن، جنوب تانجيرانج، سياتر بيرماي"
 },
-
 ru:{
 title:"📍 Адрес магазина",
 back:"⬅ Назад",
 shop:"🏪 Магазин Те Тиа",
-alamat:"Индонезия, Бантен, Южный Тангеранг, Улица Хаджи С. Нави"
+alamat:"Индонезия, Бантен, Южный Тангеранг, улица Хаджи С. Нави"
 }
-
 };
 
+/* 🧠 APPLY LANG */
 function applyLang(){
 
 let t = text[lang];
 
-document.getElementById("title").innerText =
-t.title;
-
-document.getElementById("backBtn").innerText =
-t.back;
-
-document.getElementById("shopName").innerText =
-t.shop;
-
-document.getElementById("alamatText").innerText =
-t.alamat;
+document.getElementById("title").innerText = t.title;
+document.getElementById("backBtn").innerText = t.back;
+document.getElementById("shopName").innerText = t.shop;
+document.getElementById("alamatText").innerText = t.alamat;
 
 localStorage.setItem("lang",lang);
-
 }
 
-function changeLang(newLang){
-
-lang = newLang;
-
+/* 🌍 LANG */
+function changeLang(v){
+lang = v;
 applyLang();
-
 }
 
+/* 🌙 DARK */
 function toggleDark(){
-
 document.body.classList.toggle("dark");
-
-localStorage.setItem(
-"dark",
-document.body.classList.contains("dark")
-? "on"
-: "off"
-);
-
+localStorage.setItem("dark",
+document.body.classList.contains("dark") ? "on" : "off");
 }
 
-document.getElementById("langSelect").value =
-lang;
-
+/* INIT */
+document.getElementById("langSelect").value = lang;
 applyLang();
 
 </script>
