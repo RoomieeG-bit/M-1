@@ -115,30 +115,30 @@ body.dark .topbar{
   box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
-/* EMOJI RATING */
+/* STAR RATING */
 .ratingBox{
   margin-top:30px;
   display:flex;
   justify-content:center;
-  gap:15px;
+  gap:12px;
   flex-wrap:wrap;
 }
 
-.rateEmoji{
+.rateStar{
   font-size:55px;
   cursor:pointer;
   transition:0.25s;
-  opacity:0.45;
+  opacity:0.35;
   user-select:none;
 }
 
-.rateEmoji.active{
+.rateStar.active{
   opacity:1;
-  transform:scale(1.15);
+  transform:scale(1.12);
 }
 
-.rateEmoji:hover{
-  transform:scale(1.2) rotate(5deg);
+.rateStar:hover{
+  transform:scale(1.2);
 }
 
 /* LABEL */
@@ -161,6 +161,12 @@ textarea{
   box-sizing:border-box;
   font-family:Poppins,sans-serif;
   outline:none;
+  background:white;
+}
+
+body.dark textarea{
+  background:#222;
+  color:white;
 }
 
 /* RESULT */
@@ -168,6 +174,46 @@ textarea{
   margin-top:20px;
   font-weight:600;
   color:var(--primary);
+}
+
+/* HISTORY */
+.historyBox{
+  margin-top:35px;
+  text-align:left;
+}
+
+.historyItem{
+  background:rgba(255,255,255,0.3);
+  padding:15px;
+  border-radius:18px;
+  margin-top:12px;
+  backdrop-filter:blur(10px);
+}
+
+body.dark .historyItem{
+  background:rgba(255,255,255,0.08);
+}
+
+.deleteBtn{
+  margin-top:10px;
+  border:none;
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  color:white;
+  font-weight:600;
+  background:linear-gradient(135deg,#ff5252,#ff7675);
+}
+
+.timeText{
+  opacity:0.7;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.reviewText{
+  margin-top:10px;
+  opacity:0.9;
 }
 
 </style>
@@ -200,30 +246,38 @@ textarea{
 <h1 id="welcome">Kasih Rating 🔥</h1>
 
 <p id="desc">
-Pilih emoji sesuai pengalaman lu 😎
+Kasih bintang sesuai pengalaman lu ⭐
 </p>
 
 <div class="ratingBox">
 
-<span class="rateEmoji" onclick="setRating(1)">😫</span>
-<span class="rateEmoji" onclick="setRating(2)">🙁</span>
-<span class="rateEmoji" onclick="setRating(3)">😐</span>
-<span class="rateEmoji" onclick="setRating(4)">😃</span>
-<span class="rateEmoji" onclick="setRating(5)">😁</span>
+<span class="rateStar" onclick="setRating(1)">⭐</span>
+<span class="rateStar" onclick="setRating(2)">⭐</span>
+<span class="rateStar" onclick="setRating(3)">⭐</span>
+<span class="rateStar" onclick="setRating(4)">⭐</span>
+<span class="rateStar" onclick="setRating(5)">⭐</span>
 
 </div>
 
-<div id="ratingLabel">Belum pilih rating</div>
+<div id="ratingLabel">0/5 ⭐</div>
 
 <textarea id="review" placeholder="Tulis review lu disini..."></textarea>
 
-<br>
+<br><br>
 
 <button class="btn" onclick="kirimRating()" id="sendBtn">
 🚀 Kirim Rating
 </button>
 
 <div id="hasil"></div>
+
+<div class="historyBox">
+
+<h2 id="historyTitle">📜 History Rating</h2>
+
+<div id="historyList"></div>
+
+</div>
 
 </div>
 
@@ -240,16 +294,11 @@ if(dark === "on"){
 }
 
 /* RATING */
-let currentRating = localStorage.getItem("ratingEmoji") || 0;
+let currentRating = 0;
 
-/* LABEL EMOJI */
-const emojiText = {
-1:"😫 I don't like the service!",
-2:"🙁 I'm bored...",
-3:"😐 Good i think",
-4:"😃 So good!",
-5:"😁 THIS IS GOOD!"
-};
+/* HISTORY */
+let ratingHistory =
+JSON.parse(localStorage.getItem("ratingHistory") || "[]");
 
 /* TEXT */
 const text = {
@@ -258,60 +307,70 @@ id:{
 title:"🎯 Rating Warung Teh Tia",
 back:"⬅ Kembali",
 welcome:"Kasih Rating 🔥",
-desc:"Pilih emoji sesuai pengalaman lu 😎",
+desc:"Kasih bintang sesuai pengalaman lu ⭐",
 placeholder:"Tulis review lu disini...",
 send:"🚀 Kirim Rating",
 done:"Rating berhasil dikirim 🔥",
 empty:"Pilih rating dulu 🔥",
-norating:"Belum pilih rating"
+history:"📜 History Rating",
+delete:"🗑️ Hapus",
+norating:"Belum ada rating"
 },
 
 en:{
 title:"🎯 Teh Tia Rating",
 back:"⬅ Back",
 welcome:"Give Rating 🔥",
-desc:"Choose emoji based on your experience 😎",
+desc:"Give stars based on your experience ⭐",
 placeholder:"Write your review here...",
 send:"🚀 Send Rating",
 done:"Rating sent successfully 🔥",
 empty:"Choose rating first 🔥",
-norating:"No rating selected"
+history:"📜 Rating History",
+delete:"🗑️ Delete",
+norating:"No ratings yet"
 },
 
 jp:{
 title:"🎯 レビュー",
 back:"⬅ 戻る",
 welcome:"評価してください 🔥",
-desc:"体験に合わせて絵文字を選んでください 😎",
+desc:"星で評価してください ⭐",
 placeholder:"レビューを書いてください...",
 send:"🚀 送信",
 done:"送信成功 🔥",
 empty:"先に評価してください 🔥",
-norating:"未選択"
+history:"📜 評価履歴",
+delete:"🗑️ 削除",
+norating:"まだ評価なし"
 },
 
 ar:{
 title:"🎯 التقييم",
 back:"⬅ رجوع",
 welcome:"أضف تقييم 🔥",
-desc:"اختر الإيموجي حسب تجربتك 😎",
+desc:"أضف نجوم حسب تجربتك ⭐",
 placeholder:"اكتب رأيك هنا...",
 send:"🚀 إرسال",
 done:"تم الإرسال 🔥",
 empty:"اختر تقييم أولاً 🔥",
-norating:"لا يوجد تقييم"
+history:"📜 سجل التقييمات",
+delete:"🗑️ حذف",
+norating:"لا يوجد تقييمات"
 },
 
 ru:{
 title:"🎯 Рейтинг",
 back:"⬅ Назад",
 welcome:"Оставьте рейтинг 🔥",
-desc:"Выберите эмодзи 😎",
+desc:"Поставьте звезды ⭐",
 placeholder:"Напишите отзыв...",
 send:"🚀 Отправить",
 done:"Отправлено 🔥",
 empty:"Сначала выберите рейтинг 🔥",
-norating:"Рейтинг не выбран"
+history:"📜 История рейтинга",
+delete:"🗑️ Удалить",
+norating:"Нет рейтингов"
 }
 
 };
@@ -327,12 +386,11 @@ document.getElementById("welcome").innerText = t.welcome;
 document.getElementById("desc").innerText = t.desc;
 document.getElementById("review").placeholder = t.placeholder;
 document.getElementById("sendBtn").innerText = t.send;
-
-if(currentRating == 0){
-document.getElementById("ratingLabel").innerText = t.norating;
-}
+document.getElementById("historyTitle").innerText = t.history;
 
 localStorage.setItem("lang",lang);
+
+renderHistory();
 
 }
 
@@ -364,20 +422,18 @@ function setRating(num){
 
 currentRating = num;
 
-localStorage.setItem("ratingEmoji",num);
-
-document.querySelectorAll(".rateEmoji").forEach((emoji,index)=>{
+document.querySelectorAll(".rateStar").forEach((star,index)=>{
 
 if(index < num){
-emoji.classList.add("active");
+star.classList.add("active");
 }else{
-emoji.classList.remove("active");
+star.classList.remove("active");
 }
 
 });
 
 document.getElementById("ratingLabel").innerText =
-emojiText[num];
+num + "/5 ⭐";
 
 }
 
@@ -392,25 +448,117 @@ return;
 
 }
 
-let review = document.getElementById("review").value;
+let review =
+document.getElementById("review").value;
 
-localStorage.setItem("ratingReview",review);
+let now = new Date();
 
-let emoji = ["😫","🙁","😐","🙂","😃","😁"][currentRating];
+let tanggal =
+now.toLocaleDateString();
+
+let jam =
+now.toLocaleTimeString();
+
+ratingHistory.unshift({
+rating:currentRating,
+review:review,
+tanggal:tanggal,
+jam:jam
+});
+
+localStorage.setItem(
+"ratingHistory",
+JSON.stringify(ratingHistory)
+);
+
+let stars = "";
+
+for(let i=0;i<currentRating;i++){
+stars += "⭐";
+}
 
 let pesan =
 `🎯 RATING BARU%0A%0A` +
-`${emoji} Rating: ${currentRating}/5%0A` +
-`🏷️ Status: ${emojiText[currentRating]}%0A%0A` +
-`📝 Review:%0A${review}`;
+`${stars} (${currentRating}/5)%0A%0A` +
+`📝 Review:%0A${review}%0A%0A` +
+`📅 ${tanggal}%0A` +
+`🕒 ${jam}`;
 
 document.getElementById("hasil").innerText =
 text[lang].done;
 
-alert(text[lang].done);
+renderHistory();
 
 location.href =
 `https://wa.me/6285820028734?text=${pesan}`;
+
+}
+
+/* HISTORY */
+function renderHistory(){
+
+let box =
+document.getElementById("historyList");
+
+box.innerHTML = "";
+
+if(ratingHistory.length === 0){
+
+box.innerHTML =
+`<p>${text[lang].norating}</p>`;
+
+return;
+
+}
+
+ratingHistory.forEach((item,index)=>{
+
+let stars = "";
+
+for(let i=0;i<item.rating;i++){
+stars += "⭐";
+}
+
+box.innerHTML += `
+<div class="historyItem">
+
+<div style="font-size:28px">
+${stars}
+</div>
+
+<div class="reviewText">
+📝 ${item.review || "-"}
+</div>
+
+<div class="timeText">
+📅 ${item.tanggal}
+<br>
+🕒 ${item.jam}
+</div>
+
+<button class="deleteBtn"
+onclick="hapusRating(${index})">
+${text[lang].delete}
+</button>
+
+</div>
+`;
+
+});
+
+}
+
+/* DELETE */
+function hapusRating(index){
+
+ratingHistory.splice(index,1);
+
+localStorage.setItem(
+"ratingHistory",
+JSON.stringify(ratingHistory)
+);
+
+renderHistory();
 
 }
 
@@ -418,10 +566,6 @@ location.href =
 document.getElementById("langSelect").value = lang;
 
 applyLang();
-
-if(currentRating > 0){
-setRating(currentRating);
-}
 
 </script>
 
