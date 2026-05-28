@@ -1,270 +1,300 @@
-<!DOCTYPE html>      
-<html lang="id">      
-<head>      
-<meta charset="UTF-8">      
-<meta name="viewport" content="width=device-width, initial-scale=1.0">      
-      
-<title>Warung Teh Tia</title>      
-      
-<link rel="preconnect" href="https://fonts.googleapis.com">      
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">      
-      
-<style>      
-      
-:root{      
-  --bg1:#fff1d6;      
-  --bg2:#ffe0a3;      
-  --card:rgba(255,255,255,0.75);      
-  --text:#222;      
-  --primary:#ff9800;      
-}      
-      
-body.dark{      
-  --bg1:#0f0f0f;      
-  --bg2:#1a1a1a;      
-  --card:rgba(30,30,30,0.7);      
-  --text:#f5f5f5;      
-}      
-      
-body{      
-  margin:0;      
-  font-family:Poppins,sans-serif;      
-  color:var(--text);      
-  background:linear-gradient(135deg,var(--bg1),var(--bg2));      
-  transition:0.4s;      
-}      
-      
-/* 🔥 COLORBLIND */      
-body.protanopia{ filter:hue-rotate(-20deg) saturate(0.8); }      
-body.deuteranopia{ filter:hue-rotate(40deg) saturate(0.7); }      
-body.tritanopia{ filter:hue-rotate(90deg) saturate(0.8); }      
-      
-/* HEADER PREMIUM */      
-header{      
-  text-align:center;      
-  padding:30px;      
-  font-size:28px;      
-  font-weight:700;      
-  color:white;      
-  background:linear-gradient(135deg,#ff9800,#ffb347);      
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);      
-  border-bottom-left-radius:25px;      
-  border-bottom-right-radius:25px;      
-}      
-      
-/* TOPBAR GLASS */      
-.topbar{      
-  display:flex;      
-  justify-content:center;      
-  flex-wrap:wrap;      
-  gap:10px;      
-  padding:15px;      
-  position:sticky;      
-  top:0;      
-  z-index:100;      
-      
-  background:rgba(255,255,255,0.2);      
-  backdrop-filter:blur(14px);      
-  border-bottom:1px solid rgba(255,255,255,0.2);      
-}      
-      
-body.dark .topbar{      
-  background:rgba(20,20,20,0.4);      
-}      
-      
-/* NAV BUTTON PREMIUM */      
-.navBtn{      
-  padding:10px 14px;      
-  border:none;      
-  border-radius:14px;      
-  background:linear-gradient(135deg,var(--primary),#ffb347);      
-  color:white;      
-  cursor:pointer;      
-  text-decoration:none;      
-  font-weight:600;      
-  transition:0.25s;      
-  box-shadow:0 6px 15px rgba(0,0,0,0.15);      
-}      
-      
-.navBtn:hover{      
-  transform:translateY(-3px) scale(1.03);      
-  box-shadow:0 10px 25px rgba(0,0,0,0.25);      
-}      
-      
-/* SELECT */      
-select.navBtn{      
-  appearance:none;      
-}      
-      
-/* CONTAINER */      
-.container{      
-  display:flex;      
-  justify-content:center;      
-  padding:40px 20px;      
-}      
-      
-/* CARD GLASS PREMIUM */      
-.card{      
-  width:100%;      
-  max-width:750px;      
-  padding:45px;      
-  border-radius:30px;      
-  background:var(--card);      
-  backdrop-filter:blur(10px);      
-  text-align:center;      
-  box-shadow:0 15px 40px rgba(0,0,0,0.25);      
-  border:1px solid rgba(255,255,255,0.3);      
-  transition:0.3s;      
-}      
-      
-.card:hover{      
-  transform:translateY(-5px);      
-}      
-      
-/* TEXT */      
-h1{      
-  font-size:30px;      
-  margin-bottom:10px;      
-}      
-      
-p{      
-  opacity:0.85;      
-  margin:6px 0;      
-}      
-      
-/* MAIN BUTTON ULTRA PREMIUM */      
-.mainBtn{      
-  display:inline-block;      
-  margin-top:20px;      
-  padding:16px 32px;      
-  border-radius:18px;      
-  text-decoration:none;      
-  color:white;      
-  font-weight:700;      
-  font-size:18px;      
-      
-  background:linear-gradient(135deg,#ff9800,#ffcc80);      
-  box-shadow:0 10px 25px rgba(255,152,0,0.35);      
-  transition:0.25s;      
-}      
-      
-.mainBtn:hover{      
-  transform:translateY(-4px) scale(1.03);      
-  box-shadow:0 15px 35px rgba(255,152,0,0.5);      
-}      
-      
-/* POPUP */      
-.popupBg{      
-  position:fixed;      
-  inset:0;      
-  background:rgba(0,0,0,0.45);      
-  display:none;      
-  justify-content:center;      
-  align-items:center;      
-  z-index:9999;      
-}      
-      
-.popup{      
-  width:90%;      
-  max-width:420px;      
-  background:var(--card);      
-  backdrop-filter:blur(12px);      
-  padding:25px;      
-  border-radius:25px;      
-  box-shadow:0 15px 40px rgba(0,0,0,0.3);      
-  text-align:center;      
-  animation:popupAnim 0.25s ease;      
-}      
-      
-.popup h2{      
-  margin-top:0;      
-}      
-      
-.closeBtn{      
-  margin-top:20px;      
-  padding:12px 20px;      
-  border:none;      
-  border-radius:14px;      
-  background:linear-gradient(135deg,#ff9800,#ffb347);      
-  color:white;      
-  font-weight:700;      
-  cursor:pointer;      
-}      
-      
-@keyframes popupAnim{      
-  from{      
-    opacity:0;      
-    transform:scale(0.8);      
-  }      
-  to{      
-    opacity:1;      
-    transform:scale(1);      
-  }      
-}      
-      
-/* FOOTER */      
-footer{      
-  margin-top:60px;      
-  padding:20px;      
-  text-align:center;      
-  font-size:13px;      
-  opacity:0.8;      
-}      
-      
-</style>      
-</head>      
-      
-<body>      
-      
-<header id="title">🛒 Warung Teh Tia</header>      
-      
-<div class="topbar">      
-      
-<a class="navBtn" id="buyBtn" href="beli.html">🛒 Beli</a>      
-<a class="navBtn" id="cartBtn" href="keranjang.html">🛍️ Keranjang</a>      
-<a class="navBtn" id="accBtn" href="akun.html">👤 Akun</a>      
-<a class="navBtn" id="addrBtn" href="alamat.html">📍 Alamat</a>      
-<a class="navBtn" id="contBtn" href="kontak.html">ℹ️ Kontak</a>      
-<a class="navBtn" id="ratingBtn" href="rating.html">⭐ Rating</a>      
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<button class="navBtn" onclick="openPopup()" id="infoBtn">⋮</button>
-      
-<button class="navBtn" onclick="toggleDark()">🌙</button>      
-      
-<select class="navBtn" onchange="changeLang(this.value)" id="langSelect">      
-<option value="id">🇮🇩 ID</option>      
-<option value="en">🇺🇸 EN</option>      
-<option value="jp">🇯🇵 JP</option>      
-<option value="ar">🇸🇦 AR</option>      
-<option value="ru">🇷🇺 RU</option>      
-</select>      
-      
-<select class="navBtn" onchange="changeColorblind(this.value)" id="cbSelect">      
-<option value="normal">Normal</option>      
-<option value="protanopia">Protanopia</option>      
-<option value="deuteranopia">Deuteranopia</option>      
-<option value="tritanopia">Tritanopia</option>      
-</select>      
-      
-</div>      
-      
-<div class="container">      
-      
-<div class="card">      
-      
-<h1 id="welcome">Selamat Datang 👋</h1>      
-<p id="desc1">Website Grosir Termurah di Bumi!</p>      
-<p id="desc2">Semua ada disini! Tekan tombol untuk beli!</p>      
-      
-<a href="beli.html" class="mainBtn" id="shopBtn">🛒 Mulai Belanja</a>      
-      
-</div>      
-      
-</div>      
+<title>Warung Teh Tia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg1:#fff1d6;
+  --bg2:#ffe0a3;
+  --card:rgba(255,255,255,0.75);
+  --text:#222;
+  --primary:#ff9800;
+}
+
+body.dark{
+  --bg1:#0f0f0f;
+  --bg2:#1a1a1a;
+  --card:rgba(30,30,30,0.7);
+  --text:#f5f5f5;
+}
+
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  color:var(--text);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  transition:0.4s;
+}
+
+/* 🔥 COLORBLIND */
+body.protanopia{ filter:hue-rotate(-20deg) saturate(0.8); }
+body.deuteranopia{ filter:hue-rotate(40deg) saturate(0.7); }
+body.tritanopia{ filter:hue-rotate(90deg) saturate(0.8); }
+
+/* HEADER PREMIUM */
+header{
+  position:relative;
+  text-align:center;
+  padding:30px;
+  font-size:28px;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(135deg,#ff9800,#ffb347);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  border-bottom-left-radius:25px;
+  border-bottom-right-radius:25px;
+}
+
+/* TITIK TIGA */
+.infoDots{
+  position:absolute;
+  right:20px;
+  top:20px;
+  width:45px;
+  height:45px;
+  border:none;
+  border-radius:14px;
+  background:rgba(255,255,255,0.2);
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:0.25s;
+}
+
+.infoDots:hover{
+  transform:scale(1.08);
+  background:rgba(255,255,255,0.3);
+}
+
+/* TOPBAR GLASS */
+.topbar{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+body.dark .topbar{
+  background:rgba(20,20,20,0.4);
+}
+
+/* NAV BUTTON PREMIUM */
+.navBtn{
+  padding:10px 14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--primary),#ffb347);
+  color:white;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.25s;
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+
+.navBtn:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* SELECT */
+select.navBtn{
+  appearance:none;
+}
+
+/* CONTAINER */
+.container{
+  display:flex;
+  justify-content:center;
+  padding:40px 20px;
+}
+
+/* CARD GLASS PREMIUM */
+.card{
+  width:100%;
+  max-width:750px;
+  padding:45px;
+  border-radius:30px;
+  background:var(--card);
+  backdrop-filter:blur(10px);
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.3);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* TEXT */
+h1{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+p{
+  opacity:0.85;
+  margin:6px 0;
+}
+
+/* MAIN BUTTON ULTRA PREMIUM */
+.mainBtn{
+  display:inline-block;
+  margin-top:20px;
+  padding:16px 32px;
+  border-radius:18px;
+  text-decoration:none;
+  color:white;
+  font-weight:700;
+  font-size:18px;
+
+  background:linear-gradient(135deg,#ff9800,#ffcc80);
+  box-shadow:0 10px 25px rgba(255,152,0,0.35);
+  transition:0.25s;
+}
+
+.mainBtn:hover{
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 15px 35px rgba(255,152,0,0.5);
+}
+
+/* POPUP */
+.popupBg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup{
+  width:90%;
+  max-width:420px;
+  background:var(--card);
+  backdrop-filter:blur(12px);
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+  text-align:center;
+  animation:popupAnim 0.25s ease;
+}
+
+.popup h2{
+  margin-top:0;
+}
+
+.closeBtn{
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#ff9800,#ffb347);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+@keyframes popupAnim{
+  from{
+    opacity:0;
+    transform:scale(0.8);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* FOOTER */
+footer{
+  margin-top:60px;
+  padding:20px;
+  text-align:center;
+  font-size:13px;
+  opacity:0.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<header id="title">
+🛒 Warung Teh Tia
+
+<button class="infoDots" onclick="openPopup()">
+⋮
+</button>
+
+</header>
+
+<div class="topbar">
+
+<a class="navBtn" id="buyBtn" href="beli.html">🛒 Beli</a>
+<a class="navBtn" id="cartBtn" href="keranjang.html">🛍️ Keranjang</a>
+<a class="navBtn" id="accBtn" href="akun.html">👤 Akun</a>
+<a class="navBtn" id="addrBtn" href="alamat.html">📍 Alamat</a>
+<a class="navBtn" id="contBtn" href="kontak.html">ℹ️ Kontak</a>
+<a class="navBtn" id="ratingBtn" href="rating.html">⭐ Rating</a>
+
+<button class="navBtn" onclick="toggleDark()">🌙</button>
+
+<select class="navBtn" onchange="changeLang(this.value)" id="langSelect">
+<option value="id">🇮🇩 ID</option>
+<option value="en">🇺🇸 EN</option>
+<option value="jp">🇯🇵 JP</option>
+<option value="ar">🇸🇦 AR</option>
+<option value="ru">🇷🇺 RU</option>
+</select>
+
+<select class="navBtn" onchange="changeColorblind(this.value)" id="cbSelect">
+<option value="normal">Normal</option>
+<option value="protanopia">Protanopia</option>
+<option value="deuteranopia">Deuteranopia</option>
+<option value="tritanopia">Tritanopia</option>
+</select>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h1 id="welcome">Selamat Datang 👋</h1>
+<p id="desc1">Website Grosir Termurah di Bumi!</p>
+<p id="desc2">Semua ada disini! Tekan tombol untuk beli!</p>
+
+<a href="beli.html" class="mainBtn" id="shopBtn">🛒 Mulai Belanja</a>
+
+</div>
+
+</div>
 
 <div class="popupBg" id="popupBg">
   <div class="popup">
+
     <h2 id="popupTitle">ℹ️ Informasi</h2>
+
     <p id="popupText">
       Website ini mendukung multi bahasa, dark mode, dan mode colorblind
     </p>
@@ -272,20 +302,21 @@ footer{
     <button class="closeBtn" onclick="closePopup()" id="closeText">
       Tutup
     </button>
+
   </div>
 </div>
-      
-<footer>© 2026 Warung Teh Tia</footer>      
-      
-<script>      
-/* LOGIC LU TETEP SAMA, GAK DIOTAK-ATIK */      
-let lang = localStorage.getItem("lang") || "id";      
-let colorblind = localStorage.getItem("colorblind") || "normal";      
-      
-let dark = localStorage.getItem("dark") || "off";      
-if(dark === "on") document.body.classList.add("dark");      
-      
-const text = {      
+
+<footer>© 2026 Warung Teh Tia</footer>
+
+<script>
+/* LOGIC LU TETEP SAMA, GAK DIOTAK-ATIK */
+let lang = localStorage.getItem("lang") || "id";
+let colorblind = localStorage.getItem("colorblind") || "normal";
+
+let dark = localStorage.getItem("dark") || "off";
+if(dark === "on") document.body.classList.add("dark");
+
+const text = {
 id:{
 title:"🛒 Warung Teh Tia",
 welcome:"Selamat Datang 👋",
@@ -301,7 +332,7 @@ shop:"🛒 Mulai Belanja",
 popupTitle:"ℹ️ Informasi",
 popupText:"Website ini mendukung multi bahasa, dark mode, dan mode colorblind",
 close:"Tutup"
-},      
+},
 
 en:{
 title:"🛒 Teh Tia Shop",
@@ -318,7 +349,7 @@ shop:"🛒 Start Shopping",
 popupTitle:"ℹ️ Information",
 popupText:"This website supports multi language, dark mode, and colorblind mode",
 close:"Close"
-},      
+},
 
 jp:{
 title:"🛒 ティアのティーショップ",
@@ -335,7 +366,7 @@ shop:"🛒 ショッピングを始めましょう",
 popupTitle:"ℹ️ 情報",
 popupText:"このウェブサイトは多言語、ダークモード、色覚サポートに対応しています",
 close:"閉じる"
-},      
+},
 
 ar:{
 title:"🛒 متجر",
@@ -352,7 +383,7 @@ shop:"🛒 ابدأ التسوق",
 popupTitle:"ℹ️ معلومات",
 popupText:"هذا الموقع يدعم تعدد اللغات والوضع الليلي ووضع عمى الألوان",
 close:"إغلاق"
-},      
+},
 
 ru:{
 title:"🛒 Магазин",
@@ -369,52 +400,53 @@ shop:"🛒 Старт",
 popupTitle:"ℹ️ Информация",
 popupText:"Этот сайт поддерживает несколько языков, тёмный режим и режим дальтонизма",
 close:"Закрыть"
-}      
-};      
-      
-function applyAll(){      
-let t = text[lang];      
-      
-document.getElementById("title").innerText = t.title;      
-document.getElementById("welcome").innerText = t.welcome;      
-document.getElementById("desc1").innerText = t.desc1;      
-document.getElementById("desc2").innerText = t.desc2;      
-      
-document.getElementById("buyBtn").innerText = t.buy;      
-document.getElementById("cartBtn").innerText = t.cart;      
-document.getElementById("accBtn").innerText = t.acc;      
-document.getElementById("addrBtn").innerText = t.addr;      
-document.getElementById("shopBtn").innerText = t.shop;      
-document.getElementById("contBtn").innerText = t.cont;      
-document.getElementById("ratingBtn").innerText = t.rating;      
+}
+};
+
+function applyAll(){
+let t = text[lang];
+
+document.getElementById("title").childNodes[0].textContent = t.title;
+
+document.getElementById("welcome").innerText = t.welcome;
+document.getElementById("desc1").innerText = t.desc1;
+document.getElementById("desc2").innerText = t.desc2;
+
+document.getElementById("buyBtn").innerText = t.buy;
+document.getElementById("cartBtn").innerText = t.cart;
+document.getElementById("accBtn").innerText = t.acc;
+document.getElementById("addrBtn").innerText = t.addr;
+document.getElementById("shopBtn").innerText = t.shop;
+document.getElementById("contBtn").innerText = t.cont;
+document.getElementById("ratingBtn").innerText = t.rating;
 
 document.getElementById("popupTitle").innerText = t.popupTitle;
 document.getElementById("popupText").innerText = t.popupText;
 document.getElementById("closeText").innerText = t.close;
-      
-localStorage.setItem("lang", lang);      
-}      
-      
-function toggleDark(){      
-document.body.classList.toggle("dark");      
-localStorage.setItem("dark", document.body.classList.contains("dark") ? "on" : "off");      
-}      
-      
-function changeLang(v){      
-lang = v;      
-applyAll();      
-}      
-      
-function changeColorblind(v){      
-colorblind = v;      
-localStorage.setItem("colorblind", v);      
-      
-document.body.classList.remove("protanopia","deuteranopia","tritanopia");      
-      
-if(v !== "normal"){      
-document.body.classList.add(v);      
-}      
-}      
+
+localStorage.setItem("lang", lang);
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+localStorage.setItem("dark", document.body.classList.contains("dark") ? "on" : "off");
+}
+
+function changeLang(v){
+lang = v;
+applyAll();
+}
+
+function changeColorblind(v){
+colorblind = v;
+localStorage.setItem("colorblind", v);
+
+document.body.classList.remove("protanopia","deuteranopia","tritanopia");
+
+if(v !== "normal"){
+document.body.classList.add(v);
+}
+}
 
 function openPopup(){
 document.getElementById("popupBg").style.display = "flex";
@@ -423,16 +455,16 @@ document.getElementById("popupBg").style.display = "flex";
 function closePopup(){
 document.getElementById("popupBg").style.display = "none";
 }
-      
-document.getElementById("langSelect").value = lang;      
-document.getElementById("cbSelect").value = colorblind;      
-      
-if(colorblind !== "normal"){      
-document.body.classList.add(colorblind);      
-}      
-      
-applyAll();      
-</script>      
-      
-</body>      
+
+document.getElementById("langSelect").value = lang;
+document.getElementById("cbSelect").value = colorblind;
+
+if(colorblind !== "normal"){
+document.body.classList.add(colorblind);
+}
+
+applyAll();
+</script>
+
+</body>
 </html>
