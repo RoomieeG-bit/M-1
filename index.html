@@ -239,12 +239,13 @@ footer{
           
 <body>          
           
-<header id="title">          
-🛒 Warung Teh Tia          
-          
-<button class="infoDots" onclick="openPopup()">          
-⋮          
-</button>          
+<header id="title">
+  <span id="titleText">🛒 Warung Teh Tia</span>
+
+  <button class="infoDots" onclick="openPopup()">
+    ⋮
+  </button>
+</header>
           
 </header>          
           
@@ -406,7 +407,7 @@ close:"Закрыть"
 function applyAll(){          
 let t = text[lang];          
           
-document.getElementById("title").firstChild.textContent = t.title + " ";
+document.getElementById("titleText").innerText = t.title;
           
 document.getElementById("welcome").innerText = t.welcome;          
 document.getElementById("desc1").innerText = t.desc1;          
