@@ -406,7 +406,7 @@ close:"Закрыть"
 function applyAll(){          
 let t = text[lang];          
           
-document.getElementById("title").firstChild.textContent = t.title + " ";
+document.getElementById("title").innerText = t.title;
           
 document.getElementById("welcome").innerText = t.welcome;          
 document.getElementById("desc1").innerText = t.desc1;          
