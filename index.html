@@ -85,6 +85,7 @@ header{
   position:sticky;          
   top:0;          
   z-index:100;          
+  role:navigation;          
           
   background:rgba(255,255,255,0.2);          
   backdrop-filter:blur(14px);          
@@ -239,26 +240,26 @@ footer{
           
 <body>          
           
-<header id="title">
+<header id="title" role="banner">
   <span id="titleText">🛒 Warung Teh Tia</span>
 
-  <button class="infoDots" onclick="openPopup()">
+  <button class="infoDots" onclick="openPopup()" id="infoBtnMain" aria-label="Buka informasi">
     ⋮
   </button>
 </header>          
           
-<div class="topbar">          
+<div class="topbar" role="navigation">          
           
-<a class="navBtn" id="buyBtn" href="beli.html">🛒 Beli</a>          
-<a class="navBtn" id="cartBtn" href="keranjang.html">🛍️ Keranjang</a>          
-<a class="navBtn" id="accBtn" href="akun.html">👤 Akun</a>          
-<a class="navBtn" id="addrBtn" href="alamat.html">📍 Alamat</a>          
-<a class="navBtn" id="contBtn" href="kontak.html">ℹ️ Kontak</a>          
-<a class="navBtn" id="ratingBtn" href="rating.html">⭐ Rating</a>          
+<a class="navBtn" id="buyBtn" href="beli.html" aria-label="Beli produk">🛒 Beli</a>          
+<a class="navBtn" id="cartBtn" href="keranjang.html" aria-label="Lihat keranjang belanja">🛍️ Keranjang</a>          
+<a class="navBtn" id="accBtn" href="akun.html" aria-label="Buka halaman akun">👤 Akun</a>          
+<a class="navBtn" id="addrBtn" href="alamat.html" aria-label="Kelola alamat pengiriman">📍 Alamat</a>          
+<a class="navBtn" id="contBtn" href="kontak.html" aria-label="Hubungi kami">ℹ️ Kontak</a>          
+<a class="navBtn" id="ratingBtn" href="rating.html" aria-label="Lihat rating dan ulasan">⭐ Rating</a>          
           
-<button class="navBtn" onclick="toggleDark()">🌙</button>          
+<button class="navBtn" id="darkBtn" onclick="toggleDark()" aria-label="Aktifkan mode gelap">🌙</button>          
           
-<select class="navBtn" onchange="changeLang(this.value)" id="langSelect">          
+<select class="navBtn" onchange="changeLang(this.value)" id="langSelect" aria-label="Pilih bahasa">          
 <option value="id">🇮🇩 ID</option>          
 <option value="en">🇺🇸 EN</option>          
 <option value="jp">🇯🇵 JP</option>          
@@ -266,7 +267,7 @@ footer{
 <option value="ru">🇷🇺 RU</option>          
 </select>          
           
-<select class="navBtn" onchange="changeColorblind(this.value)" id="cbSelect">          
+<select class="navBtn" onchange="changeColorblind(this.value)" id="cbSelect" aria-label="Pilih mode buta warna">          
 <option value="normal">Normal</option>          
 <option value="protanopia">Protanopia</option>          
 <option value="deuteranopia">Deuteranopia</option>          
@@ -283,13 +284,13 @@ footer{
 <p id="desc1">Website Grosir Termurah di Bumi!</p>          
 <p id="desc2">Semua ada disini! Tekan tombol untuk beli!</p>          
           
-<a href="beli.html" class="mainBtn" id="shopBtn">🛒 Mulai Belanja</a>          
+<a href="beli.html" class="mainBtn" id="shopBtn" aria-label="Mulai berbelanja sekarang">🛒 Mulai Belanja</a>          
           
 </div>          
           
 </div>          
           
-<div class="popupBg" id="popupBg">          
+<div class="popupBg" id="popupBg" role="dialog" aria-modal="true" aria-labelledby="popupTitle">          
   <div class="popup">          
           
     <h2 id="popupTitle">ℹ️ Informasi</h2>          
@@ -298,7 +299,7 @@ footer{
       Website ini dibuat oleh RoomieeG-bit atau dipanggil Athaya. Bagusnya, aku mengupdate ini hampir setiap hari.          
     </p>          
           
-    <button class="closeBtn" onclick="closePopup()" id="closeText">          
+    <button class="closeBtn" onclick="closePopup()" id="closeText" aria-label="Tutup popup informasi">          
       Tutup          
     </button>          
           
@@ -322,15 +323,27 @@ welcome:"Selamat Datang 👋",
 desc1:"Website Grosir termurah di bumi!",          
 desc2:"Semua ada disini! Tekan tombol untuk beli!",          
 buy:"🛒 Beli",          
+buyLabel:"Beli produk",
 cart:"🛍️ Keranjang",          
+cartLabel:"Lihat keranjang belanja",
 acc:"👤 Akun",          
+accLabel:"Buka halaman akun",
 addr:"📍 Alamat",          
+addrLabel:"Kelola alamat pengiriman",
 cont:"ℹ️ Kontak",          
+contLabel:"Hubungi kami",
 rating:"⭐ Rating",          
+ratingLabel:"Lihat rating dan ulasan",
 shop:"🛒 Mulai Belanja",          
+shopLabel:"Mulai berbelanja sekarang",
 popupTitle:"ℹ️ Informasi",          
 popupText:"Website ini dibuat oleh RoomieeG-bit atau dipanggil Athaya. Bagusnya, aku mengupdate ini hampir setiap hari.",          
-close:"Tutup"          
+close:"Tutup",          
+closeLabel:"Tutup popup informasi",
+darkLabel:"Aktifkan mode gelap",
+langLabel:"Pilih bahasa",
+cbLabel:"Pilih mode buta warna",
+infoLabel:"Buka informasi"
 },          
           
 en:{          
@@ -339,15 +352,27 @@ welcome:"Welcome 👋",
 desc1:"The cheapest wholesale website on earth!",          
 desc2:"Everything is here! Press button to buy!",          
 buy:"🛒 Buy",          
+buyLabel:"Buy products",
 cart:"🛍️ Cart",          
+cartLabel:"View shopping cart",
 acc:"👤 Account",          
+accLabel:"Open account page",
 addr:"📍 Address",          
+addrLabel:"Manage delivery address",
 cont:"ℹ️ Contact",          
+contLabel:"Contact us",
 rating:"⭐ Rating",          
+ratingLabel:"View ratings and reviews",
 shop:"🛒 Start Shopping",          
+shopLabel:"Start shopping now",
 popupTitle:"ℹ️ Information",          
 popupText:"This website was created by RoomieeG-bit, also known as Athaya. The good thing is, I update it almost daily.",          
-close:"Close"          
+close:"Close",          
+closeLabel:"Close information popup",
+darkLabel:"Enable dark mode",
+langLabel:"Choose language",
+cbLabel:"Choose color blind mode",
+infoLabel:"Open information"
 },          
           
 jp:{          
@@ -356,15 +381,27 @@ welcome:"ようこそ 👋",
 desc1:"世界最安値の卸売ウェブサイト！",          
 desc2:"すべてここにあります！ボタンを押して購入してください！",          
 buy:"🛒 購入",          
+buyLabel:"商品を購入する",
 cart:"🛍️ カート",          
+cartLabel:"ショッピングカートを表示",
 acc:"👤 アカウント",          
+accLabel:"アカウントページを開く",
 addr:"📍 住所",          
+addrLabel:"配送先住所を管理",
 cont:"ℹ️ 接触",          
+contLabel:"お問い合わせ",
 rating:"⭐ レビュー",          
+ratingLabel:"評価とレビューを表示",
 shop:"🛒 ショッピングを始めましょう",          
+shopLabel:"今すぐ買い物を始める",
 popupTitle:"ℹ️ 情報",          
 popupText:"このウェブサイトは、Athayaとしても知られるRoomieeG-bitによって作成されました。嬉しいことに、ほぼ毎日更新しています。",          
-close:"閉じる"          
+close:"閉じる",          
+closeLabel:"情報ポップアップを閉じる",
+darkLabel:"ダークモードを有効にする",
+langLabel:"言語を選択",
+cbLabel:"色盲モードを選択",
+infoLabel:"情報を開く"
 },          
           
 ar:{          
@@ -373,15 +410,27 @@ welcome:"مرحباً 👋",
 desc1:"أرخص موقع لبيع الجملة على وجه الأرض!",          
 desc2:"كل شيء متوفر هنا! اضغط على الزر للشراء!",          
 buy:"🛒 شراء",          
+buyLabel:"شراء المنتجات",
 cart:"🛍️ السلة",          
+cartLabel:"عرض سلة التسوق",
 acc:"👤 الحساب",          
+accLabel:"فتح صفحة الحساب",
 addr:"📍 العنوان",          
+addrLabel:"إدارة عنوان التسليم",
 cont:"ℹ️ اتصال",          
+contLabel:"اتصل بنا",
 rating:"⭐ التقييم",          
+ratingLabel:"عرض التقييمات والمراجعات",
 shop:"🛒 ابدأ التسوق",          
+shopLabel:"ابدأ التسوق الآن",
 popupTitle:"ℹ️ معلومات",          
 popupText:"تم إنشاء هذا الموقع بواسطة RoomieeG-bit، المعروفة أيضاً باسم Athaya. والجميل في الأمر أنني أقوم بتحديثه بشكل شبه يومي.",          
-close:"إغلاق"          
+close:"إغلاق",          
+closeLabel:"إغلاق نافذة المعلومات",
+darkLabel:"تفعيل الوضع الداكن",
+langLabel:"اختر اللغة",
+cbLabel:"اختر وضع عمى الألوان",
+infoLabel:"فتح المعلومات"
 },          
           
 ru:{          
@@ -390,15 +439,27 @@ welcome:"Добро пожаловать 👋",
 desc1:"Самый дешевый оптовый сайт в мире!",          
 desc2:"Всё здесь! Нажмите кнопку, чтобы купить!",          
 buy:"🛒 Купить",          
+buyLabel:"Купить товары",
 cart:"🛍️ Корзина",          
+cartLabel:"Просмотреть корзину покупок",
 acc:"👤 Аккаунт",          
+accLabel:"Открыть страницу аккаунта",
 addr:"📍 Адрес",          
+addrLabel:"Управлять адресом доставки",
 cont:"ℹ️ Контакт",          
+contLabel:"Свяжитесь с нами",
 rating:"⭐ Рейтинг",          
+ratingLabel:"Просмотреть рейтинги и отзывы",
 shop:"🛒 Старт",          
+shopLabel:"Начните покупки прямо сейчас",
 popupTitle:"ℹ️ Информация",          
 popupText:"Этот сайт создан RoomieeG-bit, также известным как Athaya. Хорошо, что я обновляю его почти ежедневно.",          
-close:"Закрыть"          
+close:"Закрыть",          
+closeLabel:"Закрыть всплывающее окно информации",
+darkLabel:"Включить темный режим",
+langLabel:"Выберите язык",
+cbLabel:"Выберите режим дальтонизма",
+infoLabel:"Открыть информацию"
 }          
 };          
           
@@ -412,16 +473,35 @@ document.getElementById("desc1").innerText = t.desc1;
 document.getElementById("desc2").innerText = t.desc2;          
           
 document.getElementById("buyBtn").innerText = t.buy;          
+document.getElementById("buyBtn").setAttribute("aria-label", t.buyLabel);
+          
 document.getElementById("cartBtn").innerText = t.cart;          
+document.getElementById("cartBtn").setAttribute("aria-label", t.cartLabel);
+          
 document.getElementById("accBtn").innerText = t.acc;          
+document.getElementById("accBtn").setAttribute("aria-label", t.accLabel);
+          
 document.getElementById("addrBtn").innerText = t.addr;          
+document.getElementById("addrBtn").setAttribute("aria-label", t.addrLabel);
+          
 document.getElementById("shopBtn").innerText = t.shop;          
+document.getElementById("shopBtn").setAttribute("aria-label", t.shopLabel);
+          
 document.getElementById("contBtn").innerText = t.cont;          
+document.getElementById("contBtn").setAttribute("aria-label", t.contLabel);
+          
 document.getElementById("ratingBtn").innerText = t.rating;          
+document.getElementById("ratingBtn").setAttribute("aria-label", t.ratingLabel);
+          
+document.getElementById("darkBtn").setAttribute("aria-label", t.darkLabel);
+document.getElementById("langSelect").setAttribute("aria-label", t.langLabel);
+document.getElementById("cbSelect").setAttribute("aria-label", t.cbLabel);
+document.getElementById("infoBtnMain").setAttribute("aria-label", t.infoLabel);
           
 document.getElementById("popupTitle").innerText = t.popupTitle;          
 document.getElementById("popupText").innerText = t.popupText;          
 document.getElementById("closeText").innerText = t.close;          
+document.getElementById("closeText").setAttribute("aria-label", t.closeLabel);
           
 localStorage.setItem("lang", lang);          
 }          
